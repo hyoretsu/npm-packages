@@ -1,0 +1,10 @@
+{
+	"name": "npm-packages",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"devDependencies": {
+		"esbuild": "^0.17.14"
+	}
+}
