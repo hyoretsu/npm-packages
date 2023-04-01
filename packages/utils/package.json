@@ -1,13 +1,8 @@
 {
-	"name": "@hyoretsu/react-hooks",
-	"description": "A collection of useful hooks that I use in my projects.",
-	"version": "1.0.1",
-	"keywords": [
-		"hooks",
-		"react",
-		"swr",
-		"vercel"
-	],
+	"name": "@hyoretsu/utils",
+	"description": "A collection of utility functions that I use in my projects.",
+	"version": "1.0.0",
+	"keywords": [],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"bugs": {
@@ -28,11 +23,5 @@
 		"build": "node esbuild.js",
 		"prepublish": "pnpm build && pnpm types && rm dist/tsconfig.tsbuildinfo",
 		"types": "tsc --emitDeclarationOnly"
-	},
-	"dependencies": {
-		"swr": "^2.1.1"
-	},
-	"devDependencies": {
-		"axios": "^1.3.4"
 	}
 }
