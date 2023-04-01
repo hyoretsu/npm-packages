@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/react-hooks",
 	"description": "A collection of useful hooks that I use in my projects.",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"keywords": [
 		"hooks",
 		"react",
@@ -26,7 +26,7 @@
 	},
 	"scripts": {
 		"build": "node esbuild.js",
-		"prepublish": "pnpm build && pnpm types && rm dist/tsconfig.tsbuildinfo",
+		"prepublish": "pnpm build && pnpm types",
 		"types": "tsc --emitDeclarationOnly"
 	},
 	"dependencies": {
