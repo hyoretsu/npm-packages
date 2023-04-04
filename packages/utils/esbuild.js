@@ -5,7 +5,7 @@ const start = Date.now();
 try {
     build({
         bundle: true,
-        entryPoints: ["./src/"],
+        entryPoints: ["./src"],
         external: ["./node_modules/*"],
         keepNames: true,
         minify: true,

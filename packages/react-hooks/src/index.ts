@@ -1,1 +1,1 @@
-export type { APIMapping, useFetch } from "./hooks/useFetch";
+export { APIMapping, useFetch } from "./hooks/useFetch";
