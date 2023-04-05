@@ -1,4 +1,5 @@
 import capitalize from "./funcs/capitalize";
+import fixNumber from "./funcs/fixNumber";
 import formatPhoneNumber from "./funcs/formatPhoneNumber";
 import JsonFixBigInt from "./funcs/JsonFixBigInt";
 import merge from "./funcs/merge";
@@ -13,6 +14,7 @@ import zeroOrOne from "./funcs/zeroOrOne";
 
 export {
     capitalize,
+    fixNumber,
     formatPhoneNumber,
     JsonFixBigInt,
     merge,

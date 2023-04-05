@@ -7,7 +7,7 @@ try {
     build({
         bundle: true,
         entryPoints: ["./src"],
-        external: Object.keys(dependencies),
+        external: Object.keys(dependencies || {}),
         keepNames: true,
         minify: true,
         outfile: "dist/index.js",

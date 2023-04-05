@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/utils",
 	"description": "A collection of utility functions that I use in my projects.",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"keywords": [],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
