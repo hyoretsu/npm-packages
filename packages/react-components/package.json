@@ -1,0 +1,39 @@
+{
+	"name": "@hyoretsu/react-components",
+	"description": "A collection of useful components that I use in my projects.",
+	"version": "1.0.0",
+	"keywords": [
+		"components",
+		"react"
+	],
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"bugs": {
+		"url": "https://github.com/hyoretsu/npm-packages/issues",
+		"email": "hyoretsu@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hyoretsu/npm-packages.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Aran Leite",
+		"email": "hyoretsu@gmail.com",
+		"url": "https://www.linkedin.com/in/aranleite"
+	},
+	"scripts": {
+		"build": "node esbuild.js",
+		"prepublish": "pnpm build && pnpm types",
+		"types": "tsc --emitDeclarationOnly"
+	},
+	"dependencies": {
+		"next": "^13.2.4",
+		"react": "^18.2.0",
+		"styled-components": "^5.3.9"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.33",
+		"@types/styled-components": "^5.1.26"
+	}
+}
