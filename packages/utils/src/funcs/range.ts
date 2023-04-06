@@ -6,7 +6,7 @@
  * @param	stop    -   A number specifying at which position to stop (not included).
  * @param	step    -   An integer number specifying the incrementation. Default is 1.
  */
-const range = (start: number, stop = 0, step = 1): number[] => {
+export const range = (start: number, stop = 0, step = 1): number[] => {
     // With a single parameter, it'll act like range(stop), but with two/three it becomes range(start, stop)
     if (stop === 0) {
         stop = start;
@@ -28,5 +28,3 @@ const range = (start: number, stop = 0, step = 1): number[] => {
 
     return Array.from({ length }, (_, index) => start + step * index);
 };
-
-export default range;

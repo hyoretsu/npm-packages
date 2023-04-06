@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/utils",
 	"description": "A collection of utility functions that I use in my projects.",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"keywords": [],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -23,5 +23,8 @@
 		"build": "node esbuild.js",
 		"prepublish": "pnpm build && pnpm types",
 		"types": "tsc --emitDeclarationOnly"
+	},
+	"devDependencies": {
+		"@types/node": "^18.15.11"
 	}
 }

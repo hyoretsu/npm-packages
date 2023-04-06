@@ -1,29 +1,12 @@
-import capitalize from "./funcs/capitalize";
-import fixNumber from "./funcs/fixNumber";
-import formatPhoneNumber from "./funcs/formatPhoneNumber";
-import JsonFixBigInt from "./funcs/JsonFixBigInt";
-import merge from "./funcs/merge";
-import random from "./funcs/random";
-import randomId from "./funcs/randomId";
-import range from "./funcs/range";
-import round from "./funcs/round";
-import swap from "./funcs/swap";
-import titleCase from "./funcs/titleCase";
-import wait from "./funcs/wait";
-import zeroOrOne from "./funcs/zeroOrOne";
-
-export {
-    capitalize,
-    fixNumber,
-    formatPhoneNumber,
-    JsonFixBigInt,
-    merge,
-    random,
-    randomId,
-    range,
-    round,
-    swap,
-    titleCase,
-    wait,
-    zeroOrOne,
-};
+export * from "./funcs/capitalize";
+export * from "./funcs/fixNumber";
+export * from "./funcs/formatPhoneNumber";
+export * from "./funcs/JsonFixBigInt";
+export * from "./funcs/random";
+export * from "./funcs/randomId";
+export * from "./funcs/range";
+export * from "./funcs/round";
+export * from "./funcs/swap";
+export * from "./funcs/titleCase";
+export * from "./funcs/wait";
+export * from "./funcs/zeroOrOne";

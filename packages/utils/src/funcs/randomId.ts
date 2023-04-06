@@ -1,13 +1,13 @@
-import random from "./random";
-import range from "./range";
-import zeroOrOne from "./zeroOrOne";
+import { random } from "./random";
+import { range } from "./range";
+import { zeroOrOne } from "./zeroOrOne";
 
 /**
  * Generates a random ID in the following sequence of alphanumeric characters:
  *
  * 4-8-12-8
  */
-const randomId = (): string => {
+export const randomId = (): string => {
     let id = "";
 
     range(0, 32).forEach((_, index) => {
@@ -25,5 +25,3 @@ const randomId = (): string => {
 
     return id;
 };
-
-export default randomId;

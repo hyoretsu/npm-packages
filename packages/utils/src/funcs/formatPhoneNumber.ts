@@ -5,7 +5,7 @@
  * @param   country             ISO country code.
  * @param   includeCountryCode  Whether to include the country code in the output.
  */
-const formatPhoneNumber = (
+export const formatPhoneNumber = (
     phoneNumber: string | number,
     country: "br" | "us",
     includeCountryCode = true,
@@ -42,5 +42,3 @@ const formatPhoneNumber = (
         matches[3]
     }`;
 };
-
-export default formatPhoneNumber;

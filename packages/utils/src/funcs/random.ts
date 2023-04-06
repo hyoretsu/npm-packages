@@ -4,7 +4,7 @@
  * @param   min -   Number to start from (inclusive).
  * @param   max -   Number to end at (exclusive).
  */
-const random = (min: number, max = 1): number => {
+export const random = (min: number, max = 1): number => {
     // With a single parameter, it'll act like random(max), but with two it becomes random(min, max)
     if (max === 0) {
         max = min;
@@ -13,5 +13,3 @@ const random = (min: number, max = 1): number => {
 
     return Math.floor(Math.random() * (max - min)) + min;
 };
-
-export default random;
