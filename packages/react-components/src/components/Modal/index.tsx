@@ -12,7 +12,7 @@ export interface ModalProps {
     opacity?: number;
 }
 
-const Modal: React.FC<ModalProps> = ({ buttonText = "Ok", children, onConfirm, opacity }) => {
+export const Modal: React.FC<ModalProps> = ({ buttonText = "Ok", children, onConfirm, opacity }) => {
     return (
         <OpacityFilter opacity={opacity}>
             <Styling>
@@ -23,5 +23,3 @@ const Modal: React.FC<ModalProps> = ({ buttonText = "Ok", children, onConfirm, o
         </OpacityFilter>
     );
 };
-
-export default Modal;

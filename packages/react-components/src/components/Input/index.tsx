@@ -2,7 +2,7 @@ import React, { FormEventHandler, InputHTMLAttributes } from "react";
 
 export type CustomInputProps = InputHTMLAttributes<HTMLInputElement>;
 
-const Input: React.FC<CustomInputProps> = ({ type, value, max, min = 0, maxLength, ...rest }) => {
+export const Input: React.FC<CustomInputProps> = ({ type, value, max, min = 0, maxLength, ...rest }) => {
     const handleOnChange: FormEventHandler<HTMLInputElement> = (e): void => {
         if (type === "number") {
             if (maxLength && !max) {
@@ -32,4 +32,3 @@ const Input: React.FC<CustomInputProps> = ({ type, value, max, min = 0, maxLengt
     );
 };
 
-export default Input;
