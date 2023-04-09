@@ -1,6 +1,5 @@
+import { fixNumber } from "@hyoretsu/utils";
 import { derivative, evaluate } from "mathjs";
-
-import { fixNumber } from "./utils";
 
 export namespace FunctionZeros {
 	export interface Details {

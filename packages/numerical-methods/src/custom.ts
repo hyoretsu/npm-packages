@@ -1,7 +1,7 @@
+import { fixNumber } from "@hyoretsu/utils";
 import { evaluate } from "mathjs";
 
 import { FunctionZeros } from "./functionZeros";
-import { fixNumber } from "./utils";
 
 type MinMaxBisection = (info: {
 	func: string;
@@ -31,10 +31,10 @@ export const minMaxBisection: MinMaxBisection = ({
 }) => {
 	const details = [];
 	let iterations = -1;
+	const nextResults = { a: [0, 0], b: [0, 0] };
 	let trueX = typeof relativeError === "number" && relativeError;
 
 	while (true) {
-		const interval = [a, b];
 		const results = [evaluate(func, { x: a }), evaluate(func, { x: b })];
 
 		const midPoint = (a + b) / 2;
@@ -64,29 +64,35 @@ export const minMaxBisection: MinMaxBisection = ({
 		};
 
 		const targetSign = target === "max" ? 1 : -1;
-		if (
-			Math.sign(midResult - results[0]) === targetSign &&
-			Math.sign(evaluate(func, { x: (midPoint + b) / 2 }) - midResult) === targetSign
-		) {
-			// If mid-point is higher/lower than A and the next mid-point is higher/lower than it, swap for A
-			swapPoints("a");
-		} else if (
-			Math.sign(midResult - results[1]) === targetSign &&
-			Math.sign(evaluate(func, { x: (midPoint + a) / 2 }) - midResult) === targetSign
-		) {
-			// If mid-point is higher/lower than B and the next mid-point is higher/lower than it, swap for B
-			swapPoints("b");
+		if (Math.sign(midResult - results[0]) === targetSign) {
+			// If mid-point is higher/lower than A
+
+			nextResults.a = [a, evaluate(func, { x: (midPoint + b) / 2 })];
+
+			// and the next mid-point is higher/lower than it, swap for A
+			if (Math.sign(nextResults.a[1] - midResult) === targetSign) {
+				swapPoints("a");
+			}
+		} else if (Math.sign(midResult - results[1]) === targetSign) {
+			// If mid-point is higher/lower than B
+
+			nextResults.b = [b, evaluate(func, { x: (midPoint + a) / 2 })];
+
+			// and the next mid-point is higher/lower than it, swap for B
+			if (Math.sign(nextResults.b[1] - midResult) === targetSign) {
+				swapPoints("b");
+			}
 		} else if (Math.sign(results[0] - results[1]) === targetSign) {
-			// If A is higher/lower than B, swap for A
+			// If A is lower/higher than B, swap for A
 			swapPoints("b");
 		} else if (Math.sign(results[1] - results[0]) === targetSign) {
-			// If B is higher/lower than A, swap for B
+			// If B is lower/higher than A, swap for B
 			swapPoints("a");
 		}
 
 		details.push({
 			iteration: iterations,
-			interval: interval.map((number) => fixNumber(number)),
+			interval: [fixNumber(a), fixNumber(b)],
 			results: results.map((number) => fixNumber(number)),
 			x: fixNumber(midPoint),
 			...(origFunc && { y: evaluate(origFunc, { x: midPoint }) }),

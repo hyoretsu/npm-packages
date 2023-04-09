@@ -1,7 +1,7 @@
+import { isOdd, range } from "@hyoretsu/utils";
 import { derivative, evaluate } from "mathjs";
 
 import { minMaxBisection } from "./custom";
-import { isOdd, range } from "./utils";
 
 export type IntegrationMethod = (info: { func: string; pointN: number; x: [number, number] }) => {
 	result: number;
@@ -70,7 +70,7 @@ export const simpsonRule13: IntegrationMethod = ({ func, pointN, x }) => {
 		},
 	] = minMaxBisection({
 		func: fourthDerivative,
-		interval: [x[0], x[1]],
+		interval: x,
 		target: "max",
 		precision: 1e-12,
 	});

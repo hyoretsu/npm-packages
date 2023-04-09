@@ -1,13 +1,116 @@
+import { fixNumber, range, swap } from "@hyoretsu/utils";
 import { evaluate } from "mathjs";
 
-import { fixNumber, range, swap } from "./utils";
+export type Matrix = number[][];
 
-export interface Matrix {
-	coefficients: number[][];
+interface LUMatrices {
+	l: Matrix;
+	u: Matrix;
+}
+
+export const luComposition = ({ l, u }: LUMatrices): Matrix => {
+	if (l.length !== l[0].length || u.length !== u[0].length) {
+		throw new Error("Both matrices must be square");
+	}
+
+	const matrix = [...l.map((line) => line.map(() => 0))];
+
+	u[0].forEach((number, i) => {
+		matrix[0][i] = number;
+	});
+
+	const uColumns: number[][] = [];
+	u.forEach((line, i) => {
+		line.forEach((number, j) => {
+			if (number === 0) return;
+
+			if (uColumns[j] === undefined) {
+				uColumns[j] = [];
+			}
+
+			uColumns[j].push(number);
+		});
+	});
+
+	matrix.slice(1).forEach((line, i) => {
+		i += 1;
+
+		const lineL: number[] = [];
+		l[i].forEach((number, j) => {
+			if (j < i) {
+				lineL.push(number);
+			}
+		});
+
+		line.forEach((_, j) => {
+			matrix[i][j] = uColumns[j].reduce((sum, number, index) => {
+				if (index > i) {
+					return sum;
+				}
+
+				if (index === i) {
+					return sum + number;
+				}
+
+				return sum + lineL[index] * number;
+			}, 0);
+		});
+	});
+
+	return matrix;
+};
+
+// Bug com matriz 4x4
+export const doolittleLuDecomposition = (matrix: Matrix): LUMatrices => {
+	if (matrix.length !== matrix[0].length) {
+		throw new Error("Matrix must be square");
+	}
+
+	const l: Matrix = [...matrix.map((line, i) => line.map((_, j) => (i === j ? 1 : 0)))];
+	const u: Matrix = [...matrix.map((line) => line.map(() => 0))];
+
+	matrix.forEach((line, i) => {
+		line.forEach((number, j) => {
+			if (j < i) {
+				if (j === 0) {
+					l[i][0] = number / u[0][0];
+					return;
+				}
+
+				l[i][j] =
+					(number -
+						range(j)
+							.map((index) => l[i][index] * u[index][j])
+							.reduce((n, sum) => sum + n, 0)) /
+					u[j][j];
+				return;
+			}
+
+			if (i === 0) {
+				u[0][j] = matrix[0][j];
+				return;
+			}
+
+			u[i][j] =
+				number -
+				range(i)
+					.map((index) => l[i][index] * u[index][j])
+					.reduce((n, sum) => sum + n, 0);
+		});
+	});
+
+	return {
+		l,
+		u,
+	};
+};
+
+export interface LinearSystem {
+	coefficients: Matrix;
 	independentTerms: number[];
 }
 
-export const gaussianElimination = ({ coefficients, independentTerms }: Matrix) => {
+export const gaussianElimination = ({ coefficients, independentTerms }: LinearSystem) => {
 	const coefficientsL = [...coefficients];
 	const independentTermsL = [...independentTerms];
 
@@ -84,7 +187,7 @@ export const gaussianElimination = ({ coefficients, independentTerms }: Matrix) 
 };
 
 export type GaussMethod = (
-	data: Matrix & {
+	data: LinearSystem & {
 		precision: number;
 		options?: {
 			/** Maximum number of iterations. */
@@ -107,7 +210,7 @@ export type GaussMethod = (
 	}>,
 ];
 
-export const spectralRadius = (coefficients: number[][]): number => {
+export const spectralRadius = (coefficients: Matrix): number => {
 	return Math.max(
 		...coefficients.map(
 			(number, i) => number.reduce((prev, curr) => prev + Math.abs(curr), 0) / Math.abs(number[i]),

@@ -4,7 +4,11 @@
 	"workspaces": [
 		"packages/*"
 	],
+	"scripts": {
+		"dev": "node -r @swc-node/register"
+	},
 	"devDependencies": {
+		"@swc-node/register": "^1.6.3",
 		"esbuild": "^0.17.14"
 	}
 }

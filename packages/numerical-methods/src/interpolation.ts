@@ -1,7 +1,7 @@
+import { fixNumber, range } from "@hyoretsu/utils";
 import { evaluate } from "mathjs";
 
 import { gaussSeidel } from "./linearSystems";
-import { fixNumber, range } from "./utils";
 
 interface Data {
 	x: number[];
