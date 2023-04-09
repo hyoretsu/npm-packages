@@ -6,39 +6,39 @@
  * @param   includeCountryCode  Whether to include the country code in the output.
  */
 export const formatPhoneNumber = (
-    phoneNumber: string | number,
-    country: "br" | "us",
-    includeCountryCode = true,
+	phoneNumber: string | number,
+	country: "br" | "us",
+	includeCountryCode = true,
 ) => {
-    const countryCodes = {
-        br: "55",
-        us: "1",
-    };
-    const formats = {
-        br: [2, 5, 4],
-        us: [3, 3, 4],
-    };
+	const countryCodes = {
+		br: "55",
+		us: "1",
+	};
+	const formats = {
+		br: [2, 5, 4],
+		us: [3, 3, 4],
+	};
 
-    if (typeof phoneNumber === "number") {
-        phoneNumber = String(phoneNumber);
-    }
+	if (typeof phoneNumber === "number") {
+		phoneNumber = String(phoneNumber);
+	}
 
-    const cleaned = phoneNumber.replace(/\D/g, "");
+	const cleaned = phoneNumber.replace(/\D/g, "");
 
-    // /^(\d{3})(\d{3})(\d{4})$/
-    const matches = cleaned.match(
-        new RegExp(
-            formats[country].reduce((regex, number) => {
-                return `${regex}(\\d{${number}})`;
-            }, ""),
-        ),
-    );
+	// /^(\d{3})(\d{3})(\d{4})$/
+	const matches = cleaned.match(
+		new RegExp(
+			formats[country].reduce((regex, number) => {
+				return `${regex}(\\d{${number}})`;
+			}, ""),
+		),
+	);
 
-    if (!matches) {
-        throw new Error("Please enter a phone number.");
-    }
+	if (!matches) {
+		throw new Error("Please enter a phone number.");
+	}
 
-    return `${includeCountryCode ? `+${countryCodes[country]} ` : ""}(${matches[1]}) ${matches[2]}-${
-        matches[3]
-    }`;
+	return `${includeCountryCode ? `+${countryCodes[country]} ` : ""}(${matches[1]}) ${matches[2]}-${
+		matches[3]
+	}`;
 };

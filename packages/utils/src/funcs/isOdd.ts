@@ -1,3 +1,3 @@
 export const isOdd = (number: number): boolean => {
-    return number % 2 === 1;
+	return number % 2 === 1;
 };

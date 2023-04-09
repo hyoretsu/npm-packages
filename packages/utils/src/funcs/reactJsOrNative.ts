@@ -2,17 +2,17 @@ import { readFileSync } from "fs";
 import path from "path";
 
 const isReactNative = () => {
-    const packageJson = JSON.parse(readFileSync(`${path.resolve(".")}/package.json`, "utf8"));
+	const packageJson = JSON.parse(readFileSync(`${path.resolve(".")}/package.json`, "utf8"));
 
-    return Object.keys(packageJson.dependencies).includes("react-native");
+	return Object.keys(packageJson.dependencies).includes("react-native");
 };
 
 const isReactJs = () => {
-    return !isReactNative();
+	return !isReactNative();
 };
 
 const reactJsOrNative = () => {
-    return isReactNative() ? "react-native" : "reactjs";
+	return isReactNative() ? "react-native" : "reactjs";
 };
 
 export { isReactNative, isReactJs, reactJsOrNative };

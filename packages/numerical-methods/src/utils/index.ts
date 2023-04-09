@@ -2,15 +2,15 @@
  * Fixes an error that happens sometimes when you're working with numbers.
  */
 export const fixNumber = (number: number): number => {
-    return Number(number.toPrecision(12));
+	return Number(number.toPrecision(12));
 };
 
 export const isEven = (number: number): boolean => {
-    return number % 2 === 0;
+	return number % 2 === 0;
 };
 
 export const isOdd = (number: number): boolean => {
-    return number % 2 === 1;
+	return number % 2 === 1;
 };
 
 /**
@@ -20,35 +20,35 @@ export const isOdd = (number: number): boolean => {
  * @param	step	- An integer number specifying the incrementation. Default is 1.
  */
 export const range = (start: number, stop = 0, step = 1): number[] => {
-    // With a single parameter, it'll act like range(stop), but with two/three it becomes range(start, stop)
-    if (stop === 0) {
-        stop = start;
-        start = 0;
-    }
+	// With a single parameter, it'll act like range(stop), but with two/three it becomes range(start, stop)
+	if (stop === 0) {
+		stop = start;
+		start = 0;
+	}
 
-    if (step === 0) {
-        throw new Error("The range doesn't exist. (step = 0)");
-    }
-    if (start === stop) {
-        throw new Error("The range doesn't exist, start and stop values are the same.");
-    }
-    // Reverse range with normal step or normal range with reverse step
-    if ((start > stop && step > 0) || (start < stop && step < 0)) {
-        throw new Error("The range doesn't exist, it would stop before starting.");
-    }
+	if (step === 0) {
+		throw new Error("The range doesn't exist. (step = 0)");
+	}
+	if (start === stop) {
+		throw new Error("The range doesn't exist, start and stop values are the same.");
+	}
+	// Reverse range with normal step or normal range with reverse step
+	if ((start > stop && step > 0) || (start < stop && step < 0)) {
+		throw new Error("The range doesn't exist, it would stop before starting.");
+	}
 
-    const length = Math.ceil((stop - start) / step);
+	const length = Math.ceil((stop - start) / step);
 
-    return Array.from({ length }, (_, index) => start + step * index);
+	return Array.from({ length }, (_, index) => start + step * index);
 };
 
 /**
  * Swaps the elements of an array at the two given indexes.
  */
 export const swap = (array: any[], firstIndex: number, secondIndex: number): any[] => {
-    const temp = array[firstIndex];
-    array[firstIndex] = array[secondIndex];
-    array[secondIndex] = temp;
+	const temp = array[firstIndex];
+	array[firstIndex] = array[secondIndex];
+	array[secondIndex] = temp;
 
-    return array;
+	return array;
 };
