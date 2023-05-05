@@ -15,7 +15,7 @@ export type MultipartParams = {
 
 const handlers: Record<string, (file: MultipartFile) => Promise<void>> = {
 	local: async ({ file, filename }) => {
-		const uploadPath = `uploads/${filename}`;
+		const uploadPath = `${process.env.UPLOAD_FOLDER}/${filename}`;
 		const writeSteam = createWriteStream(uploadPath);
 		await pipeline(file, writeSteam);
 	},
@@ -42,11 +42,11 @@ const handlers: Record<string, (file: MultipartFile) => Promise<void>> = {
 };
 
 /**
- * Fastify decorator to handle multipart forms. Receives an object with the following parameters:
+ * Fastify decorator to handle multipart forms. May receive an object with the following optional parameters:
  *
- * @param {string[]} fields - list of image fields to allow.
- * @param {boolean | string[]} optionalFields - list of image fields that are optional.
- * @param {string[]} validation - Same class that you use to validate your body.
+ * @param {string[]} fields - List of image fields to receive. Will throw an error if any fields are not present and are required.
+ * @param {boolean | string[]} optionalFields - List of image fields that are optional.
+ * @param {string[]} validation - Same class that you would use to validate your body.
  */
 export const Multipart = createParamDecorator(
 	async ({ fields, optionalFields, validation }: MultipartParams, ctx: ExecutionContext) => {

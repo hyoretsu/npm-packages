@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/nest-decorators",
 	"description": "A collection of useful decorators for Nest.js",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"keywords": [
 		"backend",
 		"class-validator",
@@ -42,5 +42,8 @@
 	"devDependencies": {
 		"@fastify/multipart": "^7.6.0",
 		"fastify": "^4.17.0"
+	},
+	"peerDependencies": {
+		"@fastify/multipart": "^7.6.0"
 	}
 }
