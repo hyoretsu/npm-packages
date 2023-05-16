@@ -1,3 +1,5 @@
+type Country = "br" | "us";
+
 /**
  * Formats a phone number to a specific country format.
  *
@@ -7,15 +9,15 @@
  */
 export const formatPhoneNumber = (
 	phoneNumber: string | number,
-	country: "br" | "us",
+	country: Country,
 	includeCountryCode = true,
 ) => {
 	const countryCodes = {
 		br: "55",
 		us: "1",
 	};
-	const formats = {
-		br: [2, 5, 4],
+	const formats: Record<Country, Array<number | number[]>> = {
+		br: [2, [4, 5], 4],
 		us: [3, 3, 4],
 	};
 
@@ -29,7 +31,7 @@ export const formatPhoneNumber = (
 	const matches = cleaned.match(
 		new RegExp(
 			formats[country].reduce((regex, number) => {
-				return `${regex}(\\d{${number}})`;
+				return `${regex}(\\d{${Array.isArray(number) ? `${number[0]},${number[1]}` : number}})`;
 			}, ""),
 		),
 	);
