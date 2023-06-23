@@ -1,0 +1,41 @@
+{
+	"name": "@hyoretsu/providers",
+	"description": "A collection of useful providers for Node.js",
+	"version": "1.0.0",
+	"keywords": [
+		"backend",
+		"nodejs",
+		"providers",
+		"utils"
+	],
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/providers",
+	"bugs": {
+		"url": "https://github.com/hyoretsu/npm-packages/issues",
+		"email": "hyoretsu@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hyoretsu/npm-packages.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Aran Leite",
+		"email": "hyoretsu@gmail.com",
+		"url": "https://www.linkedin.com/in/aranleite"
+	},
+	"scripts": {
+		"build": "node esbuild.js",
+		"prepublish": "pnpm build && tsc --emitDeclarationOnly"
+	},
+	"dependencies": {
+		"bcrypt": "^5.1.0",
+		"nodemailer": "^6.9.3"
+	},
+	"devDependencies": {
+		"@types/bcrypt": "^5.0.0",
+		"@types/nodemailer": "^6.4.8"
+	},
+	"peerDependencies": {}
+}
