@@ -1,7 +1,7 @@
 import nodemailer, { Transporter } from "nodemailer";
 
 import { SendMailDTO } from "../dtos/SendMail.dto";
-import MailProvider from "../models";
+import { MailProvider } from "../models";
 
 export default class EtherealMailProvider implements MailProvider {
 	private client!: Transporter;

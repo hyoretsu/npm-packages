@@ -1,2 +1,2 @@
-export { HashProviderKeys, HashProviders, hashProviders } from "./HashProvider";
-export { MailProviderKeys, MailProviders, SendMailDTO, mailProviders } from "./MailProvider";
+export { HashProviderKeys, HashProvider, hashProviders } from "./HashProvider";
+export { MailProviderKeys, MailProvider, SendMailDTO, mailProviders } from "./MailProvider";

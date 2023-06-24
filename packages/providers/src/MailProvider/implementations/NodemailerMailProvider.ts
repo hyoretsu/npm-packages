@@ -1,9 +1,9 @@
 import nodemailer, { Transporter } from "nodemailer";
 
 import { SendMailDTO } from "../dtos/SendMail.dto";
-import IMailProvider from "../models";
+import { MailProvider } from "../models";
 
-export default class NodemailerMailProvider implements IMailProvider {
+export default class NodemailerMailProvider implements MailProvider {
 	private client: Transporter;
 
 	constructor() {

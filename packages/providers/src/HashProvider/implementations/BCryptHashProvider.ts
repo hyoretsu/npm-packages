@@ -1,6 +1,6 @@
 import { hash, compare } from "bcrypt";
 
-import HashProvider from "../models";
+import { HashProvider } from "../models";
 
 export default class BCryptHashProvider implements HashProvider {
 	public async compareHash(payload: string, hashed: string): Promise<boolean> {
