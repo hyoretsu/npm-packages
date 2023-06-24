@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/providers",
 	"description": "A collection of useful providers for Node.js",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"keywords": [
 		"backend",
 		"nodejs",

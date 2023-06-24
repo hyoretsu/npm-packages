@@ -26,7 +26,7 @@ export default class NodemailerMailProvider implements MailProvider {
 			},
 		};
 
-		this.client = nodemailer.createTransport(transportObject[process.env.MAIL_PROVIDER as string]);
+		this.client = nodemailer.createTransport(transportObject[process.env.MAIL_DRIVER as string]);
 	}
 
 	public async sendMail({ from, to, subject, body: text }: SendMailDTO): Promise<void> {
