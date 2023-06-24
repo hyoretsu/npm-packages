@@ -1,5 +1,5 @@
 import BCryptHashProvider from "./implementations/BCryptHashProvider";
-export { HashProvider } from "./models";
+export * from "./models";
 
 export type HashProviderKeys = "bcrypt";
 type HashProviders = typeof BCryptHashProvider;
