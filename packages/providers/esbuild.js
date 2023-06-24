@@ -1,4 +1,5 @@
 const { build } = require("esbuild");
+const { dependencies, devDependencies, peerDependencies } = require("./package.json");
 
 const start = Date.now();
 
@@ -6,7 +7,11 @@ try {
 	build({
 		bundle: true,
 		entryPoints: ["./src"],
-		external: ["./node_modules/*"],
+		external: [
+			...(dependencies && Object.keys(dependencies)),
+			...(devDependencies && Object.keys(devDependencies)),
+			...(peerDependencies && Object.keys(peerDependencies)),
+		],
 		keepNames: true,
 		minify: true,
 		outfile: "dist/index.js",
