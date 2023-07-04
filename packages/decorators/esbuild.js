@@ -8,15 +8,14 @@ try {
 		bundle: true,
 		entryPoints: ["./src"],
 		external: [
-			...Object.keys(dependencies),
-			...Object.keys(devDependencies),
-			...Object.keys(peerDependencies),
+			...(dependencies && Object.keys(dependencies)),
+			...(devDependencies && Object.keys(devDependencies)),
+			...(peerDependencies && Object.keys(peerDependencies)),
 		],
 		keepNames: true,
 		minify: true,
 		outfile: "dist/index.js",
 		platform: "node",
-		// rome-ignore lint/style/useTemplate: <explanation>
 	}).then(() => console.log("⚡ " + "\x1b[32m" + `Done in ${Date.now() - start}ms`));
 } catch (e) {
 	console.log(e);
