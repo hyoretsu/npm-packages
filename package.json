@@ -17,6 +17,7 @@
 		"@swc-node/register": "^1.6.3",
 		"esbuild": "^0.17.14",
 		"husky": "^8.0.3",
-		"lint-staged": "^13.2.3"
+		"lint-staged": "^13.2.3",
+		"rome": "^12.1.3"
 	}
 }
