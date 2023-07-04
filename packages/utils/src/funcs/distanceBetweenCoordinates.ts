@@ -24,5 +24,5 @@ export const distanceBetweenCoordinates = (
 
 	const distance = Math.abs(2 * radius * Math.asin(Math.sqrt(h)));
 
-	return distance * 1000;
+	return distance;
 };
