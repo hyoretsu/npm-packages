@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/react-components",
 	"description": "A collection of useful components that I use in my projects.",
-	"version": "1.0.2",
+	"version": "1.0.5",
 	"keywords": [
 		"components",
 		"react"
@@ -25,8 +25,7 @@
 	},
 	"scripts": {
 		"build": "node esbuild.js",
-		"prepublish": "pnpm build && pnpm types",
-		"types": "tsc --emitDeclarationOnly"
+		"prepublish": "pnpm build && tsc --emitDeclarationOnly"
 	},
 	"dependencies": {
 		"next": "^13.2.4",
