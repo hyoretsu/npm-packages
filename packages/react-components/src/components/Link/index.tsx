@@ -16,7 +16,7 @@ export const Link: React.FC<LinkProps> = ({
 	shallow,
 	...props
 }) => {
-	if (href.includes("http") || href.includes("png")) {
+	if (href.includes("http") || href.includes("https") || href.includes("png")) {
 		return (
 			<a href={href} target="_blank" rel="noopener noreferrer" {...props}>
 				{children}
