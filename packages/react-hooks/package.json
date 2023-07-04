@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/react-hooks",
 	"description": "A collection of useful hooks that I use in my projects.",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"keywords": [
 		"hooks",
 		"react",
@@ -10,6 +10,7 @@
 	],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
+	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/react-hooks",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",
 		"email": "hyoretsu@gmail.com"
@@ -34,5 +35,6 @@
 	},
 	"devDependencies": {
 		"axios": "^1.3.4"
-	}
+	},
+	"peerDependencies": {}
 }

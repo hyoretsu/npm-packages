@@ -1,20 +1,23 @@
 const { build } = require("esbuild");
-const { dependencies } = require("./package.json");
+const { dependencies, devDependencies, peerDependencies } = require("./package.json");
 
 const start = Date.now();
 
 try {
-    build({
-        bundle: true,
-        entryPoints: ["./src"],
-        external: Object.keys(dependencies),
-        keepNames: true,
-        minify: true,
-        outfile: "dist/index.js",
-        platform: "node",
-        // rome-ignore lint/style/useTemplate: <explanation>
-    }).then(() => console.log("⚡ " + "\x1b[32m" + `Done in ${Date.now() - start}ms`));
+	build({
+		bundle: true,
+		entryPoints: ["./src"],
+		external: [
+			...(dependencies && Object.keys(dependencies)),
+			...(devDependencies && Object.keys(devDependencies)),
+			...(peerDependencies && Object.keys(peerDependencies)),
+		],
+		keepNames: true,
+		minify: true,
+		outfile: "dist/index.js",
+		platform: "node",
+	}).then(() => console.log("⚡ " + "\x1b[32m" + `Done in ${Date.now() - start}ms`));
 } catch (e) {
-    console.log(e);
-    process.exit(1);
+	console.log(e);
+	process.exit(1);
 }
