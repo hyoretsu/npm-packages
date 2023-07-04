@@ -5,10 +5,18 @@
 		"packages/*"
 	],
 	"scripts": {
-		"dev": "node -r @swc-node/register"
+		"dev": "node -r @swc-node/register",
+		"prepare": "husky install && chmod ug+x ./husky/*"
+	},
+	"lint-staged": {
+		"**/*.(ts|tsx)": [
+			"rome format --write"
+		]
 	},
 	"devDependencies": {
 		"@swc-node/register": "^1.6.3",
-		"esbuild": "^0.17.14"
+		"esbuild": "^0.17.14",
+		"husky": "^8.0.3",
+		"lint-staged": "^13.2.3"
 	}
 }
