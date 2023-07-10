@@ -11,6 +11,7 @@ export interface ModalProps {
 	buttonBorderColor?: string;
 	buttonBorderRadius?: number;
 	buttonBorderWidth?: number;
+	buttonPadding?: [number, number];
 	buttonText?: string;
 	children: ReactNode;
 	onConfirm: () => void;
@@ -24,6 +25,7 @@ export const Modal: React.FC<ModalProps> = ({
 	buttonBorderColor,
 	buttonBorderRadius,
 	buttonBorderWidth,
+	buttonPadding,
 	buttonText = "Ok",
 	children,
 	onConfirm,
@@ -40,6 +42,7 @@ export const Modal: React.FC<ModalProps> = ({
 					border={buttonBorderColor}
 					borderRadius={buttonBorderRadius}
 					borderWidth={buttonBorderWidth}
+					padding={buttonPadding}
 					onClick={onConfirm}
 				>
 					{buttonText}

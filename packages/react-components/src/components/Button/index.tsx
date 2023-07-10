@@ -34,8 +34,9 @@ export const Button: React.FC<CustomButtonProps> = ({
 			style={{
 				backgroundColor: background,
 				borderColor: border,
-				borderWidth,
 				borderRadius,
+				borderStyle: "solid",
+				borderWidth,
 				paddingBottom: (paddingVertical || padding[0]) - borderWidth,
 				paddingLeft: (paddingHorizontal || padding[1]) - borderWidth,
 				paddingRight: (paddingHorizontal || padding[1]) - borderWidth,
