@@ -5,10 +5,9 @@ export const Styling = styled.div`
     flex-direction: column;
     align-items: center;
 
-    background-color: #c4d3f2;
-
     border-radius: 15px;
     padding: 16px 24px;
+    max-width: 45%;
 `;
 
 export const ModalText = styled.p`
