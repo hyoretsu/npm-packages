@@ -4,6 +4,8 @@ export interface CustomButtonProps
 	extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 	background?: string;
 	border?: string;
+	borderRadius?: number;
+	borderWidth?: number;
 	children: ReactNode;
 	color?: string;
 	fontSize?: number;
@@ -15,6 +17,8 @@ export interface CustomButtonProps
 export const Button: React.FC<CustomButtonProps> = ({
 	background = "#3d6",
 	border,
+	borderRadius = 10,
+	borderWidth = border ? 4 : 0,
 	children,
 	color = "#fff",
 	fontSize = 16,
@@ -24,8 +28,6 @@ export const Button: React.FC<CustomButtonProps> = ({
 	style,
 	...rest
 }) => {
-	const borderWidth = border ? 4 : 0;
-
 	return (
 		<button
 			type="button"
@@ -33,7 +35,7 @@ export const Button: React.FC<CustomButtonProps> = ({
 				backgroundColor: background,
 				borderColor: border,
 				borderWidth,
-				borderRadius: 10,
+				borderRadius,
 				paddingBottom: (paddingVertical || padding[0]) - borderWidth,
 				paddingLeft: (paddingHorizontal || padding[1]) - borderWidth,
 				paddingRight: (paddingHorizontal || padding[1]) - borderWidth,

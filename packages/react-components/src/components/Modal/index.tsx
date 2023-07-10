@@ -7,6 +7,10 @@ import { Styling, ModalText } from "./styles";
 
 export interface ModalProps {
 	backgroundColor?: string;
+	buttonBackground?: string;
+	buttonBorderColor?: string;
+	buttonBorderRadius?: number;
+	buttonBorderWidth?: number;
 	buttonText?: string;
 	children: ReactNode;
 	onConfirm: () => void;
@@ -16,6 +20,10 @@ export interface ModalProps {
 
 export const Modal: React.FC<ModalProps> = ({
 	backgroundColor = "#c4d3f2",
+	buttonBackground,
+	buttonBorderColor,
+	buttonBorderRadius,
+	buttonBorderWidth,
 	buttonText = "Ok",
 	children,
 	onConfirm,
@@ -27,7 +35,15 @@ export const Modal: React.FC<ModalProps> = ({
 			<Styling style={{ backgroundColor }}>
 				<ModalText style={{ color: textColor }}>{children}</ModalText>
 
-				<Button onClick={onConfirm}>{buttonText}</Button>
+				<Button
+					background={buttonBackground}
+					border={buttonBorderColor}
+					borderRadius={buttonBorderRadius}
+					borderWidth={buttonBorderWidth}
+					onClick={onConfirm}
+				>
+					{buttonText}
+				</Button>
 			</Styling>
 		</OpacityFilter>
 	);
