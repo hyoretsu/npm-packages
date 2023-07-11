@@ -11,7 +11,7 @@ export * from "./funcs/random";
 export * from "./funcs/randomId";
 export * from "./funcs/range";
 export * from "./funcs/round";
+export * from "./funcs/sleep";
 export * from "./funcs/swap";
 export * from "./funcs/titleCase";
-export * from "./funcs/wait";
 export * from "./funcs/zeroOrOne";
