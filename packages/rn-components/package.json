@@ -1,14 +1,14 @@
 {
-	"name": "@hyoretsu/react-components",
-	"description": "A collection of useful components that I use in my projects.",
-	"version": "1.1.3",
+	"name": "@hyoretsu/rn-components",
+	"description": "A collection of useful React Native components that I use in my projects.",
+	"version": "1.0.0",
 	"keywords": [
 		"components",
-		"react"
+		"react-native"
 	],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/react-components",
+	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/rn-components",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",
 		"email": "hyoretsu@gmail.com"
@@ -28,8 +28,8 @@
 		"prepublish": "pnpm build && tsc --emitDeclarationOnly"
 	},
 	"dependencies": {
-		"next": "^13.2.4",
 		"react": "^18.2.0",
+		"react-native": "^0.72.2",
 		"styled-components": "^5.3.9"
 	},
 	"devDependencies": {
