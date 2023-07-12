@@ -6,7 +6,7 @@
 	],
 	"scripts": {
 		"dev": "node -r @swc-node/register",
-		"prepare": "husky install && chmod ug+x ./husky/*"
+		"prepare": "husky install && chmod ug+x .husky/*"
 	},
 	"lint-staged": {
 		"**/*.(ts|tsx)": [
