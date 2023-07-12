@@ -1,10 +1,11 @@
 {
 	"name": "@hyoretsu/react-components",
 	"description": "A collection of useful components that I use in my projects.",
-	"version": "1.0.9",
+	"version": "1.1.0",
 	"keywords": [
 		"components",
-		"react"
+		"react",
+		"react-native"
 	],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
