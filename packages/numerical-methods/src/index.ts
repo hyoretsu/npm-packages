@@ -4,13 +4,21 @@ import * as integration from "./integration";
 import * as interpolation from "./interpolation";
 import * as linearSystems from "./linearSystems";
 
-export const organizedMethods = {
+export const categorizedMethods = {
 	custom,
 	functionZeros,
 	integration,
 	interpolation,
 	linearSystems,
 };
+
+export const allMethods = Object.values(categorizedMethods).reduce(
+	(obj, methods) => ({
+		...obj,
+		...methods,
+	}),
+	{},
+);
 
 export * from "./custom";
 export * from "./functionZeros";
