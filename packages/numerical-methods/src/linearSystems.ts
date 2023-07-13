@@ -3,7 +3,7 @@ import { evaluate } from "mathjs";
 
 export type Matrix = number[][];
 
-interface LUMatrices {
+export interface LUMatrices {
 	l: Matrix;
 	u: Matrix;
 }

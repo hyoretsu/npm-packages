@@ -3,18 +3,20 @@ import { evaluate } from "mathjs";
 
 import { gaussSeidel } from "./linearSystems";
 
-interface Data {
-	x: number[];
-	y: number[];
-	targetX?: number;
+export namespace Interpolation {
+	export interface Data {
+		x: number[];
+		y: number[];
+		targetX?: number;
+	}
+
+	export interface Results {
+		polynomial: string;
+		result?: number;
+	}
 }
 
-interface Results {
-	polynomial: string;
-	result?: number;
-}
-
-export type InterpolationMethod = (data: Data) => Results;
+export type InterpolationMethod = (data: Interpolation.Data) => Interpolation.Results;
 
 export const lagrangeInterpolation: InterpolationMethod = ({ x, y, targetX }) => {
 	const polynomial = y
@@ -64,7 +66,7 @@ export const vandermondeInterpolation: InterpolationMethod = ({ x, y, targetX })
 	};
 };
 
-type NewtonInterpolation = (data: Data) => Results & {
+type NewtonInterpolation = (data: Interpolation.Data) => Interpolation.Results & {
 	dividedDifferences: number[][];
 };
 
