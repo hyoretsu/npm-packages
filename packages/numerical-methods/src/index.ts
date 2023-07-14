@@ -48,6 +48,8 @@ export const allMethods = {
 	...categorizedMethods.linearSystems,
 };
 
+export type AllMethods = keyof typeof allMethods;
+
 export * from "./custom";
 export * from "./functionZeros";
 export * from "./integration";
