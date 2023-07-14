@@ -1,24 +1,52 @@
-import * as custom from "./custom";
-import * as functionZeros from "./functionZeros";
-import * as integration from "./integration";
-import * as interpolation from "./interpolation";
-import * as linearSystems from "./linearSystems";
+import { minMaxBisection } from "./custom";
+import { bisection, falsePosition, newtonRaphson, secant } from "./functionZeros";
+import { simpsonRule13, trapezoidalRule } from "./integration";
+import { lagrangeInterpolation, newtonInterpolation, vandermondeInterpolation } from "./interpolation";
+import {
+	doolittleLuDecomposition,
+	gaussJacobi,
+	gaussSeidel,
+	gaussianElimination,
+	luComposition,
+	spectralRadius,
+} from "./linearSystems";
 
 export const categorizedMethods = {
-	custom,
-	functionZeros,
-	integration,
-	interpolation,
-	linearSystems,
+	custom: {
+		minMaxBisection,
+	},
+	functionZeros: {
+		bisection,
+		falsePosition,
+		newtonRaphson,
+		secant,
+	},
+	integration: {
+		simpsonRule13,
+		trapezoidalRule,
+	},
+	interpolation: {
+		lagrangeInterpolation,
+		newtonInterpolation,
+		vandermondeInterpolation,
+	},
+	linearSystems: {
+		doolittleLuDecomposition,
+		gaussJacobi,
+		gaussSeidel,
+		gaussianElimination,
+		luComposition,
+		spectralRadius,
+	},
 };
 
-export const allMethods = Object.values(categorizedMethods).reduce(
-	(obj, methods) => ({
-		...obj,
-		...methods,
-	}),
-	{},
-);
+export const allMethods = {
+	...categorizedMethods.custom,
+	...categorizedMethods.functionZeros,
+	...categorizedMethods.integration,
+	...categorizedMethods.interpolation,
+	...categorizedMethods.linearSystems,
+};
 
 export * from "./custom";
 export * from "./functionZeros";
