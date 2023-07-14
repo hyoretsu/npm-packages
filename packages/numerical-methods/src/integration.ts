@@ -35,6 +35,9 @@ export const trapezoidalRule: IntegrationMethod = ({ func, pointN, x }) => {
 		interval: [x[0], x[1]],
 		target: "max",
 		precision: 1e-12,
+		options: {
+			maxIterations: 1000,
+		},
 	});
 
 	const error =
@@ -73,6 +76,9 @@ export const simpsonRule13: IntegrationMethod = ({ func, pointN, x }) => {
 		interval: x,
 		target: "max",
 		precision: 1e-12,
+		options: {
+			maxIterations: 1000,
+		},
 	});
 
 	const error =
