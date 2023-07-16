@@ -1,10 +1,12 @@
 {
 	"name": "@hyoretsu/utils",
 	"description": "A collection of utility functions that I use in my projects.",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"keywords": [],
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"main": "dist/index.cjs",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"type": "module",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",
 		"email": "hyoretsu@gmail.com"
@@ -20,12 +22,9 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"build": "node esbuild.js",
-		"prepublish": "pnpm build && tsc --emitDeclarationOnly"
+		"prepublish": "tsup"
 	},
-	"dependencies": {},
 	"devDependencies": {
 		"@types/node": "^18.15.11"
-	},
-	"peerDependencies": {}
+	}
 }

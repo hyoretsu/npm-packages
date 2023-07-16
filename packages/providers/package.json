@@ -1,15 +1,17 @@
 {
 	"name": "@hyoretsu/providers",
 	"description": "A collection of useful providers for Node.js",
-	"version": "1.0.11",
+	"version": "1.0.12",
 	"keywords": [
 		"backend",
 		"nodejs",
 		"providers",
 		"utils"
 	],
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"main": "dist/index.cjs",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"type": "module",
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/providers",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",
@@ -26,8 +28,7 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"build": "node esbuild.js",
-		"prepublish": "pnpm build && tsc --emitDeclarationOnly"
+		"prepublish": "tsup"
 	},
 	"dependencies": {
 		"bcrypt": "^5.1.0",
@@ -36,6 +37,5 @@
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.0",
 		"@types/nodemailer": "^6.4.8"
-	},
-	"peerDependencies": {}
+	}
 }

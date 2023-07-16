@@ -1,15 +1,17 @@
 {
 	"name": "numerical-methods",
 	"description": "A library that I made while studying Computer Science at UFPB. Documentation's available through TypeScript.",
-	"version": "0.11.11",
+	"version": "0.11.12",
 	"keywords": [
 		"academic",
 		"calculus",
 		"numerical analysis",
 		"numerical methods"
 	],
-	"main": "dist/index.js",
+	"main": "dist/index.cjs",
+	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
+	"type": "module",
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/numerical-methods",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",
@@ -26,13 +28,10 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"build": "node esbuild.js",
-		"prepublish": "pnpm build && tsc --emitDeclarationOnly"
+		"prepublish": "tsup"
 	},
 	"dependencies": {
-		"@hyoretsu/utils": "^1.3.0",
+		"@hyoretsu/utils": "^1.5.0",
 		"mathjs": "^11.2.1"
-	},
-	"devDependencies": {},
-	"peerDependencies": {}
+	}
 }

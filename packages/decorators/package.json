@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/decorators",
 	"description": "A collection of useful decorators (mainly Nest.js)",
-	"version": "1.1.7",
+	"version": "1.1.8",
 	"keywords": [
 		"backend",
 		"class-validator",
@@ -10,8 +10,10 @@
 		"fastify",
 		"nestjs"
 	],
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"main": "dist/index.cjs",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"type": "module",
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/decorators",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",
@@ -28,8 +30,7 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"build": "node esbuild.js",
-		"prepublish": "pnpm build && tsc --emitDeclarationOnly"
+		"prepublish": "tsup"
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.327.0",

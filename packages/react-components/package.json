@@ -1,13 +1,15 @@
 {
 	"name": "@hyoretsu/react-components",
 	"description": "A collection of useful components that I use in my projects.",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"keywords": [
 		"components",
 		"react"
 	],
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"main": "dist/index.cjs",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"type": "module",
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/react-components",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",
@@ -24,8 +26,7 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"build": "node esbuild.js",
-		"prepublish": "pnpm build && tsc --emitDeclarationOnly"
+		"prepublish": "tsup"
 	},
 	"dependencies": {
 		"next": "^13.2.4",
@@ -35,6 +36,5 @@
 	"devDependencies": {
 		"@types/react": "^18.0.33",
 		"@types/styled-components": "^5.1.26"
-	},
-	"peerDependencies": {}
+	}
 }
