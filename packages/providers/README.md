@@ -1,4 +1,4 @@
-## A collection of useful providers for Nest.js
+## A collection of useful backend providers
 
 If you're using `tsyringe`, be sure to use `container.registerInstance()` instead of `container.registerSingleton()` and to instantiate the classes using `new Class()` for providers that have constructors.
 
