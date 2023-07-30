@@ -5,7 +5,7 @@ import {
 	PressableProps as DefaultPressableProps,
 } from "react-native";
 
-interface PressableProps extends DefaultPressableProps {
+export interface PressableProps extends DefaultPressableProps {
 	touchFeedback?: boolean;
 }
 
