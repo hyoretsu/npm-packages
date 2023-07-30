@@ -1,6 +1,8 @@
 export interface SendMailDTO {
-	from?: string;
-	to: string;
-	subject: string;
 	body: string;
+	files?: Express.Multer.File[];
+	from?: string;
+	replyTo?: string[];
+	subject: string;
+	to: string;
 }
