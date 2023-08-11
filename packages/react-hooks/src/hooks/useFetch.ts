@@ -4,7 +4,7 @@ import useSWR from "swr";
 // rome-ignore lint/suspicious/noEmptyInterface: <explanation>
 export interface APIMapping {}
 
-export function useFetch<Route extends keyof APIMapping, Error = any>(
+export function useFetch<Route extends keyof APIMapping & string, Error = any>(
 	urlDeps: Route | [Route, any | any[]],
 	api: AxiosInstance,
 	body?: Record<string, any>,
