@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosResponse } from "axios";
 import useSWR from "swr";
 
-// rome-ignore lint/suspicious/noEmptyInterface: <explanation>
+// rome-ignore lint/suspicious/noEmptyInterface:
 export interface APIMapping {}
 
 interface FetchOpts {
