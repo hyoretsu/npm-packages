@@ -4,13 +4,15 @@ import useSWR from "swr";
 // rome-ignore lint/suspicious/noEmptyInterface: <explanation>
 export interface APIMapping {}
 
+interface FetchOpts {
+	body?: Record<string, any>;
+	query?: Record<string, any>;
+}
+
 export function useFetch<Route extends keyof APIMapping, Error = any>(
 	urlDeps: Route | [Route, any | any[]],
 	api: AxiosInstance,
-	{ body, query }: Record<"body" | "query", Record<string, any> | undefined> = {
-		body: undefined,
-		query: undefined,
-	},
+	{ body, query }: FetchOpts = {},
 ) {
 	const reqInfo = useSWR<APIMapping[Route], Error>(urlDeps, async (path: string) => {
 		let res: AxiosResponse<APIMapping[Route]>;
@@ -21,8 +23,9 @@ export function useFetch<Route extends keyof APIMapping, Error = any>(
 
 		if (query) {
 			path = `${path}?${Object.entries(query).reduce(
-				// rome-ignore lint/style/useTemplate:
-				([key, value], str, index, arr) => str + key + "=" + value + (index !== arr.length - 1 ? "¨&" : ""),
+				([key, value], str, index, arr) =>
+					// rome-ignore lint/style/useTemplate:
+					str + key + "=" + JSON.stringify(value) + (index !== arr.length - 1 ? "¨&" : ""),
 				"",
 			)}`;
 		}
