@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
+"use client";
 import styled from "styled-components";
 
 import { OpacityFilterProps } from ".";
