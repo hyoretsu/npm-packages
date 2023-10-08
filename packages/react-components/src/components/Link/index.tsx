@@ -1,12 +1,8 @@
-import React, { ReactNode } from "react";
-import NextLink, { LinkProps as NextLinkProps } from "next/link";
+import React, { PropsWithChildren } from "react";
+import NextLink, { LinkProps } from "next/link";
+import { UrlObject } from "url";
 
-export interface LinkProps extends NextLinkProps {
-	children: ReactNode;
-	href: string;
-}
-
-export const Link: React.FC<LinkProps> = ({
+export const Link: React.FC<PropsWithChildren & LinkProps> = ({
 	as,
 	children,
 	href,
@@ -16,6 +12,19 @@ export const Link: React.FC<LinkProps> = ({
 	shallow,
 	...props
 }) => {
+	let hrefObj: UrlObject = {};
+
+	if (typeof href !== "string") {
+		hrefObj = { ...hrefObj, ...href };
+
+		href = href.pathname as string;
+		if (hrefObj.query) {
+			Object.entries(hrefObj.query).forEach(([query, value], index) => {
+				href += `${index === 0 ? "?" : "&"}${query}="${value}"`;
+			});
+		}
+	}
+
 	if (href.includes("http") || href.includes("https") || href.includes("png")) {
 		return (
 			<a href={href} target="_blank" rel="noopener noreferrer" {...props}>
