@@ -3,8 +3,6 @@ import React, { ReactNode } from "react";
 import { Button } from "../Button";
 import { OpacityFilter } from "../OpacityFilter";
 
-import { Styling, ModalText } from "./styles";
-
 export interface ModalProps {
 	backgroundColor?: string;
 	buttonBackground?: string;
@@ -34,8 +32,27 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
 	return (
 		<OpacityFilter opacity={opacity}>
-			<Styling style={{ backgroundColor }}>
-				<ModalText style={{ color: textColor }}>{children}</ModalText>
+			<div
+				style={{
+					alignItems: "center",
+					backgroundColor,
+					borderRadius: 15,
+					display: "flex",
+					flexDirection: "column",
+					maxWidth: "45%",
+					padding: "16px 24px",
+				}}
+			>
+				<p
+					style={{
+						color: textColor,
+						fontSize: "1rem",
+						marginBottom: 10,
+						textAlign: "center",
+					}}
+				>
+					{children}
+				</p>
 
 				<Button
 					background={buttonBackground}
@@ -47,7 +64,7 @@ export const Modal: React.FC<ModalProps> = ({
 				>
 					{buttonText}
 				</Button>
-			</Styling>
+			</div>
 		</OpacityFilter>
 	);
 };
