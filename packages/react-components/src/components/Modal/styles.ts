@@ -1,5 +1,5 @@
 "use client";
-import styled from "styled-components";
+import { styled } from "@linaria/react";
 
 export const Styling = styled.div`
     display: flex;
