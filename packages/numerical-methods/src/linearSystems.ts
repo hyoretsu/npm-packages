@@ -8,12 +8,19 @@ export interface LUMatrices {
 	u: Matrix;
 }
 
+const matrixParam = "number[][]";
+
+export const luCompositionParams = {
+	l: matrixParam,
+	u: matrixParam,
+};
+
 export const luComposition = ({ l, u }: LUMatrices): Matrix => {
 	if (l.length !== l[0].length || u.length !== u[0].length) {
 		throw new Error("Both matrices must be square");
 	}
 
-	const matrix = [...l.map((line) => line.map(() => 0))];
+	const matrix = [...l.map(line => line.map(() => 0))];
 
 	u[0].forEach((number, i) => {
 		matrix[0][i] = number;
@@ -60,6 +67,10 @@ export const luComposition = ({ l, u }: LUMatrices): Matrix => {
 	return matrix;
 };
 
+export const doolittleLuDecompositionParams = {
+	matrix: matrixParam,
+};
+
 // Bug com matriz 4x4
 export const doolittleLuDecomposition = (matrix: Matrix): LUMatrices => {
 	if (matrix.length !== matrix[0].length) {
@@ -67,7 +78,7 @@ export const doolittleLuDecomposition = (matrix: Matrix): LUMatrices => {
 	}
 
 	const l: Matrix = [...matrix.map((line, i) => line.map((_, j) => (i === j ? 1 : 0)))];
-	const u: Matrix = [...matrix.map((line) => line.map(() => 0))];
+	const u: Matrix = [...matrix.map(line => line.map(() => 0))];
 
 	matrix.forEach((line, i) => {
 		line.forEach((number, j) => {
@@ -80,7 +91,7 @@ export const doolittleLuDecomposition = (matrix: Matrix): LUMatrices => {
 				l[i][j] =
 					(number -
 						range(j)
-							.map((index) => l[i][index] * u[index][j])
+							.map(index => l[i][index] * u[index][j])
 							.reduce((n, sum) => sum + n, 0)) /
 					u[j][j];
 				return;
@@ -94,7 +105,7 @@ export const doolittleLuDecomposition = (matrix: Matrix): LUMatrices => {
 			u[i][j] =
 				number -
 				range(i)
-					.map((index) => l[i][index] * u[index][j])
+					.map(index => l[i][index] * u[index][j])
 					.reduce((n, sum) => sum + n, 0);
 		});
 	});
@@ -109,6 +120,13 @@ export interface LinearSystem {
 	coefficients: Matrix;
 	independentTerms: number[];
 }
+
+const linearSystemParams = {
+	coefficients: matrixParam,
+	independentTerms: "number[]",
+};
+
+export const gaussianEliminationParams = linearSystemParams;
 
 export const gaussianElimination = ({ coefficients, independentTerms }: LinearSystem) => {
 	const coefficientsL = [...coefficients];
@@ -134,7 +152,7 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 		swap(independentTermsL, j, highestLine);
 		steps.push(
 			coefficientsL.map((line, i) => [
-				...line.map((number) => number.toFixed(2)),
+				...line.map(number => number.toFixed(2)),
 				independentTermsL[i].toFixed(2),
 			]),
 		);
@@ -156,6 +174,9 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 		}
 	}
 
+	console.log(steps);
+	console.log(coefficients);
+
 	// Solve the system
 	for (let i = coefficients.length - 1; i >= 0; i--) {
 		let equation = "";
@@ -173,8 +194,10 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 				`($1-${coefficientsL[i][j]}${String.fromCharCode("a".charCodeAt(0) + j)} + )`,
 			);
 		}
+		console.log(equation);
 		equation = equation.replace(/\((.*)\)/, `($1${independentTermsL[i]})`);
 		transformedFuncs.push(equation);
+		console.log(equation);
 
 		evaluate(equation, results);
 	}
@@ -184,6 +207,18 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 		results,
 		steps,
 	};
+};
+
+export const spectralRadiusParams = {
+	coefficients: matrixParam,
+};
+
+export const spectralRadius = (coefficients: Matrix): number => {
+	return Math.max(
+		...coefficients.map(
+			(number, i) => number.reduce((prev, curr) => prev + Math.abs(curr), 0) / Math.abs(number[i]),
+		),
+	);
 };
 
 export type GaussMethod = (
@@ -210,12 +245,12 @@ export type GaussMethod = (
 	}>,
 ];
 
-export const spectralRadius = (coefficients: Matrix): number => {
-	return Math.max(
-		...coefficients.map(
-			(number, i) => number.reduce((prev, curr) => prev + Math.abs(curr), 0) / Math.abs(number[i]),
-		),
-	);
+export const gaussMethodParams = {
+	...linearSystemParams,
+	precision: "number",
+	options: {
+		maxIterations: "number",
+	},
 };
 
 export const gaussJacobi: GaussMethod = ({
@@ -234,7 +269,7 @@ export const gaussJacobi: GaussMethod = ({
 	// Creating iteration functions
 	const iterationFunc = independentTermsL.map((number, i) => {
 		return [
-			...range(dimension - 1).map((j) => {
+			...range(dimension - 1).map(j => {
 				const correctJ = j >= i ? j + 1 : j;
 
 				return `${
@@ -269,8 +304,8 @@ export const gaussJacobi: GaussMethod = ({
 
 		details.push({
 			iteration: iterations,
-			currentGuess: prevGuess.map((number) => fixNumber(number)),
-			nextGuess: guess.map((number) => fixNumber(number)),
+			currentGuess: prevGuess.map(number => fixNumber(number)),
+			nextGuess: guess.map(number => fixNumber(number)),
 			absoluteError: fixNumber(absoluteError),
 			relativeError: fixNumber(relativeError),
 		});
@@ -305,7 +340,7 @@ export const gaussSeidel: GaussMethod = ({
 	// Creating iteration functions
 	const iterationFunc = independentTermsL.map((number, i) => {
 		return [
-			...range(dimension - 1).map((j) => {
+			...range(dimension - 1).map(j => {
 				const correctJ = j >= i ? j + 1 : j;
 
 				return `${
@@ -315,7 +350,7 @@ export const gaussSeidel: GaussMethod = ({
 			String(number / coefficientsL[i][i]),
 		].join("");
 	});
-	const guess = independentTermsL.map((_) => 0);
+	const guess = independentTermsL.map(_ => 0);
 
 	while (true) {
 		const prevGuess = [...guess];
@@ -341,8 +376,8 @@ export const gaussSeidel: GaussMethod = ({
 
 		details.push({
 			iteration: iterations,
-			currentGuess: prevGuess.map((number) => fixNumber(number)),
-			nextGuess: guess.map((number) => fixNumber(number)),
+			currentGuess: prevGuess.map(number => fixNumber(number)),
+			nextGuess: guess.map(number => fixNumber(number)),
 			absoluteError: fixNumber(absoluteError),
 			relativeError: fixNumber(relativeError),
 		});

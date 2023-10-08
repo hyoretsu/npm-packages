@@ -5,7 +5,7 @@ import { FunctionZeros } from "./functionZeros";
 
 type MinMaxBisection = (info: {
 	func: string;
-	interval: number[];
+	interval: [number, number];
 	target: "min" | "max";
 	precision: number;
 	options?: Omit<FunctionZeros.Options, "bail">;
@@ -21,6 +21,21 @@ type MinMaxBisection = (info: {
 		}
 	>,
 ];
+
+const minMaxBisectionOptionsParams = {
+	conditionsWhitelist: "[boolean,boolean]",
+	maxIterations: "number",
+	origFunc: "string",
+	relativeError: "number",
+};
+
+export const minMaxBisectionParams = {
+	func: "string",
+	interval: "[number,number]",
+	target: '"min"|"max"',
+	precision: "number",
+	options: minMaxBisectionOptionsParams,
+};
 
 export const minMaxBisection: MinMaxBisection = ({
 	func,
@@ -93,7 +108,7 @@ export const minMaxBisection: MinMaxBisection = ({
 		details.push({
 			iteration: iterations,
 			interval: [fixNumber(a), fixNumber(b)],
-			results: results.map((number) => fixNumber(number)),
+			results: results.map(number => fixNumber(number)),
 			x: fixNumber(midPoint),
 			...(origFunc && { y: evaluate(origFunc, { x: midPoint }) }),
 			...(relativeError && { relativeError: fixNumber(relativeError as number) }),

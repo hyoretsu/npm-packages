@@ -8,12 +8,18 @@ export type IntegrationMethod = (info: { func: string; pointN: number; x: [numbe
 	error: number;
 };
 
+export const integrationParams = {
+	func: "string",
+	pointN: "number",
+	x: "[number,number]",
+};
+
 export const trapezoidalRule: IntegrationMethod = ({ func, pointN, x }) => {
 	const intervals = pointN - 1;
 
 	const amplitude = (x[1] - x[0]) / intervals;
 	const points = [...range(x[0], x[1], amplitude), x[1]];
-	const y = points.map((number) => evaluate(func, { x: number }));
+	const y = points.map(number => evaluate(func, { x: number }));
 
 	let result = y.reduce((sum, value, i) => {
 		if (i === 0 || i === y.length - 1) {
@@ -51,7 +57,7 @@ export const simpsonRule13: IntegrationMethod = ({ func, pointN, x }) => {
 
 	const amplitude = (x[1] - x[0]) / intervals;
 	const points = [...range(x[0], x[1], amplitude), x[1]];
-	const y = points.map((number) => evaluate(func, { x: number }));
+	const y = points.map(number => evaluate(func, { x: number }));
 
 	let result = y.reduce((sum, value, i) => {
 		if (i === 0 || i === y.length - 1) {

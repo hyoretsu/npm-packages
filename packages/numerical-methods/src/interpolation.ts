@@ -16,6 +16,12 @@ export namespace Interpolation {
 	}
 }
 
+export const interpolationParams = {
+	x: "number[]",
+	y: "number[]",
+	targetX: "number|undefined",
+};
+
 export type InterpolationMethod = (data: Interpolation.Data) => Interpolation.Results;
 
 export const lagrangeInterpolation: InterpolationMethod = ({ x, y, targetX }) => {
@@ -47,7 +53,7 @@ export const vandermondeInterpolation: InterpolationMethod = ({ x, y, targetX })
 	const dimension = x.length;
 
 	const [{ solution: vandermondeResults }] = gaussSeidel({
-		coefficients: x.map((coefficient, i) => range(dimension).map((j) => coefficient ** j)),
+		coefficients: x.map((coefficient, i) => range(dimension).map(j => coefficient ** j)),
 		independentTerms: y,
 		precision: 1e-9,
 	});

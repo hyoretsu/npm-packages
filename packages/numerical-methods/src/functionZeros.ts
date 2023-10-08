@@ -15,7 +15,7 @@ export namespace FunctionZeros {
 		/** Stop iterating as soon as any of the conditions are true. */
 		bail?: boolean;
 		/** Which conditions you want to consider when iterating. */
-		conditionsWhitelist?: boolean[];
+		conditionsWhitelist?: [boolean, boolean];
 		/** Maximum number of iterations. */
 		maxIterations?: number;
 		/** For instances where you're iterating over a different function, but still want the results from the original one e.g. iterating over a differentiated function to find a maximum value from the original. */
@@ -25,23 +25,36 @@ export namespace FunctionZeros {
 	}
 }
 
+const functionZerosOptionsParams = {
+	bail: "boolean",
+	conditionsWhitelist: "[boolean,boolean]",
+	maxIterations: "number",
+	origFunc: "string",
+	relativeError: "number",
+};
+
+export const zerosFunctionParams = {
+	func: "string",
+	interval: "[number,number]",
+	precision: "number",
+	options: functionZerosOptionsParams,
+};
+
 export type SimpleZerosFunction = (info: {
 	func: string;
-	interval: number[];
+	interval: [number, number];
 	precision: number;
 	options?: FunctionZeros.Options;
-}) => [
-	results: {
-		iterations: number;
-		interval: [string, string];
-	},
+}) => {
+	iterations: number;
+	interval: [string, string];
 	details: Array<
 		FunctionZeros.Details & {
 			interval: number[];
 			results: number[];
 		}
-	>,
-];
+	>;
+};
 
 export const bisection: SimpleZerosFunction = ({
 	func,
@@ -68,36 +81,28 @@ export const bisection: SimpleZerosFunction = ({
 
 		iterations += 1;
 		const condition1 = Math.abs(b - a);
-		const condition2 = Math.abs(evaluate(func, { x: midPoint }));
+		const condition2 = Math.abs(midResult);
 
-		switch (Math.sign(midResult)) {
-			case Math.sign(results[0]):
-				if (relativeError) {
-					if (!trueX) trueX = a;
+		if (Math.sign(midResult) === Math.sign(results[0])) {
+			if (relativeError && !trueX) trueX = a;
 
-					relativeError = Math.abs(midPoint - trueX) / Math.abs(midPoint);
-				}
+			a = midPoint;
+		} else {
+			if (relativeError && !trueX) trueX = b;
 
-				a = midPoint;
-				break;
-			case Math.sign(results[1]):
-				if (relativeError) {
-					if (!trueX) trueX = b;
-
-					relativeError = Math.abs(midPoint - trueX) / Math.abs(midPoint);
-				}
-
-				b = midPoint;
-				break;
+			b = midPoint;
 		}
 
 		details.push({
 			iteration: iterations,
-			interval: interval.map((number) => fixNumber(number)),
-			results: results.map((number) => fixNumber(number)),
+			interval: interval.map(number => fixNumber(number)),
+			results: results.map(number => fixNumber(number)),
 			x: fixNumber(midPoint),
 			...(origFunc && { y: evaluate(origFunc, { x: midPoint }) }),
-			...(relativeError && { relativeError: fixNumber(relativeError as number) }),
+			...(relativeError &&
+				trueX !== 0 && {
+					relativeError: fixNumber(Math.abs(midPoint - (trueX as number)) / Math.abs(midPoint)),
+				}),
 			condition1: fixNumber(condition1),
 			condition2: fixNumber(condition2),
 		});
@@ -119,13 +124,11 @@ export const bisection: SimpleZerosFunction = ({
 		throw new Error(`Something went wrong, less iterations than the minimum (${minIterations}) were done.`);
 	}
 
-	return [
-		{
-			iterations,
-			interval: [a.toPrecision(21), b.toPrecision(21)],
-		},
+	return {
+		iterations,
+		interval: [a.toPrecision(21), b.toPrecision(21)],
 		details,
-	];
+	};
 };
 
 export const falsePosition: SimpleZerosFunction = ({
@@ -178,8 +181,8 @@ export const falsePosition: SimpleZerosFunction = ({
 
 		details.push({
 			iteration: iterations,
-			interval: interval.map((number) => fixNumber(number)),
-			results: results.map((number) => fixNumber(number)),
+			interval: interval.map(number => fixNumber(number)),
+			results: results.map(number => fixNumber(number)),
 			x: fixNumber(newPoint),
 			...(origFunc && { y: evaluate(origFunc, { x: newPoint }) }),
 			...(relativeError && { relativeError: fixNumber(relativeError as number) }),
@@ -199,13 +202,18 @@ export const falsePosition: SimpleZerosFunction = ({
 			break;
 	}
 
-	return [
-		{
-			iterations,
-			interval: [a.toPrecision(21), b.toPrecision(21)],
-		},
+	return {
+		iterations,
+		interval: [a.toPrecision(21), b.toPrecision(21)],
 		details,
-	];
+	};
+};
+
+export const newtonRaphsonParams = {
+	func: "string",
+	initialX: "number",
+	precision: "number",
+	options: functionZerosOptionsParams,
 };
 
 export type NewtonRaphson = (params: {
@@ -295,7 +303,7 @@ export const newtonRaphson: NewtonRaphson = ({
 
 export type Secant = (params: {
 	func: string;
-	interval: number[];
+	interval: [number, number];
 	precision: number;
 	options?: FunctionZeros.Options;
 }) => [
@@ -345,7 +353,7 @@ export const secant: Secant = ({
 		details.push({
 			iteration: iterations,
 			interval: [fixNumber(a), fixNumber(b)],
-			results: results.map((number) => fixNumber(number)),
+			results: results.map(number => fixNumber(number)),
 			x: fixNumber(c),
 			...(origFunc && { y: evaluate(origFunc, { x: c }) }),
 			...(typeof relativeError === "number" && { relativeError: fixNumber(relativeError) }),
