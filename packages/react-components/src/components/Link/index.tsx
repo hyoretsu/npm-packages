@@ -12,9 +12,15 @@ export const Link: React.FC<PropsWithChildren & LinkProps> = ({
 	shallow,
 	...props
 }) => {
+	if (!href) {
+		// biome-ignore lint/a11y/useAnchorContent:
+		// biome-ignore lint/a11y/useValidAnchor:
+		return <a href="" />;
+	}
+
 	let hrefObj: UrlObject = {};
 
-	if (href && typeof href !== "string") {
+	if (typeof href !== "string") {
 		hrefObj = { ...hrefObj, ...href };
 
 		href = href.pathname as string;
@@ -25,7 +31,7 @@ export const Link: React.FC<PropsWithChildren & LinkProps> = ({
 		}
 	}
 
-	if (href?.includes("http") || href?.includes("https") || href?.includes("png")) {
+	if (href.includes("http") || href.includes("https") || href.includes("png")) {
 		return (
 			<a href={href} target="_blank" rel="noopener noreferrer" {...props}>
 				{children}
@@ -33,7 +39,7 @@ export const Link: React.FC<PropsWithChildren & LinkProps> = ({
 		);
 	}
 
-	if (href?.includes("mailto:")) {
+	if (href.includes("mailto:")) {
 		return <a href={href}>{children}</a>;
 	}
 
