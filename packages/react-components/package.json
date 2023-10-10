@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/react-components",
 	"description": "A collection of useful components that I use in my projects.",
-	"version": "1.2.7",
+	"version": "1.2.8",
 	"keywords": ["components", "react"],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",

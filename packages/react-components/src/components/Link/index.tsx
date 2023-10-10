@@ -14,7 +14,7 @@ export const Link: React.FC<PropsWithChildren & LinkProps> = ({
 }) => {
 	let hrefObj: UrlObject = {};
 
-	if (typeof href !== "string") {
+	if (href && typeof href !== "string") {
 		hrefObj = { ...hrefObj, ...href };
 
 		href = href.pathname as string;
