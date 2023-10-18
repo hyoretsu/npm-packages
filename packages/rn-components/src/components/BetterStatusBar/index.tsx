@@ -1,12 +1,12 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { StatusBar, StatusBarProps, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 
 export interface BetterStatusBarProps extends StatusBarProps {
 	backgroundColor?: string;
 }
 
-export const BetterStatusBar: React.FC<BetterStatusBarProps> = ({ backgroundColor, ...props }) => {
+const BetterStatusBarRaw: React.FC<BetterStatusBarProps> = ({ backgroundColor, ...props }) => {
 	const { top: height } = useSafeAreaInsets();
 
 	return (
@@ -15,3 +15,9 @@ export const BetterStatusBar: React.FC<BetterStatusBarProps> = ({ backgroundColo
 		</View>
 	);
 };
+
+export const BetterStatusBar: React.FC<BetterStatusBarProps> = props => (
+	<SafeAreaProvider>
+		<BetterStatusBarRaw {...props} />
+	</SafeAreaProvider>
+);
