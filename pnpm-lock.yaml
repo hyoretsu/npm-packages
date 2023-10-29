@@ -89,10 +89,10 @@ importers:
   packages/react-components:
     dependencies:
       '@hyoretsu/react-hooks':
-        specifier: workspace:^
+        specifier: '>=1.2.0'
         version: link:../react-hooks
       '@hyoretsu/utils':
-        specifier: workspace:^
+        specifier: '>=1.2.0'
         version: link:../utils
       next:
         specifier: ^13.2.4
