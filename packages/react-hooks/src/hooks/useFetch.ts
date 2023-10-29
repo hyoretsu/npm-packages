@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosResponse } from "axios";
 import useSWR from "swr";
 
-// rome-ignore lint/suspicious/noEmptyInterface:
+// biome-ignore lint/suspicious/noEmptyInterface:
 export interface APIMapping {}
 
 interface FetchOpts {
@@ -9,7 +9,7 @@ interface FetchOpts {
 	query?: Record<string, any>;
 }
 
-export default function useFetch<Route extends keyof APIMapping, Error = any>(
+export function useFetch<Route extends keyof APIMapping, Error = any>(
 	urlDeps: Route | [Route, any | any[]],
 	api: AxiosInstance,
 	{ body, query }: FetchOpts = {},
@@ -24,7 +24,7 @@ export default function useFetch<Route extends keyof APIMapping, Error = any>(
 		if (query) {
 			path = `${path}?${Object.entries(query).reduce(
 				([key, value], str, index, arr) =>
-					// rome-ignore lint/style/useTemplate:
+					// biome-ignore lint/style/useTemplate:
 					str + key + "=" + JSON.stringify(value) + (index !== arr.length - 1 ? "¨&" : ""),
 				"",
 			)}`;
