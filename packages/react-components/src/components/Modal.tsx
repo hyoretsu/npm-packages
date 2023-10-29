@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
-
-import { Button } from "../Button";
-import { OpacityFilter } from "../OpacityFilter";
+import { Button } from "./Button";
+import { OpacityFilter } from "./OpacityFilter";
 
 export interface ModalProps {
 	backgroundColor?: string;

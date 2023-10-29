@@ -23,6 +23,7 @@
 				"noParameterAssign": "warn"
 			},
 			"suspicious": {
+				"noArrayIndexKey": "warn",
 				"noExplicitAny": "off"
 			}
 		}
