@@ -108,7 +108,7 @@ importers:
   packages/react-hooks:
     dependencies:
       react:
-        specifier: '>16.8.0'
+        specifier: '>=16.8.0'
         version: 18.2.0
       swr:
         specifier: ^2.1.2
