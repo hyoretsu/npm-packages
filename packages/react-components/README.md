@@ -1,6 +1,7 @@
 ## A collection of React components, either made or curated by me
 
 - **`Button`**
+- **`GlowingBlur`**
 - **`Input`** - A powerful `<input />` component (actually enforces min/max values and maxLength)
 - **`Link`** - A multi-purpose Link modification for Next.js, switching automatically between the stock `<Link />` and safe `<a />`
 - **`Modal`**
