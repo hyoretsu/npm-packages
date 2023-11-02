@@ -38,7 +38,7 @@ export const SvgGradient: React.FC<SvgGradientProps> = ({ colors, id, to = "bott
 		<svg width="0" height="0" style={{ position: "absolute" }}>
 			<linearGradient id={id} {...xy}>
 				{colors.map((color, index) => (
-					<stop key={color} offset={`${(index / (colors.length - 1)) * 100}%`} stop-color={color} />
+					<stop key={color} offset={`${(index / (colors.length - 1)) * 100}%`} stopColor={color} />
 				))}
 			</linearGradient>
 		</svg>
