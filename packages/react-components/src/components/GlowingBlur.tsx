@@ -6,7 +6,7 @@ export interface GlowingBlurProps {
 	color: string;
 	/** In case you want to position it from the right/bottom. */
 	invertPositions?: [x: boolean, y: boolean];
-	/** A number between 0 and 255. */
+	/** A number between 0 and 1. */
 	intensity?: number;
 	/** A number between 0 and 1. */
 	opacity?: number;
@@ -54,7 +54,7 @@ export const GlowingBlur: React.FC<GlowingBlurProps> = ({
 		<span
 			style={{
 				backgroundImage: `radial-gradient(46% 46% at 50% 50%, rgba(${hexToRgba(color)}, ${
-					intensity / 255
+					intensity * 255
 				}), transparent)`,
 				borderRadius: "50%",
 				height: `${radius * 2}${unit}`,
