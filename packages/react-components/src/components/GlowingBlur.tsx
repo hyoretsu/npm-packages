@@ -53,9 +53,9 @@ export const GlowingBlur: React.FC<GlowingBlurProps> = ({
 	return (
 		<span
 			style={{
-				backgroundImage: `radial-gradient(46% 46% at 50% 50%, rgba(${hexToRgba(color)}, ${
-					intensity * 255
-				}), transparent)`,
+				backgroundImage: `radial-gradient(46% 46% at 50% 50%, rgba(${hexToRgba(
+					color,
+				)}, ${intensity}), transparent)`,
 				borderRadius: "50%",
 				height: `${radius * 2}${unit}`,
 				opacity,
