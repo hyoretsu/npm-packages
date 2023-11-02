@@ -40,20 +40,20 @@ export const TextRing: React.FC<TextRingProps> = ({
 	}
 
 	useStyleInjection(`
-		@keyframes reverse-spin {
-			to {
-				rotate: -360deg;
-			}
-		}
-	`);
+        @keyframes reverse-spin {
+            to {
+                rotate: -360deg;
+            }
+        }
+    `);
 
 	useStyleInjection(`
-		@keyframes spin {
-			to {
-				rotate: 360deg;
-			}
-		}
-	`);
+        @keyframes spin {
+            to {
+                rotate: 360deg;
+            }
+        }
+    `);
 
 	return (
 		<div
