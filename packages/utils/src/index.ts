@@ -4,6 +4,7 @@ export * from "./funcs/distanceBetweenCoordinates";
 export * from "./funcs/fixNumber";
 export * from "./funcs/formatPhoneNumber";
 export * from "./funcs/haversine";
+export * from "./funcs/hexToRgba";
 export * from "./funcs/isEven";
 export * from "./funcs/isOdd";
 export * from "./funcs/isPowerOf";

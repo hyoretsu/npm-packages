@@ -3,17 +3,21 @@ List of utility functions:
 - capitalize
 - degreesToRadians
 - distanceBetweenCoordinates
+- fixNumber (that .00000000001 error)
 - formatPhoneNumber (currently supports BR and US numbers)
 - haversine and archaversine
+- hexToRgba (RGB and RGBA)
 - isEven
 - isOdd
+- isPowerOf
 - isReactJs
 - isReactNative
 - JsonFixBigInt
 - random (Python-like)
+- randomId
 - reactJsOrNative
 - round (More precise than Math.round)
+- sleep (async)
 - swap (in-place)
 - titleCase
-- wait (async)
 - zeroOrOne
