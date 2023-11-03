@@ -8,3 +8,7 @@
 - **`OpacityFilter`** - A filter to darken the entire screen
 - **`TextRing`** - Circles a given text in a given radius
 - **`SvgGradient`** - A little util for when you want to set a SVG's color to gradient. Pass an ID as a prop and use `url("#your-id")` as either `fill` or `stroke`
+
+### Visual effects
+
+- **`Sonar`** - Adds a sonar effect to any component
