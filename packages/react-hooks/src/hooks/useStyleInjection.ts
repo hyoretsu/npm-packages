@@ -6,7 +6,7 @@ export const useStyleInjection = (style: string) => {
 		// Check for duplicates
 		const styles = document.head.querySelectorAll("style");
 		for (const elem of styles) {
-			if (elem.innerHTML.search(style) >= 0) {
+			if (elem.innerHTML === style) {
 				return;
 			}
 		}
