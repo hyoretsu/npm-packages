@@ -8,13 +8,24 @@ export interface SonarProps {
 	color: string;
 	/** Duration of the animation. Default is seconds. */
 	duration?: number | string;
+	/** Enables or disables margin injection. Default is `true` */
+	margin?: boolean;
 	/** Size of the animation. */
 	size?: number | string;
 }
 
-export const Sonar: React.FC<SonarProps> = ({ children, color, duration = 1, size = "1rem" }) => {
+export const Sonar: React.FC<SonarProps> = ({
+	children,
+	color,
+	duration = 1.5,
+	margin = true,
+	size = "1rem",
+}) => {
 	const rgbColor = hexToRgba(color);
 
+	if (typeof duration === "number") {
+		duration = `${duration}s`;
+	}
 	if (typeof size === "number") {
 		size = `${size}px`;
 	}
@@ -37,8 +48,8 @@ export const Sonar: React.FC<SonarProps> = ({ children, color, duration = 1, siz
 
 	return cloneElement(children as ReactElement, {
 		style: {
-			animation: `${keyframe} ${typeof duration === "number" ? `${duration}s` : duration} linear infinite`,
-			margin: size,
+			animation: `${keyframe} ${duration} linear infinite`,
+			...(margin && { margin: size }),
 		},
 	});
 };
