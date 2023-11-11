@@ -7,14 +7,14 @@ If you're using `tsyringe`, be sure to use `container.registerInstance()` instea
 A simple provider to generate and compare hashes.
 
 You need environment variables to use it.
-> - `HASH_DRIVER = "bcrypt"`
+> `HASH_DRIVER = "bcrypt"`
 
 - **`mailProviders`**
 
 A simple provider to send emails using Nodemailer. Has constructor.
 
 You need environment variables to use it.
-> - `MAIL_DRIVER = "ethereal" | "gmail" | "nodemailer" | "sendgrid"`
+> `MAIL_DRIVER = "ethereal" | "gmail" | "nodemailer" | "sendgrid"`
 >
 > If using Gmail/Nodemailer:
 > - `MAIL_PASS`
