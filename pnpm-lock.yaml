@@ -92,7 +92,7 @@ importers:
         specifier: '>=1.2.0'
         version: link:../react-hooks
       '@hyoretsu/utils':
-        specifier: '>=1.2.0'
+        specifier: '>=1.6.0'
         version: link:../utils
       next:
         specifier: ^13.2.4
