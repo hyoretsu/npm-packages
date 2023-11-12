@@ -6,7 +6,7 @@ export interface OpacityFilterProps {
 	opacity?: number;
 }
 
-export const OpacityFilter: React.FC<OpacityFilterProps> = ({ children, opacity }) => {
+export const OpacityFilter: React.FC<OpacityFilterProps> = ({ children, opacity = 0.5 }) => {
 	return (
 		<div
 			style={{
@@ -20,7 +20,7 @@ export const OpacityFilter: React.FC<OpacityFilterProps> = ({ children, opacity 
 
 				width: "100%",
 				height: "100%",
-				backgroundColor: `rgba(0, 0, 0, ${opacity || 0.5})`,
+				backgroundColor: `rgba(0, 0, 0, ${opacity})`,
 			}}
 		>
 			{children}
