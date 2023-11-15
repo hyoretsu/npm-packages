@@ -9,6 +9,7 @@ export * from "./funcs/isEven";
 export * from "./funcs/isOdd";
 export * from "./funcs/isPowerOf";
 export * from "./funcs/JsonFixBigInt";
+export * from "./funcs/measureText";
 export * from "./funcs/random";
 export * from "./funcs/randomId";
 export * from "./funcs/range";
