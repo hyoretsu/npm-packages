@@ -2,14 +2,18 @@ import { RefObject } from "react";
 
 type MeasureTextParam = RefObject<Element>;
 
-/** Measures how many height/width pixels a given text will have. */
+/** Measures how many pixels of height a given text will need. (Currently only supports React refs) */
 export const measureText = (text: string, param: MeasureTextParam) => {
 	let element: Element;
 	let lineCount = 0,
 		lineHeight = "0px";
 
 	const parseValue = (value: string) => {
-		return parseInt(value.slice(0, -2));
+		if (!value.endsWith("px")) {
+			return 0;
+		}
+
+		return parseInt(value.slice(0, -2), 10);
 	};
 
 	if (param.current) {

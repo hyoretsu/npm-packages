@@ -13,7 +13,7 @@ List of utility functions:
 - isReactJs
 - isReactNative
 - JsonFixBigInt
-- measureText – Measures how many height/width pixels a given text will have (useful for dynamic universal animations)
+- measureText – Measures how many pixels of height a given text will need (useful for dynamic universal animations)
 - random (Python-like)
 - randomId
 - reactJsOrNative
