@@ -2,13 +2,15 @@ import React, { ReactNode } from "react";
 
 export interface OpacityFilterProps {
 	children: ReactNode;
+	className?: string;
 	/** Value between 0 and 1. */
 	opacity?: number;
 }
 
-export const OpacityFilter: React.FC<OpacityFilterProps> = ({ children, opacity = 0.5 }) => {
+export const OpacityFilter: React.FC<OpacityFilterProps> = ({ children, className, opacity = 0.5 }) => {
 	return (
 		<div
+			className={className}
 			style={{
 				display: "flex",
 				alignItems: "center",
