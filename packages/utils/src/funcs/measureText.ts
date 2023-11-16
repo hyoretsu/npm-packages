@@ -2,11 +2,13 @@ import { RefObject } from "react";
 
 type MeasureTextParam = RefObject<Element>;
 
-/** Measures how many pixels of height a given text will need. (Currently only supports React refs) */
+/** Measures how many pixels of height a given text will need. (Currently only supports React refs)
+ *
+ * Credits: [Phuoc Nguyen](https://phuoc.ng/collection/html-dom/count-how-many-lines-a-given-string-takes-up-in-a-text-area)
+ */
 export const measureText = (text: string, param: MeasureTextParam) => {
-	let element: Element;
 	let lineCount = 0,
-		lineHeight = "0px";
+		lineHeight = "";
 
 	const parseValue = (value: string) => {
 		if (!value.endsWith("px")) {
@@ -17,7 +19,7 @@ export const measureText = (text: string, param: MeasureTextParam) => {
 	};
 
 	if (param.current) {
-		element = param.current;
+		const element = param.current;
 		({ lineHeight } = window.getComputedStyle(element));
 
 		const { fontFamily, fontSize, fontWeight, paddingLeft, paddingRight } = window.getComputedStyle(element);
