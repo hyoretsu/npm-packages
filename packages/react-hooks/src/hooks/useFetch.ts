@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosInstance, AxiosResponse, Method } from "axios";
 import useSWR from "swr";
 
 // biome-ignore lint/suspicious/noEmptyInterface:
@@ -6,17 +6,16 @@ export interface APIMapping {}
 
 interface FetchOpts {
 	body?: Record<string, any>;
+	method?: Method;
 	query?: Record<string, any>;
 }
 
 export function useFetch<Route extends keyof APIMapping, Error = any>(
 	urlDeps: Route | [Route, any | any[]],
-	api: AxiosInstance,
-	{ body, query }: FetchOpts = {},
+	api: AxiosInstance | null,
+	{ body, method, query }: FetchOpts = {},
 ) {
 	const reqInfo = useSWR<APIMapping[Route], Error>(urlDeps, async (path: string) => {
-		let res: AxiosResponse<APIMapping[Route]>;
-
 		if (typeof urlDeps !== "string") {
 			[path] = urlDeps;
 		}
@@ -30,13 +29,30 @@ export function useFetch<Route extends keyof APIMapping, Error = any>(
 			)}`;
 		}
 
-		if (body) {
-			res = await api.post(path, body);
-		} else {
-			res = await api.get(path);
+		if (api) {
+			let res: AxiosResponse<APIMapping[Route]>;
+
+			if (body) {
+				res = await api.post(path, body);
+			} else {
+				res = await api.get(path);
+			}
+
+			return res.data;
 		}
 
-		return res.data;
+		let res: Response;
+
+		if (body) {
+			res = await fetch(path, {
+				body: body.toString(),
+				method: method?.toUpperCase() || "POST",
+			});
+		} else {
+			res = await fetch(path);
+		}
+
+		return res.json();
 	});
 
 	return reqInfo;
