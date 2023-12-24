@@ -6,6 +6,7 @@ List of utility functions:
 - fixNumber (that .00000000001 error)
 - formatPhoneNumber (currently supports BR and US numbers)
 - haversine and archaversine
+- hexToHsl
 - hexToRgba (RGB and RGBA)
 - isEven
 - isOdd
@@ -21,4 +22,5 @@ List of utility functions:
 - sleep (async)
 - swap (in-place)
 - titleCase
+- validHex
 - zeroOrOne

@@ -1,13 +1,11 @@
+import { validHex } from "./validHex";
+
 export type RGB = [number, number, number];
 export type RGBA = [number, number, number, number];
 export type ColorArray = RGB | RGBA;
 
 export const hexToRgba = (hex: string): ColorArray => {
-	if (
-		!hex.startsWith("#") ||
-		(hex.length !== 3 + 1 && hex.length !== 6 + 1 && hex.length !== 4 + 1 && hex.length !== 8 + 1) ||
-		hex.search(/[^a-fA-F\d#]/) >= 0
-	) {
+	if (!validHex(hex)) {
 		throw new Error("Please provide a valid color hex string.");
 	}
 
