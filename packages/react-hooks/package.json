@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/react-hooks",
 	"description": "A collection of useful hooks that I use in my projects.",
-	"version": "1.2.4",
+	"version": "1.2.5",
 	"keywords": ["hooks", "react", "swr", "vercel"],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
@@ -26,8 +26,7 @@
 		"prepublish": "tsup"
 	},
 	"dependencies": {
-		"react": ">=16.8.0",
-		"swr": "^2.1.2"
+		"react": ">=16.8.0"
 	},
 	"devDependencies": {
 		"@types/react": "^18.0.33",
