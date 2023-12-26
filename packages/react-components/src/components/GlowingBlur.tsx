@@ -10,8 +10,10 @@ export interface GlowingBlurProps {
 	intensity?: number;
 	/** A number between 0 and 1. */
 	opacity?: number;
-	/** In case you want `position: absolute`. Default is left/top */
+	/** In case you want `position: absolute`. Default is left/top. */
 	position?: [x: number | string, y: number | string];
+	/** In case you want `position: fixed` instead of absolute. */
+	positionFixed?: boolean;
 	/** A number in pixels or a measurement with CSS units. */
 	radius: number | string;
 	zIndex?: number;
@@ -23,6 +25,7 @@ export const GlowingBlur: React.FC<GlowingBlurProps> = ({
 	invertPositions = [false, false],
 	opacity = 1,
 	position,
+	positionFixed,
 	radius,
 	zIndex,
 }) => {
@@ -62,7 +65,7 @@ export const GlowingBlur: React.FC<GlowingBlurProps> = ({
 				width: `${radius * 2}${unit}`,
 				zIndex,
 				...(position && {
-					position: "absolute",
+					position: positionFixed ? "fixed" : "absolute",
 					...positions,
 				}),
 			}}
