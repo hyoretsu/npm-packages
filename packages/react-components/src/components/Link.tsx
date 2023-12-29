@@ -4,7 +4,7 @@ import { UrlObject } from "url";
 
 export interface LinkProps extends NextLinkProps {
 	children: ReactNode;
-	style: CSSProperties;
+	style?: CSSProperties;
 }
 
 export function Link({

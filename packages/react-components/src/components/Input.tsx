@@ -1,18 +1,9 @@
-"use client";
 import { range } from "@hyoretsu/utils";
-import React, { ChangeEventHandler, FormEventHandler, InputHTMLAttributes } from "react";
+import React, { FormEventHandler, InputHTMLAttributes } from "react";
 
 export type CustomInputProps = InputHTMLAttributes<HTMLInputElement>;
 
-export const Input: React.FC<CustomInputProps> = ({
-	type,
-	value,
-	max,
-	min = 0,
-	maxLength,
-	onChange,
-	...rest
-}) => {
+export const Input: React.FC<CustomInputProps> = ({ type, value, max, min = 0, maxLength, ...rest }) => {
 	const onInput: FormEventHandler<HTMLInputElement> = (e): void => {
 		if (type === "number") {
 			if (maxLength && !max) {
@@ -37,22 +28,5 @@ export const Input: React.FC<CustomInputProps> = ({
 		}
 	};
 
-	const handleOnChange: ChangeEventHandler<HTMLInputElement> = e => {
-		e.preventDefault();
-
-		if (onChange) {
-			onChange(e);
-		}
-	};
-
-	return (
-		<input
-			type={type || "text"}
-			value={value}
-			maxLength={maxLength}
-			onInput={onInput}
-			onChange={handleOnChange}
-			{...rest}
-		/>
-	);
+	return <input type={type || "text"} value={value} maxLength={maxLength} onInput={onInput} {...rest} />;
 };
