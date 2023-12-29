@@ -1,3 +1,4 @@
+"use client";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import React, { CSSProperties, ReactNode } from "react";
 import { UrlObject } from "url";
