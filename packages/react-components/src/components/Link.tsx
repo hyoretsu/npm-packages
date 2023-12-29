@@ -1,8 +1,13 @@
-import React, { PropsWithChildren } from "react";
-import NextLink, { LinkProps } from "next/link";
+import NextLink, { LinkProps as NextLinkProps } from "next/link";
+import React, { CSSProperties, ReactNode } from "react";
 import { UrlObject } from "url";
 
-export const Link: React.FC<PropsWithChildren & LinkProps> = ({
+export interface LinkProps extends NextLinkProps {
+	children: ReactNode;
+	style: CSSProperties;
+}
+
+export function Link({
 	as,
 	children,
 	href,
@@ -10,12 +15,11 @@ export const Link: React.FC<PropsWithChildren & LinkProps> = ({
 	replace,
 	scroll = false,
 	shallow,
+	style,
 	...props
-}) => {
+}: LinkProps) {
 	if (!href) {
-		// biome-ignore lint/a11y/useAnchorContent:
-		// biome-ignore lint/a11y/useValidAnchor:
-		return <a href="" />;
+		return <></>;
 	}
 
 	let hrefObj: UrlObject = {};
@@ -44,8 +48,16 @@ export const Link: React.FC<PropsWithChildren & LinkProps> = ({
 	}
 
 	return (
-		<NextLink as={as} href={href} passHref={passHref} replace={replace} scroll={scroll} shallow={shallow}>
+		<NextLink
+			as={as}
+			href={href}
+			passHref={passHref}
+			replace={replace}
+			scroll={scroll}
+			shallow={shallow}
+			style={style}
+		>
 			{children}
 		</NextLink>
 	);
-};
+}

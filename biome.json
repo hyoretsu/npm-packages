@@ -6,6 +6,9 @@
 	"formatter": {
 		"lineWidth": 110
 	},
+	"organizeImports": {
+		"enabled": false
+	},
 	"javascript": {
 		"formatter": {
 			"arrowParentheses": "asNeeded"
