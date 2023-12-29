@@ -1,3 +1,4 @@
+"use client";
 import { range } from "@hyoretsu/utils";
 import React, { FormEventHandler, InputHTMLAttributes } from "react";
 
