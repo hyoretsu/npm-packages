@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { CSSProperties, ReactNode } from "react";
 import { Button } from "./Button";
 import { OpacityFilter } from "./OpacityFilter";
 
@@ -11,12 +11,14 @@ export interface ModalProps {
 	buttonPadding?: [number, number];
 	buttonText?: string;
 	children: ReactNode;
+	className?: string;
 	onConfirm: () => void;
 	opacity?: number;
+	style?: CSSProperties;
 	textColor?: string;
 }
 
-export const Modal: React.FC<ModalProps> = ({
+export function Modal({
 	backgroundColor = "#c4d3f2",
 	buttonBackground,
 	buttonBorderColor,
@@ -25,13 +27,16 @@ export const Modal: React.FC<ModalProps> = ({
 	buttonPadding,
 	buttonText = "Ok",
 	children,
+	className,
 	onConfirm,
 	opacity,
+	style,
 	textColor = "#000",
-}) => {
+}: ModalProps) {
 	return (
 		<OpacityFilter opacity={opacity}>
 			<div
+				className={className}
 				style={{
 					alignItems: "center",
 					backgroundColor,
@@ -40,6 +45,7 @@ export const Modal: React.FC<ModalProps> = ({
 					flexDirection: "column",
 					maxWidth: "45%",
 					padding: "16px 24px",
+					...style,
 				}}
 			>
 				<p
@@ -66,4 +72,4 @@ export const Modal: React.FC<ModalProps> = ({
 			</div>
 		</OpacityFilter>
 	);
-};
+}
