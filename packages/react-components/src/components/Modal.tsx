@@ -10,7 +10,7 @@ export interface ModalProps {
 	buttonBorderWidth?: number;
 	buttonPadding?: [number, number];
 	buttonText?: string;
-	children: ReactNode;
+	children: ReactNode | string;
 	className?: string;
 	onConfirm: () => void;
 	opacity?: number;
@@ -48,16 +48,20 @@ export function Modal({
 					...style,
 				}}
 			>
-				<p
-					style={{
-						color: textColor,
-						fontSize: "1rem",
-						marginBottom: 10,
-						textAlign: "center",
-					}}
-				>
-					{children}
-				</p>
+				{typeof children === "string" ? (
+					<p
+						style={{
+							color: textColor,
+							fontSize: "1rem",
+							marginBottom: 10,
+							textAlign: "center",
+						}}
+					>
+						{children}
+					</p>
+				) : (
+					children
+				)}
 
 				<Button
 					background={buttonBackground}
