@@ -4,6 +4,7 @@ import { UrlObject } from "url";
 
 export interface LinkProps extends NextLinkProps {
 	children: ReactNode;
+	className?: string;
 	style?: CSSProperties;
 }
 
@@ -44,7 +45,11 @@ export function Link({
 	}
 
 	if (href.includes("mailto:")) {
-		return <a href={href}>{children}</a>;
+		return (
+			<a href={href} {...props}>
+				{children}
+			</a>
+		);
 	}
 
 	return (
@@ -56,6 +61,7 @@ export function Link({
 			scroll={scroll}
 			shallow={shallow}
 			style={style}
+			{...props}
 		>
 			{children}
 		</NextLink>
