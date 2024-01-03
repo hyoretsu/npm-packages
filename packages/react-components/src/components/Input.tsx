@@ -1,6 +1,6 @@
 "use client";
 import { range } from "@hyoretsu/utils";
-import React, { ChangeEvent, ChangeEventHandler, InputHTMLAttributes, useCallback, useState } from "react";
+import React, { ChangeEvent, ChangeEventHandler, InputHTMLAttributes, useEffect, useState } from "react";
 
 export interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	onChange: ChangeEventHandler<HTMLInputElement>;
@@ -15,42 +15,40 @@ export const Input: React.FC<CustomInputProps> = ({
 	onChange,
 	...rest
 }) => {
-	const [internalValue, setInternalValue] = useState(value);
+	const [internalValue, setInternalValue] = useState("");
 
-	const handleOnChange = useCallback(
-		(e: ChangeEvent<HTMLInputElement>, send = false): void => {
-			if (!send) {
-				setInternalValue(e.currentTarget.value);
-				return;
+	useEffect(() => {
+		setInternalValue(String(value));
+	}, [value]);
+
+	const handleOnChange = (e: ChangeEvent<HTMLInputElement>, send = false): void => {
+		if (!send) {
+			setInternalValue(e.currentTarget.value);
+			return;
+		}
+
+		if (type === "number") {
+			if (maxLength && !max) {
+				max = Number(range(0, maxLength).reduce(str => `${str}9`, ""));
 			}
 
-			if (type === "number") {
-				if (maxLength && !max) {
-					max = Number(range(0, maxLength).reduce(str => `${str}9`, ""));
-				}
-
-				// @ts-ignore
-				if (Number(e.currentTarget.value) > max) {
-					setInternalValue(String(max));
-				}
-				// @ts-ignore
-				if (Number(e.currentTarget.value) < min) {
-					setInternalValue(String(min));
-				}
-
-				return;
+			// @ts-ignore
+			if (Number(e.currentTarget.value) > max) {
+				e.currentTarget.value = String(max);
 			}
-
+			// @ts-ignore
+			if (Number(e.currentTarget.value) < min) {
+				e.currentTarget.value = String(min);
+			}
+		} else {
 			// Longer than max length
 			if (maxLength && e.currentTarget.value.length >= maxLength) {
 				e.currentTarget.value = e.currentTarget.value.slice(0, maxLength);
 			}
+		}
 
-			onChange(e);
-			setInternalValue(value);
-		},
-		[max, maxLength, min, type, onChange, value],
-	);
+		onChange(e);
+	};
 
 	return (
 		<input
