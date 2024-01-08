@@ -47,6 +47,8 @@ export const Input: React.FC<CustomInputProps> = ({
 			}
 		}
 
+		setInternalValue(e.currentTarget.value);
+
 		onChange(e);
 	};
 
@@ -56,12 +58,13 @@ export const Input: React.FC<CustomInputProps> = ({
 			value={internalValue}
 			maxLength={maxLength}
 			onChange={handleOnChange}
-			onBlur={() => {
+			onBlur={() =>
+				internalValue !== String(value) &&
 				handleOnChange(
 					{ currentTarget: { value: String(internalValue) } } as ChangeEvent<HTMLInputElement>,
 					true,
-				);
-			}}
+				)
+			}
 			{...rest}
 		/>
 	);
