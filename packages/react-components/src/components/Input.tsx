@@ -58,6 +58,7 @@ export const Input: React.FC<CustomInputProps> = ({
 			value={internalValue}
 			maxLength={maxLength}
 			onChange={handleOnChange}
+			onKeyUp={e => e.key === "Enter" && e.currentTarget.blur()}
 			onBlur={() =>
 				internalValue !== String(value) &&
 				handleOnChange(
