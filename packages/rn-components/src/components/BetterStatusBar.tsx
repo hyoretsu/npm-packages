@@ -6,7 +6,7 @@ export interface BetterStatusBarProps extends StatusBarProps {
 	backgroundColor?: string;
 }
 
-export const BetterStatusBar: React.FC<BetterStatusBarProps> = ({ backgroundColor, ...props }) => {
+export function BetterStatusBar({ backgroundColor, ...props }: BetterStatusBarProps) {
 	const { top: height } = useSafeAreaInsets();
 
 	return (
@@ -14,4 +14,4 @@ export const BetterStatusBar: React.FC<BetterStatusBarProps> = ({ backgroundColo
 			<StatusBar translucent backgroundColor={backgroundColor} {...props} />
 		</View>
 	);
-};
+}

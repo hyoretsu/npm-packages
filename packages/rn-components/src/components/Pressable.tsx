@@ -9,7 +9,7 @@ export interface PressableProps extends DefaultPressableProps {
 	touchFeedback?: boolean;
 }
 
-export const Pressable: React.FC<PressableProps> = ({ children, touchFeedback = true, ...rest }) => {
+export function Pressable({ children, touchFeedback = true, ...rest }: PressableProps) {
 	const animated = new Animated.Value(1);
 
 	const fadeIn = () => {
@@ -33,4 +33,4 @@ export const Pressable: React.FC<PressableProps> = ({ children, touchFeedback = 
 			<Animated.View style={{ opacity: touchFeedback ? animated : 1 }}>{children}</Animated.View>
 		</DefaultPressable>
 	);
-};
+}
