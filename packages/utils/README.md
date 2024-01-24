@@ -1,6 +1,7 @@
 List of utility functions:
 
 - capitalize
+- clamp - CSS-like clamp()
 - degreesToRadians
 - distanceBetweenCoordinates
 - fixNumber (that .00000000001 error)
