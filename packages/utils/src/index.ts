@@ -1,4 +1,6 @@
+export * from "./funcs/JsonFixBigInt";
 export * from "./funcs/capitalize";
+export * from "./funcs/clamp";
 export * from "./funcs/degreesToRadians";
 export * from "./funcs/distanceBetweenCoordinates";
 export * from "./funcs/fixNumber";
@@ -9,7 +11,6 @@ export * from "./funcs/hexToRgba";
 export * from "./funcs/isEven";
 export * from "./funcs/isOdd";
 export * from "./funcs/isPowerOf";
-export * from "./funcs/JsonFixBigInt";
 export * from "./funcs/measureText";
 export * from "./funcs/random";
 export * from "./funcs/randomId";
