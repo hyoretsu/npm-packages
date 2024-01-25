@@ -3,6 +3,7 @@ List of utility functions:
 - capitalize
 - clamp - CSS-like clamp()
 - degreesToRadians
+- directLink - supports GDrive
 - distanceBetweenCoordinates
 - fixNumber (that .00000000001 error)
 - formatPhoneNumber (currently supports BR and US numbers)
