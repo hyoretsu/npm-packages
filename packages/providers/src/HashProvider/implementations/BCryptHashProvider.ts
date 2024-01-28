@@ -1,4 +1,4 @@
-import { hash, compare } from "bcrypt";
+import { compare, hash } from "bcryptjs";
 
 import { HashProvider } from "../models";
 
