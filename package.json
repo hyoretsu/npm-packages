@@ -4,7 +4,7 @@
 	"workspaces": ["packages/*"],
 	"scripts": {
 		"dev": "tsx",
-		"prepare": "husky install && chmod ug+x .husky/*"
+		"prepare": "git config --local core.hooksPath .githooks"
 	},
 	"lint-staged": {
 		"**/*.(json|js|jsx|ts|tsx)": ["biome format --write"]
@@ -12,9 +12,9 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.2.2",
 		"@swc-node/register": "^1.6.3",
-		"husky": "^8.0.3",
-		"lint-staged": "^13.2.3",
-		"tsup": "^7.1.0",
-		"tsx": "^3.12.7"
+		"@types/bun": "^1.0.8",
+		"@types/node": "^20.11.28",
+		"lint-staged": "^15.2.2",
+		"tsup": "^8.0.2"
 	}
 }
