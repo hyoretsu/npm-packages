@@ -45,16 +45,18 @@ export type SimpleZerosFunction = (info: {
 	interval: [number, number];
 	precision: number;
 	options?: FunctionZeros.Options;
-}) => {
-	iterations: number;
-	interval: [string, string];
+}) => [
+	results: {
+		iterations: number;
+		interval: [string, string];
+	},
 	details: Array<
 		FunctionZeros.Details & {
 			interval: number[];
 			results: number[];
 		}
-	>;
-};
+	>,
+];
 
 export const bisection: SimpleZerosFunction = ({
 	func,
@@ -124,11 +126,13 @@ export const bisection: SimpleZerosFunction = ({
 		throw new Error(`Something went wrong, less iterations than the minimum (${minIterations}) were done.`);
 	}
 
-	return {
-		iterations,
-		interval: [a.toPrecision(21), b.toPrecision(21)],
+	return [
+		{
+			iterations,
+			interval: [a.toPrecision(21), b.toPrecision(21)],
+		},
 		details,
-	};
+	];
 };
 
 export const falsePosition: SimpleZerosFunction = ({
@@ -202,11 +206,13 @@ export const falsePosition: SimpleZerosFunction = ({
 			break;
 	}
 
-	return {
-		iterations,
-		interval: [a.toPrecision(21), b.toPrecision(21)],
+	return [
+		{
+			iterations,
+			interval: [a.toPrecision(21), b.toPrecision(21)],
+		},
 		details,
-	};
+	];
 };
 
 export const newtonRaphsonParams = {
