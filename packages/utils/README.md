@@ -19,10 +19,12 @@ List of utility functions:
 - measureText – Measures how many pixels of height a given text will need (useful for dynamic universal animations)
 - random (Python-like)
 - randomId
+- range
 - reactJsOrNative
 - round (More precise than Math.round)
 - sleep (async)
 - swap (in-place)
+- timeConversion - Converts values from one time unit to another
 - titleCase
 - validHex
 - zeroOrOne
