@@ -1,6 +1,7 @@
 import { useStyleInjection } from "@hyoretsu/react-hooks";
 import { range } from "@hyoretsu/utils";
-import React, { CSSProperties } from "react";
+import React from "react";
+import type { CSSProperties } from "react";
 
 export interface TextRingProps {
 	children?: string;
@@ -11,6 +12,8 @@ export interface TextRingProps {
 	/** Duration of the spin. Only works with the `rotating` prop. */
 	duration?: number;
 	firstHalfColor?: string;
+	/** Amount of extra rotation to be appliead to the letters. */
+	offset?: number;
 	/** Amount of empty spaces to be added to the end of the string. */
 	padding?: number;
 	radius?: number;
@@ -35,6 +38,7 @@ export const TextRing: React.FC<TextRingProps> = ({
 	dividingBullet,
 	duration = 6,
 	firstHalfColor = "#000",
+	offset = 0,
 	padding = 0,
 	radius = 0,
 	reverse = false,
@@ -65,13 +69,13 @@ export const TextRing: React.FC<TextRingProps> = ({
 			characters.push(...range(padding).map(_ => " "));
 		}
 	} else if (words) {
-		words.forEach(word => {
+		for (const word of words) {
 			characters.push(...word.split(""));
 
 			if (dividingBullet) {
 				characters.push(bullet);
 			}
-		});
+		}
 	}
 
 	const fullLength = characters.length - (words?.length || 0) - padding;
@@ -129,9 +133,9 @@ export const TextRing: React.FC<TextRingProps> = ({
 							position: "absolute",
 							top: "50%",
 							left: "50%",
-							transform: `translate(-50%, -50%) rotate(calc(360deg / ${
-								characters.length
-							} * ${index})) translateY(calc(${isBullet ? radius * 1.5 + 0.2 : radius} * -1ch))`,
+							transform: `translate(-50%, -50%) rotate(calc(360deg / ${characters.length} * ${
+								index + offset
+							})) translateY(calc(${isBullet ? radius * 1.5 + 0.2 : radius} * -1ch))`,
 							color,
 							...(isBullet && { fontFamily: "Times New Roman" }),
 						}}
