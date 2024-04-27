@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/react-components",
 	"description": "A collection of useful components that I use in my projects.",
-	"version": "1.7.10",
+	"version": "1.7.12",
 	"keywords": ["components", "react"],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
@@ -26,12 +26,13 @@
 		"prepublish": "tsup"
 	},
 	"dependencies": {
-		"@hyoretsu/react-hooks": ">=1.2.0",
-		"@hyoretsu/utils": ">=1.6.0",
+		"@hyoretsu/react-hooks": "latest",
+		"@hyoretsu/utils": "latest",
 		"next": "^13.2.4",
 		"react": "^18.2.0"
 	},
 	"devDependencies": {
-		"@types/react": "^18.0.33"
+		"@types/react": "^18.0.33",
+		"tsup": "^8.0.2"
 	}
 }

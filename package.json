@@ -9,11 +9,10 @@
 		"**/*.(json|js|jsx|ts|tsx)": ["biome format --write"]
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.2.2",
+		"@biomejs/biome": "^1.7.1",
 		"@swc-node/register": "^1.6.3",
 		"@types/bun": "^1.0.8",
 		"@types/node": "^20.11.28",
-		"lint-staged": "^15.2.2",
-		"tsup": "^8.0.2"
+		"lint-staged": "^15.2.2"
 	}
 }

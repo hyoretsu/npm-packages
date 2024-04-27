@@ -13,6 +13,7 @@
 		"formatter": {
 			"arrowParentheses": "asNeeded"
 		},
+		"jsxRuntime": "reactClassic",
 		"parser": {
 			"unsafeParameterDecoratorsEnabled": true
 		}
