@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import type { RefObject } from "react";
 
 export type MeasureTextParam = RefObject<Element>;
 
@@ -25,12 +25,11 @@ export const measureText = (text: string, param: MeasureTextParam): string => {
 
 		if (value.endsWith("rem")) {
 			return (
-				parseInt(value.slice(0, -3), 10) *
-				Number(getComputedStyle(document.documentElement).fontSize.slice(0, -2))
+				Number(value.slice(0, -3)) * Number(getComputedStyle(document.documentElement).fontSize.slice(0, -2))
 			);
 		}
 
-		return parseInt(value.slice(0, -2), 10);
+		return Number(value.slice(0, -2));
 	};
 
 	const canvas = document.createElement("canvas");
@@ -42,7 +41,6 @@ export const measureText = (text: string, param: MeasureTextParam): string => {
 		const element = param.current;
 
 		const computedStyles = window.getComputedStyle(element);
-		console.log(computedStyles);
 
 		lineHeight = computedStyles.lineHeight;
 		if (lineHeight === "normal") {
