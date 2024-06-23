@@ -30,7 +30,7 @@ const functionZerosOptionsParams = {
 	conditionsWhitelist: "[boolean,boolean]",
 	maxIterations: "number",
 	origFunc: "string",
-	relativeError: "number",
+	relativeError: "boolean",
 };
 
 export const zerosFunctionParams = {
