@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/providers",
 	"description": "A collection of useful providers for Node.js",
-	"version": "1.1.2",
+	"version": "1.2.0",
 	"keywords": ["backend", "nodejs", "providers", "utils"],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
@@ -27,12 +27,15 @@
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
+		"jose": "^5.6.3",
+		"jsonwebtoken": "^9.0.2",
 		"nodemailer": "^6.9.3",
 		"nodemailer-sendgrid": "^1.0.3"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.0",
 		"@types/bcryptjs": "^2.4.6",
+		"@types/jsonwebtoken": "^9.0.6",
 		"@types/multer": "^1.4.7",
 		"@types/nodemailer": "^6.4.8",
 		"@types/nodemailer-sendgrid": "^1.0.0"
