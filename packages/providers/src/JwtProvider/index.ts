@@ -1,5 +1,6 @@
 import JoseJwtProvider from "./implementations/JoseJwtProvider";
 import JsonWebTokenJwtProvider from "./implementations/JsonWebTokenJwtProvider";
+export * from "./models";
 
 type JwtProviders = typeof JoseJwtProvider | typeof JsonWebTokenJwtProvider;
 export type JwtProviderKeys = "jose" | "jsonwebtoken";
