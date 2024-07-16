@@ -1,13 +1,12 @@
-import nodemailer, { Transporter } from "nodemailer";
-
-import { SendMailDTO } from "../dtos/SendMail.dto";
-import { MailProvider } from "../models";
+import nodemailer, { type Transporter } from "nodemailer";
+import type { SendMailDTO } from "../dtos/SendMail.dto";
+import type { MailProvider } from "../models";
 
 export default class EtherealMailProvider implements MailProvider {
 	private client!: Transporter;
 
 	constructor() {
-		nodemailer.createTestAccount().then((account) => {
+		nodemailer.createTestAccount().then(account => {
 			const transporter = nodemailer.createTransport({
 				host: account.smtp.host,
 				port: account.smtp.port,

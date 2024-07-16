@@ -1,9 +1,8 @@
-import nodemailer, { Transporter } from "nodemailer";
+import nodemailer, { type Transporter } from "nodemailer";
+import type SMTPTransport from "nodemailer/lib/smtp-transport";
 import nodemailerSendgrid from "nodemailer-sendgrid";
-
-import { SendMailDTO } from "../dtos/SendMail.dto";
-import { MailProvider } from "../models";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
+import type { SendMailDTO } from "../dtos/SendMail.dto";
+import type { MailProvider } from "../models";
 
 export default class NodemailerMailProvider implements MailProvider {
 	private client: Transporter;
@@ -36,7 +35,7 @@ export default class NodemailerMailProvider implements MailProvider {
 
 	public async sendMail({ body: html, files = [], from, replyTo, subject, to }: SendMailDTO): Promise<void> {
 		await this.client.sendMail({
-			attachments: files.map((file) => ({ content: file.buffer, filename: file.originalname })),
+			attachments: files.map(file => ({ content: file.buffer, filename: file.originalname })),
 			from,
 			html,
 			replyTo,
