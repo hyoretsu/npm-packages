@@ -1,11 +1,11 @@
 import { sign } from "jsonwebtoken";
-import type { JwtProvider } from "../models";
+import type { JwtProvider, SignJwt } from "../models";
 
 export default class JsonWebTokenJwtProvider implements JwtProvider {
-	public async sign(subject: any, expiresIn: number): Promise<string> {
-		const jwt = sign({}, process.env.JWT_SECRET!, {
-			subject,
+	public async sign({ expiresIn = "24h", payload = {}, subject }: SignJwt): Promise<string> {
+		const jwt = sign(payload, process.env.JWT_SECRET!, {
 			expiresIn,
+			subject,
 		});
 
 		return jwt;
