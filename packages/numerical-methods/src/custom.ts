@@ -1,7 +1,7 @@
 import { fixNumber } from "@hyoretsu/utils";
 import { evaluate } from "mathjs";
 
-import { FunctionZeros } from "./functionZeros";
+import type { FunctionZeros } from "./functionZeros";
 
 type MinMaxBisection = (info: {
 	func: string;
@@ -42,7 +42,12 @@ export const minMaxBisection: MinMaxBisection = ({
 	interval: [a, b],
 	target,
 	precision,
-	options: { conditionsWhitelist = [true, true], maxIterations = Infinity, origFunc, relativeError } = {},
+	options: {
+		conditionsWhitelist = [true, true],
+		maxIterations = Number.POSITIVE_INFINITY,
+		origFunc,
+		relativeError,
+	} = {},
 }) => {
 	const details = [];
 	let iterations = -1;
@@ -122,7 +127,7 @@ export const minMaxBisection: MinMaxBisection = ({
 	}
 
 	const minIterations = Math.ceil((Math.log10(b - a) - Math.log10(precision)) / Math.log10(2));
-	if (iterations < minIterations && maxIterations === Infinity) {
+	if (iterations < minIterations && maxIterations === Number.POSITIVE_INFINITY) {
 		throw new Error(`Something went wrong, less iterations than the minimum (${minIterations}) were done.`);
 	}
 

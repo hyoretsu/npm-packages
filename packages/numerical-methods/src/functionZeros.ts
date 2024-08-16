@@ -65,7 +65,7 @@ export const bisection: SimpleZerosFunction = ({
 	options: {
 		bail = false,
 		conditionsWhitelist = [true, true],
-		maxIterations = Infinity,
+		maxIterations = Number.POSITIVE_INFINITY,
 		origFunc,
 		relativeError,
 	} = {},
@@ -122,7 +122,7 @@ export const bisection: SimpleZerosFunction = ({
 	}
 
 	const minIterations = Math.ceil((Math.log10(b - a) - Math.log10(precision)) / Math.log10(2));
-	if (iterations < minIterations && maxIterations === Infinity) {
+	if (iterations < minIterations && maxIterations === Number.POSITIVE_INFINITY) {
 		throw new Error(`Something went wrong, less iterations than the minimum (${minIterations}) were done.`);
 	}
 
@@ -142,7 +142,7 @@ export const falsePosition: SimpleZerosFunction = ({
 	options: {
 		bail = false,
 		conditionsWhitelist = [true, true],
-		maxIterations = Infinity,
+		maxIterations = Number.POSITIVE_INFINITY,
 		origFunc,
 		relativeError = false,
 	} = {},
@@ -248,7 +248,7 @@ export const newtonRaphson: NewtonRaphson = ({
 	options: {
 		bail = false,
 		conditionsWhitelist = [true, true],
-		maxIterations = Infinity,
+		maxIterations = Number.POSITIVE_INFINITY,
 		origFunc,
 		relativeError = false,
 	} = {},
@@ -332,7 +332,7 @@ export const secant: Secant = ({
 	options: {
 		bail = false,
 		conditionsWhitelist = [true, true],
-		maxIterations = Infinity,
+		maxIterations = Number.POSITIVE_INFINITY,
 		origFunc,
 		relativeError = false,
 	} = {},

@@ -167,25 +167,27 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 		// Transform next lines with multipliers
 		for (let i = j + 1; i < coefficients.length; i++) {
 			for (let k = j; k < coefficients.length; k++) {
-				coefficientsL[i][k] -= multipliers[i] * coefficientsL[j][k];
+				coefficientsL[i][k] =
+					fixNumber(coefficientsL[i][k]) - fixNumber(multipliers[i] * coefficientsL[j][k]);
 			}
 
 			independentTermsL[i] -= multipliers[i] * independentTermsL[j];
 		}
 	}
 
-	console.log(steps);
-	console.log(coefficients);
+	// console.log(steps);
+	// console.log(coefficientsL);
 
 	// Solve the system
 	for (let i = coefficients.length - 1; i >= 0; i--) {
+		// console.log(results);
 		let equation = "";
 
 		for (let j = 0; j < coefficients.length; j++) {
 			if (coefficientsL[i][j] === 0) continue;
 
 			if (equation === "") {
-				equation = `${String.fromCharCode("a".charCodeAt(0) + j)} = () / ${coefficientsL[i][j]}`;
+				equation = `${String.fromCharCode("a".charCodeAt(0) + i)} = () / ${coefficientsL[i][j]}`;
 				continue;
 			}
 
@@ -194,10 +196,9 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 				`($1-${coefficientsL[i][j]}${String.fromCharCode("a".charCodeAt(0) + j)} + )`,
 			);
 		}
-		console.log(equation);
 		equation = equation.replace(/\((.*)\)/, `($1${independentTermsL[i]})`);
+		// console.log(equation);
 		transformedFuncs.push(equation);
-		console.log(equation);
 
 		evaluate(equation, results);
 	}
@@ -207,10 +208,6 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 		results,
 		steps,
 	};
-};
-
-export const spectralRadiusParams = {
-	coefficients: matrixParam,
 };
 
 export const spectralRadius = (coefficients: Matrix): number => {
@@ -257,7 +254,7 @@ export const gaussJacobi: GaussMethod = ({
 	coefficients,
 	independentTerms,
 	precision,
-	options: { maxIterations = Infinity } = {},
+	options: { maxIterations = Number.POSITIVE_INFINITY } = {},
 }) => {
 	const coefficientsL = [...coefficients];
 	const independentTermsL = [...independentTerms];
@@ -272,9 +269,9 @@ export const gaussJacobi: GaussMethod = ({
 			...range(dimension - 1).map(j => {
 				const correctJ = j >= i ? j + 1 : j;
 
-				return `${
-					-coefficientsL[i][correctJ] / coefficientsL[i][i]
-				} * ${String.fromCharCode("a".charCodeAt(0) + correctJ)} + `;
+				return `${-coefficientsL[i][correctJ] / coefficientsL[i][i]} * ${String.fromCharCode(
+					"a".charCodeAt(0) + correctJ,
+				)} + `;
 			}),
 			String(number / coefficientsL[i][i]),
 		].join("");
@@ -328,7 +325,7 @@ export const gaussSeidel: GaussMethod = ({
 	coefficients,
 	independentTerms,
 	precision,
-	options: { maxIterations = Infinity } = {},
+	options: { maxIterations = Number.POSITIVE_INFINITY } = {},
 }) => {
 	const coefficientsL = [...coefficients];
 	const independentTermsL = [...independentTerms];
@@ -343,9 +340,9 @@ export const gaussSeidel: GaussMethod = ({
 			...range(dimension - 1).map(j => {
 				const correctJ = j >= i ? j + 1 : j;
 
-				return `${
-					-coefficientsL[i][correctJ] / coefficientsL[i][i]
-				} * ${String.fromCharCode("a".charCodeAt(0) + correctJ)} + `;
+				return `${-coefficientsL[i][correctJ] / coefficientsL[i][i]} * ${String.fromCharCode(
+					"a".charCodeAt(0) + correctJ,
+				)} + `;
 			}),
 			String(number / coefficientsL[i][i]),
 		].join("");
