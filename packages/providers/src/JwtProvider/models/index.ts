@@ -24,6 +24,11 @@ export interface SignJwt {
 	subject: string;
 }
 
+export interface VerifyJwt {
+	jwt: string;
+}
+
 export abstract class JwtProvider {
 	abstract sign(data: SignJwt): Promise<string>;
+	abstract verify(data: VerifyJwt): Promise<Record<string, any>>;
 }
