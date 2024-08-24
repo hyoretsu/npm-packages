@@ -20,6 +20,7 @@ export * from "./funcs/range";
 export * from "./funcs/round";
 export * from "./funcs/sanitizeJson";
 export * from "./funcs/sleep";
+export * from "./funcs/sum";
 export * from "./funcs/swap";
 export * from "./funcs/timeConversion";
 export * from "./funcs/titleCase";
