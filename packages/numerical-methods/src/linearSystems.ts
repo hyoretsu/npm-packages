@@ -210,6 +210,10 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 	};
 };
 
+export const spectralRadiusParams = {
+	coefficients: matrixParam,
+};
+
 export const spectralRadius = (coefficients: Matrix): number => {
 	return Math.max(
 		...coefficients.map(
@@ -286,11 +290,9 @@ export const gaussJacobi: GaussMethod = ({
 			evaluate(
 				func,
 				// Merging all guesses in a single object
-				guess.reduce((prev, curr) => {
-					return {
-						...prev,
-						[String.fromCharCode("a".charCodeAt(0) + Object.entries(prev).length)]: curr,
-					};
+				guess.reduce<Record<string, number>>((obj, curr) => {
+					obj[String.fromCharCode("a".charCodeAt(0) + Object.entries(obj).length)] = curr;
+					return obj;
 				}, {}),
 			),
 		);
@@ -357,13 +359,10 @@ export const gaussSeidel: GaussMethod = ({
 			guess[i] = evaluate(
 				func,
 				// Merging all guesses in a single object
-				guess.reduce(
-					(prev, curr) => ({
-						...prev,
-						[String.fromCharCode("a".charCodeAt(0) + Object.entries(prev).length)]: curr,
-					}),
-					{},
-				),
+				guess.reduce<Record<string, number>>((obj, curr) => {
+					obj[String.fromCharCode("a".charCodeAt(0) + Object.entries(obj).length)] = curr;
+					return obj;
+				}, {}),
 			);
 		});
 
