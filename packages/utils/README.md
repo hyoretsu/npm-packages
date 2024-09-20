@@ -5,6 +5,7 @@ List of utility functions:
 - degreesToRadians
 - directLink - supports GDrive
 - distanceBetweenCoordinates
+- divmod
 - fixNumber (that .00000000001 error)
 - formatPhoneNumber (currently supports BR and US numbers)
 - haversine and archaversine

@@ -3,6 +3,7 @@ export * from "./funcs/clamp";
 export * from "./funcs/degreesToRadians";
 export * from "./funcs/directLink";
 export * from "./funcs/distanceBetweenCoordinates";
+export * from "./funcs/divmod";
 export * from "./funcs/fixNumber";
 export * from "./funcs/formatPhoneNumber";
 export * from "./funcs/haversine";
