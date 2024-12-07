@@ -1,11 +1,11 @@
-export function setUrlState(key: string[], value: any[]): string {
+export function setUrlState(statesToSet: Record<string, any>): string {
 	const url = new URL(document.URL);
 
-	for (let i = 0; i < key.length; i++) {
-		if (url.searchParams.get(key[i]) === value[i]) {
-			url.searchParams.delete(key[i]);
+	for (const [key, value] of Object.entries(statesToSet)) {
+		if (!value) {
+			url.searchParams.delete(key);
 		} else {
-			url.searchParams.set(key[i], value[i]);
+			url.searchParams.set(key, value);
 		}
 	}
 
