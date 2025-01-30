@@ -1,5 +1,6 @@
 import { validHex } from "./validHex";
 
+/** Supports alpha channel. */
 export const hexToHsl = (hex: string) => {
 	if (!validHex(hex)) {
 		throw new Error("Please provide a valid color hex string.");
@@ -17,6 +18,7 @@ export const hexToHsl = (hex: string) => {
 	const r = parseInt(colors[0], 16) / 255;
 	const g = parseInt(colors[1], 16) / 255;
 	const b = parseInt(colors[2], 16) / 255;
+	const a = parseInt(colors[3], 16) / 255;
 
 	const max = Math.max(r, g, b);
 	const min = Math.min(r, g, b);
@@ -53,5 +55,5 @@ export const hexToHsl = (hex: string) => {
 	s = Math.round(s * 100);
 	l = Math.round(l * 100);
 
-	return `hsl(${h}, ${s}%, ${l}%)`;
+	return `hsl(${h}, ${s}%, ${l}%, ${a})`;
 };
