@@ -1,13 +1,5 @@
 {
 	"name": "npm-packages",
-	"private": true,
-	"workspaces": ["packages/*"],
-	"scripts": {
-		"prepare": "git config --local core.hooksPath .githooks"
-	},
-	"lint-staged": {
-		"**/*.(json|js|jsx|ts|tsx)": ["biome format --write"]
-	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.7.1",
 		"@swc-node/register": "^1.6.3",
@@ -15,5 +7,13 @@
 		"@types/node": "^20.11.28",
 		"lint-staged": "^15.2.2"
 	},
-	"trustedDependencies": ["@biomejs/biome", "@swc/core", "bcrypt", "esbuild"]
+	"lint-staged": {
+		"**/*.(json|js|jsx|ts|tsx)": ["biome format --write"]
+	},
+	"private": true,
+	"scripts": {
+		"prepare": "git config --local core.hooksPath .githooks"
+	},
+	"trustedDependencies": ["@biomejs/biome", "@swc/core", "bcrypt", "esbuild"],
+	"workspaces": ["packages/*"]
 }
