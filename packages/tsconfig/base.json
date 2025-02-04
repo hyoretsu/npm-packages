@@ -1,0 +1,15 @@
+{
+	"extends": "@tsconfig/bun/tsconfig.json",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"composite": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"noImplicitAny": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"removeComments": false,
+		"resolveJsonModule": true,
+		"strictNullChecks": true
+	}
+}
