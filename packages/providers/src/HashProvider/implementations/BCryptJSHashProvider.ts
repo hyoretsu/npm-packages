@@ -1,7 +1,7 @@
-import { compare, hash } from "bcrypt";
+import { compare, hash } from "bcryptjs";
 import type { HashProvider } from "../models";
 
-export class BCryptHashProvider implements HashProvider {
+export class BCryptJSHashProvider implements HashProvider {
 	public async compareHash(payload: string, hashed: string): Promise<boolean> {
 		return compare(payload, hashed);
 	}

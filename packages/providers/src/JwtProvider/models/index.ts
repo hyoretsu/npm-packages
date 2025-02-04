@@ -1,7 +1,3 @@
-export interface IJwtProvider {
-	sign(subject: any, expiresIn: number): Promise<string>;
-}
-
 export interface SignJwt {
 	/** Signature or encryption algorithm. */
 	alg?:
@@ -28,7 +24,12 @@ export interface VerifyJwt {
 	jwt: string;
 }
 
-export abstract class JwtProvider {
+export interface IJwtProvider {
+	sign(data: SignJwt): Promise<string>;
+	verify(data: VerifyJwt): Promise<Record<string, any>>;
+}
+
+export abstract class JwtProvider implements IJwtProvider {
 	abstract sign(data: SignJwt): Promise<string>;
 	abstract verify(data: VerifyJwt): Promise<Record<string, any>>;
 }

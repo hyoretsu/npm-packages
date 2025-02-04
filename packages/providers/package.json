@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/providers",
 	"description": "A collection of useful providers for Node.js",
-	"version": "1.2.4",
+	"version": "1.2.5",
 	"keywords": ["backend", "nodejs", "providers", "utils"],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
@@ -26,6 +26,7 @@
 		"prepublish": "tsup"
 	},
 	"dependencies": {
+		"bcrypt": "^5.1.1",
 		"bcryptjs": "^2.4.3",
 		"jose": "^5.6.3",
 		"jsonwebtoken": "^9.0.2",
