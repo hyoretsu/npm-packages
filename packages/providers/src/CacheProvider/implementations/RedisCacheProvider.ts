@@ -9,7 +9,7 @@ export class RedisCacheProvider extends CacheProvider {
 		await this.client.del(key);
 	}
 
-	public async get({ expiration, key, mode = "get", newValue }: GetCache): Promise<CacheValue | null> {
+	public async get<T = CacheValue>({ expiration, key, mode = "get", newValue }: GetCache): Promise<T | null> {
 		let value: string | null;
 
 		switch (mode) {
@@ -42,7 +42,7 @@ export class RedisCacheProvider extends CacheProvider {
 
 	private serialize(value: CacheValue): string {
 		if (typeof value === "bigint") {
-			value = Number(value);
+			value = Array.isArray(value) ? value.map(Number) : Number(value);
 		}
 
 		return JSON.stringify(value);

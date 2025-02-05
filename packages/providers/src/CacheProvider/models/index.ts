@@ -1,4 +1,5 @@
-export type CacheValue = bigint | boolean | number | string | Record<string, any>;
+export type CacheValueBase = bigint | boolean | number | string | Record<string, any>;
+export type CacheValue = CacheValueBase | CacheValueBase[];
 export type Iso8601Duration = string;
 export type Expiration = number | Iso8601Duration;
 
@@ -26,6 +27,6 @@ export interface ICacheProvider {
 
 export abstract class CacheProvider implements ICacheProvider {
 	abstract delete(key: string): Promise<void>;
-	abstract get(data: GetCache): Promise<CacheValue | null>;
+	abstract get<T = CacheValue>(data: GetCache): Promise<T | null>;
 	abstract set(data: SetCache): Promise<void>;
 }
