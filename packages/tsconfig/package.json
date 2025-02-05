@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/tsconfig",
 	"description": "A default config for TypeScript projects.",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/tsconfig",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",

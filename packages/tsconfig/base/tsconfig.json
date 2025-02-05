@@ -5,6 +5,7 @@
 		"composite": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
+		"incremental": true,
 		"isolatedModules": true,
 		"noImplicitAny": true,
 		"noPropertyAccessFromIndexSignature": false,
