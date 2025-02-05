@@ -49,6 +49,8 @@ export class RedisCacheProvider extends CacheProvider {
 	}
 
 	public async set({ expiration = 0, key, value }: SetCache): Promise<void> {
-		await this.client.setex(key, this.parseExpiration(expiration), this.serialize(value));
+		const args = (expiration ? ["PX", this.parseExpiration(expiration)] : []) as ["PX", number];
+
+		await this.client.set(key, this.serialize(value), ...args);
 	}
 }
