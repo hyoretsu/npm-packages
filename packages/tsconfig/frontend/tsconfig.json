@@ -1,5 +1,5 @@
 {
-	"extends": "../base.json",
+	"extends": "../base/tsconfig.json",
 	"compilerOptions": {
 		"lib": ["DOM", "DOM.Iterable", "ESNext"]
 	}
