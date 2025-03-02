@@ -1,6 +1,6 @@
 import { Redis } from "ioredis";
-import { CacheProvider, type CacheValue, type Expiration, type GetCache, type SetCache } from "../models";
 import { parse, toSeconds } from "iso8601-duration";
+import { CacheProvider, type CacheValue, type Expiration, type GetCache, type SetCache } from "../models";
 
 export class RedisCacheProvider extends CacheProvider {
 	private client: Redis = new Redis(process.env.CACHE_URL!);
@@ -49,7 +49,7 @@ export class RedisCacheProvider extends CacheProvider {
 	}
 
 	public async set({ expiration = 0, key, value }: SetCache): Promise<void> {
-		const args = (expiration ? ["PX", this.parseExpiration(expiration)] : []) as ["PX", number];
+		const args = (expiration !== 0 ? ["PX", this.parseExpiration(expiration)] : []) as ["PX", number];
 
 		await this.client.set(key, this.serialize(value), ...args);
 	}
