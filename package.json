@@ -14,6 +14,6 @@
 	"scripts": {
 		"prepare": "git config --local core.hooksPath .githooks"
 	},
-	"trustedDependencies": ["@biomejs/biome", "@swc/core", "bcrypt", "esbuild"],
+	"trustedDependencies": ["@biomejs/biome", "@swc/core", "bcrypt", "esbuild", "protobufjs"],
 	"workspaces": ["packages/*"]
 }
