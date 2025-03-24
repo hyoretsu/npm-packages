@@ -264,6 +264,10 @@ export const gaussJacobi: GaussMethod = ({
 	precision,
 	options: { maxIterations = Number.POSITIVE_INFINITY } = {},
 }) => {
+	if (precision === 0) {
+		precision = 1e-5;
+	}
+
 	const coefficientsL = [...coefficients];
 	const independentTermsL = [...independentTerms];
 
@@ -333,6 +337,10 @@ export const gaussSeidel: GaussMethod = ({
 	precision,
 	options: { maxIterations = Number.POSITIVE_INFINITY } = {},
 }) => {
+	if (precision === 0) {
+		precision = 1e-5;
+	}
+
 	const coefficientsL = [...coefficients];
 	const independentTermsL = [...independentTerms];
 

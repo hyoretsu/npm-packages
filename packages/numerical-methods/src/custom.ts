@@ -49,6 +49,10 @@ export const minMaxBisection: MinMaxBisection = ({
 		relativeError,
 	} = {},
 }) => {
+	if (precision === 0) {
+		precision = 1e-5;
+	}
+
 	const details = [];
 	let iterations = -1;
 	const nextResults = { a: [0, 0], b: [0, 0] };

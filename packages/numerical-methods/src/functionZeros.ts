@@ -70,6 +70,10 @@ export const bisection: SimpleZerosFunction = ({
 		relativeError,
 	} = {},
 }) => {
+	if (precision === 0) {
+		precision = 1e-5;
+	}
+
 	const details = [];
 	let iterations = -1;
 	let trueX = typeof relativeError === "number" && relativeError;
@@ -147,6 +151,10 @@ export const falsePosition: SimpleZerosFunction = ({
 		relativeError = false,
 	} = {},
 }) => {
+	if (precision === 0) {
+		precision = 1e-5;
+	}
+
 	const details = [];
 	let iterations = -1;
 	let trueX = typeof relativeError === "number" && relativeError;
@@ -253,6 +261,10 @@ export const newtonRaphson: NewtonRaphson = ({
 		relativeError = false,
 	} = {},
 }) => {
+	if (precision === 0) {
+		precision = 1e-5;
+	}
+
 	const details = [];
 	let iterations = -1;
 	let trueX = typeof relativeError === "number" && relativeError;
@@ -337,6 +349,10 @@ export const secant: Secant = ({
 		relativeError = false,
 	} = {},
 }) => {
+	if (precision === 0) {
+		precision = 1e-5;
+	}
+
 	const details = [];
 	let iterations = -1;
 	let trueX = typeof relativeError === "number" && relativeError;
