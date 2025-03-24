@@ -10,9 +10,11 @@ export namespace Interpolation {
 		targetX?: number;
 	}
 
-	export interface Results {
-		polynomial: string;
-		result?: number;
+	export interface Results<Details = {}> {
+		result: string;
+		details: {
+			targetResult?: number;
+		} & Details;
 	}
 }
 
@@ -42,17 +44,21 @@ export const lagrangeInterpolation: InterpolationMethod = ({ x, y, targetX }) =>
 		.reduce((prev, curr) => (prev ? `${prev} + ${curr}` : curr), "");
 
 	return {
-		polynomial,
-		...(targetX && {
-			result: fixNumber(evaluate(polynomial, { x: targetX })),
-		}),
+		result: polynomial,
+		details: {
+			...(targetX && {
+				targetResult: fixNumber(evaluate(polynomial, { x: targetX })),
+			}),
+		},
 	};
 };
 
 export const vandermondeInterpolation: InterpolationMethod = ({ x, y, targetX }) => {
 	const dimension = x.length;
 
-	const [{ solution: vandermondeResults }] = gaussSeidel({
+	const {
+		result: { solution: vandermondeResults },
+	} = gaussSeidel({
 		coefficients: x.map((coefficient, i) => range(dimension).map(j => coefficient ** j)),
 		independentTerms: y,
 		precision: 1e-9,
@@ -65,16 +71,18 @@ export const vandermondeInterpolation: InterpolationMethod = ({ x, y, targetX })
 	}, "");
 
 	return {
-		polynomial,
-		...(targetX && {
-			result: fixNumber(evaluate(polynomial, { x: targetX })),
-		}),
+		result: polynomial,
+		details: {
+			...(targetX && {
+				targetResult: fixNumber(evaluate(polynomial, { x: targetX })),
+			}),
+		},
 	};
 };
 
-type NewtonInterpolation = (data: Interpolation.Data) => Interpolation.Results & {
-	dividedDifferences: number[][];
-};
+type NewtonInterpolation = (
+	data: Interpolation.Data,
+) => Interpolation.Results<{ dividedDifferences: number[][] }>;
 
 export const newtonInterpolation: NewtonInterpolation = ({ x, y, targetX }) => {
 	const dividedDifferences: number[][] = [];
@@ -107,10 +115,12 @@ export const newtonInterpolation: NewtonInterpolation = ({ x, y, targetX }) => {
 		.join(" ");
 
 	return {
-		polynomial,
-		dividedDifferences,
-		...(targetX && {
-			result: evaluate(polynomial, { x: targetX }),
-		}),
+		result: polynomial,
+		details: {
+			dividedDifferences,
+			...(targetX && {
+				result: evaluate(polynomial, { x: targetX }),
+			}),
+		},
 	};
 };

@@ -5,7 +5,9 @@ import { minMaxBisection } from "./custom";
 
 export type IntegrationMethod = (info: { func: string; pointN: number; x: [number, number] }) => {
 	result: number;
-	error: number;
+	details: {
+		error: number;
+	};
 };
 
 export const integrationParams = {
@@ -49,7 +51,7 @@ export const trapezoidalRule: IntegrationMethod = ({ func, pointN, x }) => {
 	const error =
 		(amplitude ** 3 / (12 * intervals ** 2)) * Math.abs(evaluate(secondDerivative, { x: maxPoint }));
 
-	return { result, error };
+	return { result, details: { error } };
 };
 
 export const simpsonRule13: IntegrationMethod = ({ func, pointN, x }) => {
@@ -90,5 +92,5 @@ export const simpsonRule13: IntegrationMethod = ({ func, pointN, x }) => {
 	const error =
 		(amplitude ** 5 / (180 * intervals ** 2)) * Math.abs(evaluate(fourthDerivative, { x: maxPoint }));
 
-	return { result, error };
+	return { result, details: { error } };
 };

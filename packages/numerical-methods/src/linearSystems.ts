@@ -72,7 +72,7 @@ export const doolittleLuDecompositionParams = {
 };
 
 // Bug com matriz 4x4
-export const doolittleLuDecomposition = (matrix: Matrix): LUMatrices => {
+export const doolittleLuDecomposition = (matrix: Matrix): { result: LUMatrices } => {
 	if (matrix.length !== matrix[0].length) {
 		throw new Error("Matrix must be square");
 	}
@@ -111,8 +111,10 @@ export const doolittleLuDecomposition = (matrix: Matrix): LUMatrices => {
 	});
 
 	return {
-		l,
-		u,
+		result: {
+			l,
+			u,
+		},
 	};
 };
 
@@ -204,9 +206,11 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 	}
 
 	return {
-		transformedFuncs,
-		results,
-		steps,
+		result: results,
+		details: {
+			transformedFuncs,
+			steps,
+		},
 	};
 };
 
