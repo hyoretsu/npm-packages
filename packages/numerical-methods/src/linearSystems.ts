@@ -230,21 +230,21 @@ export type GaussMethod = (
 			maxIterations?: number;
 		};
 	},
-) => [
-	results: {
+) => {
+	result: {
 		iterations: number;
 		iterationFunc: string[];
 		spectralRadius: number;
 		solution: number[];
-	},
+	};
 	details: Array<{
 		iteration: number;
 		currentGuess: number[];
 		nextGuess: number[];
 		absoluteError: number;
 		relativeError: number;
-	}>,
-];
+	}>;
+};
 
 export const gaussMethodParams = {
 	...linearSystemParams,
@@ -312,15 +312,15 @@ export const gaussJacobi: GaussMethod = ({
 		if (relativeError < precision || iterations >= maxIterations) break;
 	}
 
-	return [
-		{
+	return {
+		result: {
 			iterations,
 			iterationFunc,
 			spectralRadius: spectralRadius(coefficients),
 			solution: guess,
 		},
 		details,
-	];
+	};
 };
 
 export const gaussSeidel: GaussMethod = ({
@@ -381,13 +381,13 @@ export const gaussSeidel: GaussMethod = ({
 		if ((iterations > 0 && relativeError < precision) || iterations >= maxIterations) break;
 	}
 
-	return [
-		{
+	return {
+		result: {
 			iterations,
 			iterationFunc,
 			spectralRadius: spectralRadius(coefficients),
 			solution: guess,
 		},
 		details,
-	];
+	};
 };

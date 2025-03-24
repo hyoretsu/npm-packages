@@ -45,18 +45,18 @@ export type SimpleZerosFunction = (info: {
 	interval: [number, number];
 	precision: number;
 	options?: FunctionZeros.Options;
-}) => [
-	results: {
+}) => {
+	result: {
 		iterations: number;
 		interval: [string, string];
-	},
+	};
 	details: Array<
 		FunctionZeros.Details & {
 			interval: number[];
 			results: number[];
 		}
-	>,
-];
+	>;
+};
 
 export const bisection: SimpleZerosFunction = ({
 	func,
@@ -126,13 +126,13 @@ export const bisection: SimpleZerosFunction = ({
 		throw new Error(`Something went wrong, less iterations than the minimum (${minIterations}) were done.`);
 	}
 
-	return [
-		{
+	return {
+		result: {
 			iterations,
 			interval: [a.toPrecision(21), b.toPrecision(21)],
 		},
 		details,
-	];
+	};
 };
 
 export const falsePosition: SimpleZerosFunction = ({
@@ -206,13 +206,13 @@ export const falsePosition: SimpleZerosFunction = ({
 			break;
 	}
 
-	return [
-		{
+	return {
+		result: {
 			iterations,
 			interval: [a.toPrecision(21), b.toPrecision(21)],
 		},
 		details,
-	];
+	};
 };
 
 export const newtonRaphsonParams = {
@@ -227,19 +227,19 @@ export type NewtonRaphson = (params: {
 	initialX: number;
 	precision: number;
 	options?: FunctionZeros.Options;
-}) => [
-	results: {
+}) => {
+	result: {
 		iterations: number;
 		x: string;
-	},
+	};
 	details: Array<
 		FunctionZeros.Details & {
 			prevX: number;
 			prevY: number;
 			diffY: number;
 		}
-	>,
-];
+	>;
+};
 
 export const newtonRaphson: NewtonRaphson = ({
 	func,
@@ -298,13 +298,13 @@ export const newtonRaphson: NewtonRaphson = ({
 			break;
 	}
 
-	return [
-		{
+	return {
+		result: {
 			iterations,
 			x: x.toPrecision(21),
 		},
 		details,
-	];
+	};
 };
 
 export type Secant = (params: {
@@ -312,18 +312,18 @@ export type Secant = (params: {
 	interval: [number, number];
 	precision: number;
 	options?: FunctionZeros.Options;
-}) => [
-	results: {
+}) => {
+	result: {
 		iterations: number;
 		interval: [string, string];
-	},
+	};
 	details: Array<
 		FunctionZeros.Details & {
 			interval: number[];
 			results: number[];
 		}
-	>,
-];
+	>;
+};
 
 export const secant: Secant = ({
 	func,
@@ -382,11 +382,11 @@ export const secant: Secant = ({
 		b = c;
 	}
 
-	return [
-		{
+	return {
+		result: {
 			iterations,
 			interval: [a.toPrecision(21), b.toPrecision(21)],
 		},
 		details,
-	];
+	};
 };
