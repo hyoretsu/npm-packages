@@ -1,11 +1,80 @@
 import { fixNumber, range, swap } from "@hyoretsu/utils";
 import { evaluate } from "mathjs";
 
+export interface LinearSystem {
+	coefficients: Matrix;
+	independentTerms: number[];
+}
+
 export type Matrix = number[][];
 
-export interface LUMatrices {
-	l: Matrix;
-	u: Matrix;
+export namespace LinearSystems {
+	export interface LUMatrices {
+		l: Matrix;
+		u: Matrix;
+	}
+
+	export type LUComposition = (data: LUMatrices) => Matrix;
+
+	export namespace LUDecomposition {
+		export type Doolittle = (data: Matrix) => LUDecomposition.Doolittle.Return;
+		export namespace Doolittle {
+			export interface Return {
+				result: LUMatrices;
+			}
+		}
+	}
+
+	export type GaussianElimination = (data: LinearSystem) => GaussianElimination.Return;
+	export namespace GaussianElimination {
+		export type Result = Record<string, number>;
+
+		export interface Step {
+			coefficients: string[];
+			independentTerms: string[];
+		}
+
+		export type TransformedFuncs = string[];
+
+		export interface Details {
+			steps: Step[];
+			transformedFuncs: TransformedFuncs;
+		}
+
+		export type Return = {
+			result: Result;
+			details: Details;
+		};
+	}
+
+	export type GaussMethod = (data: GaussMethod.Params) => GaussMethod.Return;
+	export namespace GaussMethod {
+		export type Params = LinearSystem & {
+			precision: number;
+			options?: {
+				/** Maximum number of iterations. */
+				maxIterations?: number;
+			};
+		};
+
+		export interface Result {
+			iterations: number;
+			iterationFunc: string[];
+			spectralRadius: number;
+			solution: number[];
+		}
+		export type Details = Array<{
+			iteration: number;
+			currentGuess: number[];
+			nextGuess: number[];
+			absoluteError: number;
+			relativeError: number;
+		}>;
+		export interface Return {
+			result: Result;
+			details: Details;
+		}
+	}
 }
 
 const matrixParam = "number[][]";
@@ -15,7 +84,7 @@ export const luCompositionParams = {
 	u: matrixParam,
 };
 
-export const luComposition = ({ l, u }: LUMatrices): Matrix => {
+export const luComposition: LinearSystems.LUComposition = ({ l, u }) => {
 	if (l.length !== l[0].length || u.length !== u[0].length) {
 		throw new Error("Both matrices must be square");
 	}
@@ -72,7 +141,7 @@ export const doolittleLuDecompositionParams = {
 };
 
 // Bug com matriz 4x4
-export const doolittleLuDecomposition = (matrix: Matrix): { result: LUMatrices } => {
+export const doolittleLuDecomposition: LinearSystems.LUDecomposition.Doolittle = matrix => {
 	if (matrix.length !== matrix[0].length) {
 		throw new Error("Matrix must be square");
 	}
@@ -118,11 +187,6 @@ export const doolittleLuDecomposition = (matrix: Matrix): { result: LUMatrices }
 	};
 };
 
-export interface LinearSystem {
-	coefficients: Matrix;
-	independentTerms: number[];
-}
-
 const linearSystemParams = {
 	coefficients: matrixParam,
 	independentTerms: "number[]",
@@ -130,7 +194,10 @@ const linearSystemParams = {
 
 export const gaussianEliminationParams = linearSystemParams;
 
-export const gaussianElimination = ({ coefficients, independentTerms }: LinearSystem) => {
+export const gaussianElimination: LinearSystems.GaussianElimination = ({
+	coefficients,
+	independentTerms,
+}) => {
 	const coefficientsL = [...coefficients];
 	const independentTermsL = [...independentTerms];
 
@@ -152,12 +219,19 @@ export const gaussianElimination = ({ coefficients, independentTerms }: LinearSy
 
 		swap(coefficientsL, j, highestLine);
 		swap(independentTermsL, j, highestLine);
-		steps.push(
-			coefficientsL.map((line, i) => [
-				...line.map(number => number.toFixed(2)),
-				independentTermsL[i].toFixed(2),
-			]),
-		);
+		for (const line of coefficientsL) {
+			const step: LinearSystems.GaussianElimination.Step = {
+				coefficients: [],
+				independentTerms: [],
+			};
+
+			for (const [i, number] of line.entries()) {
+				step.independentTerms.push(number.toFixed(2));
+				step.independentTerms.push(independentTermsL[i].toFixed(2));
+			}
+
+			steps.push(step);
+		}
 
 		const multipliers = [];
 
@@ -226,30 +300,6 @@ export const spectralRadius = (coefficients: Matrix): number => {
 	);
 };
 
-export type GaussMethod = (
-	data: LinearSystem & {
-		precision: number;
-		options?: {
-			/** Maximum number of iterations. */
-			maxIterations?: number;
-		};
-	},
-) => {
-	result: {
-		iterations: number;
-		iterationFunc: string[];
-		spectralRadius: number;
-		solution: number[];
-	};
-	details: Array<{
-		iteration: number;
-		currentGuess: number[];
-		nextGuess: number[];
-		absoluteError: number;
-		relativeError: number;
-	}>;
-};
-
 export const gaussMethodParams = {
 	...linearSystemParams,
 	precision: "number",
@@ -258,7 +308,7 @@ export const gaussMethodParams = {
 	},
 };
 
-export const gaussJacobi: GaussMethod = ({
+export const gaussJacobi: LinearSystems.GaussMethod = ({
 	coefficients,
 	independentTerms,
 	precision,
@@ -331,7 +381,7 @@ export const gaussJacobi: GaussMethod = ({
 	};
 };
 
-export const gaussSeidel: GaussMethod = ({
+export const gaussSeidel: LinearSystems.GaussMethod = ({
 	coefficients,
 	independentTerms,
 	precision,

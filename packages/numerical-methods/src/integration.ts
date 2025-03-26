@@ -3,12 +3,23 @@ import { derivative, evaluate } from "mathjs";
 
 import { minMaxBisection } from "./custom";
 
-export type IntegrationMethod = (info: { func: string; pointN: number; x: [number, number] }) => {
-	result: number;
-	details: {
+export type Integration = (data: Integration.Params) => Integration.Return;
+export namespace Integration {
+	export interface Params {
+		func: string;
+		pointN: number;
+		x: [number, number];
+	}
+
+	export type Result = number;
+	export interface Details {
 		error: number;
-	};
-};
+	}
+	export interface Return {
+		result: Integration.Result;
+		details: Integration.Details;
+	}
+}
 
 export const integrationParams = {
 	func: "string",
@@ -16,7 +27,7 @@ export const integrationParams = {
 	x: "[number,number]",
 };
 
-export const trapezoidalRule: IntegrationMethod = ({ func, pointN, x }) => {
+export const trapezoidalRule: Integration = ({ func, pointN, x }) => {
 	const intervals = pointN - 1;
 
 	const amplitude = (x[1] - x[0]) / intervals;
@@ -34,11 +45,11 @@ export const trapezoidalRule: IntegrationMethod = ({ func, pointN, x }) => {
 
 	const secondDerivative = derivative(derivative(func, "x"), "x").toString();
 
-	const [
-		{
+	const {
+		result: {
 			interval: [maxPoint],
 		},
-	] = minMaxBisection({
+	} = minMaxBisection({
 		func: secondDerivative,
 		interval: [x[0], x[1]],
 		target: "max",
@@ -54,7 +65,7 @@ export const trapezoidalRule: IntegrationMethod = ({ func, pointN, x }) => {
 	return { result, details: { error } };
 };
 
-export const simpsonRule13: IntegrationMethod = ({ func, pointN, x }) => {
+export const simpsonRule13: Integration = ({ func, pointN, x }) => {
 	const intervals = pointN - 1;
 
 	const amplitude = (x[1] - x[0]) / intervals;
@@ -75,11 +86,11 @@ export const simpsonRule13: IntegrationMethod = ({ func, pointN, x }) => {
 		"x",
 	).toString();
 
-	const [
-		{
+	const {
+		result: {
 			interval: [maxPoint],
 		},
-	] = minMaxBisection({
+	} = minMaxBisection({
 		func: fourthDerivative,
 		interval: x,
 		target: "max",

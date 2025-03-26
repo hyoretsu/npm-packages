@@ -3,24 +3,33 @@ import { evaluate } from "mathjs";
 
 import type { FunctionZeros } from "./functionZeros";
 
-type MinMaxBisection = (info: {
-	func: string;
-	interval: [number, number];
-	target: "min" | "max";
-	precision: number;
-	options?: Omit<FunctionZeros.Options, "bail">;
-}) => [
-	results: {
-		iterations: number;
-		interval: [string, string];
-	},
-	details: Array<
-		Omit<FunctionZeros.Details, "condition2"> & {
-			interval: number[];
-			results: number[];
+export namespace Custom {
+	export type MinMaxBisection = (info: MinMaxBisection.Params) => MinMaxBisection.Return;
+	export namespace MinMaxBisection {
+		export interface Params {
+			func: string;
+			interval: [number, number];
+			target: "min" | "max";
+			precision: number;
+			options?: Omit<FunctionZeros.Options, "bail">;
 		}
-	>,
-];
+
+		export type Details = Array<
+			Omit<FunctionZeros.Details, "condition2"> & {
+				interval: number[];
+				results: number[];
+			}
+		>;
+		export interface Result {
+			iterations: number;
+			interval: [string, string];
+		}
+		export interface Return {
+			result: Result;
+			details: Details;
+		}
+	}
+}
 
 const minMaxBisectionOptionsParams = {
 	conditionsWhitelist: "[boolean,boolean]",
@@ -37,7 +46,7 @@ export const minMaxBisectionParams = {
 	options: minMaxBisectionOptionsParams,
 };
 
-export const minMaxBisection: MinMaxBisection = ({
+export const minMaxBisection: Custom.MinMaxBisection = ({
 	func,
 	interval: [a, b],
 	target,
@@ -135,11 +144,11 @@ export const minMaxBisection: MinMaxBisection = ({
 		throw new Error(`Something went wrong, less iterations than the minimum (${minIterations}) were done.`);
 	}
 
-	return [
-		{
+	return {
+		result: {
 			iterations,
 			interval: [a.toPrecision(21), b.toPrecision(21)],
 		},
 		details,
-	];
+	};
 };

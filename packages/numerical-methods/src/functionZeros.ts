@@ -2,15 +2,6 @@ import { fixNumber } from "@hyoretsu/utils";
 import { derivative, evaluate } from "mathjs";
 
 export namespace FunctionZeros {
-	export interface Details {
-		iteration: number;
-		x: number;
-		y?: number;
-		relativeError?: number;
-		condition1: number;
-		condition2: number;
-	}
-
 	export interface Options {
 		/** Stop iterating as soon as any of the conditions are true. */
 		bail?: boolean;
@@ -22,6 +13,64 @@ export namespace FunctionZeros {
 		origFunc?: string;
 		/** Outputs the relative error between the new X and the last X or the true X, if given. */
 		relativeError?: number | boolean;
+	}
+
+	export interface Params {
+		func: string;
+		interval: [number, number];
+		precision: number;
+		options?: Options;
+	}
+
+	export interface Result {
+		interval: [string, string];
+		iterations: number;
+	}
+	export interface Details {
+		iteration: number;
+		x: number;
+		y?: number;
+		relativeError?: number;
+		condition1: number;
+		condition2: number;
+		interval: number[];
+		results: number[];
+	}
+	export interface Return {
+		result: Result;
+		details: Details[];
+	}
+
+	export type NewtonRaphson = (info: NewtonRaphson.Params) => NewtonRaphson.Return;
+	export namespace NewtonRaphson {
+		export type Params = Omit<FunctionZeros.Params, "interval"> & {
+			initialX: number;
+		};
+
+		export interface Return {
+			result: Omit<FunctionZeros.Result, "interval"> & {
+				x: string;
+			};
+			details: Array<
+				Omit<FunctionZeros.Details, "interval" | "results"> & {
+					prevX: number;
+					prevY: number;
+					diffY: number;
+				}
+			>;
+		}
+	}
+
+	export type Secant = (info: Secant.Params) => Secant.Return;
+	export namespace Secant {
+		export type Params = FunctionZeros.Params;
+		export type Return = FunctionZeros.Return;
+	}
+
+	export type Simple = (info: Simple.Params) => Simple.Return;
+	export namespace Simple {
+		export type Params = FunctionZeros.Params;
+		export type Return = FunctionZeros.Return;
 	}
 }
 
@@ -40,25 +89,7 @@ export const zerosFunctionParams = {
 	options: functionZerosOptionsParams,
 };
 
-export type SimpleZerosFunction = (info: {
-	func: string;
-	interval: [number, number];
-	precision: number;
-	options?: FunctionZeros.Options;
-}) => {
-	result: {
-		iterations: number;
-		interval: [string, string];
-	};
-	details: Array<
-		FunctionZeros.Details & {
-			interval: number[];
-			results: number[];
-		}
-	>;
-};
-
-export const bisection: SimpleZerosFunction = ({
+export const bisection: FunctionZeros.Simple = ({
 	func,
 	interval: [a, b],
 	precision,
@@ -139,7 +170,7 @@ export const bisection: SimpleZerosFunction = ({
 	};
 };
 
-export const falsePosition: SimpleZerosFunction = ({
+export const falsePosition: FunctionZeros.Simple = ({
 	func,
 	interval: [a, b],
 	precision,
@@ -230,26 +261,7 @@ export const newtonRaphsonParams = {
 	options: functionZerosOptionsParams,
 };
 
-export type NewtonRaphson = (params: {
-	func: string;
-	initialX: number;
-	precision: number;
-	options?: FunctionZeros.Options;
-}) => {
-	result: {
-		iterations: number;
-		x: string;
-	};
-	details: Array<
-		FunctionZeros.Details & {
-			prevX: number;
-			prevY: number;
-			diffY: number;
-		}
-	>;
-};
-
-export const newtonRaphson: NewtonRaphson = ({
+export const newtonRaphson: FunctionZeros.NewtonRaphson = ({
 	func,
 	initialX: x,
 	precision,
@@ -319,25 +331,7 @@ export const newtonRaphson: NewtonRaphson = ({
 	};
 };
 
-export type Secant = (params: {
-	func: string;
-	interval: [number, number];
-	precision: number;
-	options?: FunctionZeros.Options;
-}) => {
-	result: {
-		iterations: number;
-		interval: [string, string];
-	};
-	details: Array<
-		FunctionZeros.Details & {
-			interval: number[];
-			results: number[];
-		}
-	>;
-};
-
-export const secant: Secant = ({
+export const secant: FunctionZeros.Secant = ({
 	func,
 	interval: [a, b],
 	precision,

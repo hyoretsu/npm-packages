@@ -3,18 +3,31 @@ import { evaluate } from "mathjs";
 
 import { gaussSeidel } from "./linearSystems";
 
+export type Interpolation = (data: Interpolation.Params) => Interpolation.Return;
 export namespace Interpolation {
-	export interface Data {
+	export interface Params {
 		x: number[];
 		y: number[];
 		targetX?: number;
 	}
 
-	export interface Results<Details = {}> {
-		result: string;
-		details: {
-			targetResult?: number;
-		} & Details;
+	export type Result = string;
+	export interface Details {
+		targetResult?: number;
+	}
+	export interface Return {
+		result: Interpolation.Result;
+		details: Interpolation.Details;
+	}
+
+	export type Newton = (data: Interpolation.Newton.Params) => Interpolation.Newton.Return;
+	export namespace Newton {
+		export type Params = Interpolation.Params;
+		export type Return = Interpolation.Return & {
+			details: {
+				dividedDifferences: number[][];
+			};
+		};
 	}
 }
 
@@ -24,9 +37,7 @@ export const interpolationParams = {
 	targetX: "number|undefined",
 };
 
-export type InterpolationMethod = (data: Interpolation.Data) => Interpolation.Results;
-
-export const lagrangeInterpolation: InterpolationMethod = ({ x, y, targetX }) => {
+export const lagrangeInterpolation: Interpolation = ({ x, y, targetX }) => {
 	const polynomial = y
 		.map((result, i) => {
 			let numerator = "";
@@ -53,7 +64,7 @@ export const lagrangeInterpolation: InterpolationMethod = ({ x, y, targetX }) =>
 	};
 };
 
-export const vandermondeInterpolation: InterpolationMethod = ({ x, y, targetX }) => {
+export const vandermondeInterpolation: Interpolation = ({ x, y, targetX }) => {
 	const dimension = x.length;
 
 	const {
@@ -80,11 +91,7 @@ export const vandermondeInterpolation: InterpolationMethod = ({ x, y, targetX })
 	};
 };
 
-type NewtonInterpolation = (
-	data: Interpolation.Data,
-) => Interpolation.Results<{ dividedDifferences: number[][] }>;
-
-export const newtonInterpolation: NewtonInterpolation = ({ x, y, targetX }) => {
+export const newtonInterpolation: Interpolation.Newton = ({ x, y, targetX }) => {
 	const dividedDifferences: number[][] = [];
 
 	// Creating all of the divided differences
