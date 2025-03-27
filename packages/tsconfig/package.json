@@ -18,7 +18,7 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"prepublish": "tsup"
+		"prepublishOnly": "tsup"
 	},
 	"dependencies": {
 		"@tsconfig/bun": "^1.0.7"

@@ -2,14 +2,7 @@
 	"name": "@hyoretsu/decorators",
 	"description": "A collection of useful decorators (mainly Nest.js)",
 	"version": "1.1.8",
-	"keywords": [
-		"backend",
-		"class-validator",
-		"decorator",
-		"decorators",
-		"fastify",
-		"nestjs"
-	],
+	"keywords": ["backend", "class-validator", "decorator", "decorators", "fastify", "nestjs"],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -30,7 +23,7 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"prepublish": "tsup"
+		"prepublishOnly": "tsup"
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.327.0",

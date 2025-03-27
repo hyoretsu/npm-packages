@@ -23,7 +23,7 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"prepublish": "tsup"
+		"prepublishOnly": "tsup"
 	},
 	"dependencies": {
 		"@opentelemetry/api-logs": "^0.57.2",

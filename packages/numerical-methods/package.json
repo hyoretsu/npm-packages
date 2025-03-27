@@ -23,7 +23,7 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"prepublish": "tsup"
+		"prepublishOnly": "tsup"
 	},
 	"dependencies": {
 		"@hyoretsu/utils": "^1.5.0",
