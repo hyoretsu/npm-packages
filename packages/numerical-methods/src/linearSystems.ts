@@ -47,8 +47,8 @@ export namespace LinearSystems {
 		};
 	}
 
-	export type GaussMethod = (data: GaussMethod.Params) => GaussMethod.Return;
-	export namespace GaussMethod {
+	export type GaussJacobi = (data: GaussJacobi.Params) => GaussJacobi.Return;
+	export namespace GaussJacobi {
 		export type Params = LinearSystem & {
 			precision: number;
 			options?: {
@@ -70,6 +70,20 @@ export namespace LinearSystems {
 			absoluteError: number;
 			relativeError: number;
 		}>;
+		export interface Return {
+			result: Result;
+			details: Details;
+		}
+	}
+
+	export type GaussSeidel = (data: GaussSeidel.Params) => GaussSeidel.Return;
+	export namespace GaussSeidel {
+		export type Params = GaussJacobi.Params & {
+			initialGuess?: number[];
+		};
+
+		export type Result = GaussJacobi.Result;
+		export type Details = GaussJacobi.Details;
 		export interface Return {
 			result: Result;
 			details: Details;
@@ -308,7 +322,7 @@ export const gaussMethodParams = {
 	},
 };
 
-export const gaussJacobi: LinearSystems.GaussMethod = ({
+export const gaussJacobi: LinearSystems.GaussJacobi = ({
 	coefficients,
 	independentTerms,
 	precision,
@@ -381,9 +395,10 @@ export const gaussJacobi: LinearSystems.GaussMethod = ({
 	};
 };
 
-export const gaussSeidel: LinearSystems.GaussMethod = ({
+export const gaussSeidel: LinearSystems.GaussSeidel = ({
 	coefficients,
 	independentTerms,
+	initialGuess,
 	precision,
 	options: { maxIterations = Number.POSITIVE_INFINITY } = {},
 }) => {
@@ -411,7 +426,7 @@ export const gaussSeidel: LinearSystems.GaussMethod = ({
 			String(number / coefficientsL[i][i]),
 		].join("");
 	});
-	const guess = independentTermsL.map(_ => 0);
+	const guess: number[] = initialGuess || independentTermsL.map(_ => 0);
 
 	while (true) {
 		const prevGuess = [...guess];
