@@ -16,8 +16,5 @@
 		"name": "Aran Leite",
 		"email": "hyoretsu@gmail.com",
 		"url": "https://www.linkedin.com/in/aranleite"
-	},
-	"scripts": {
-		"prepublishOnly": "tsup"
 	}
 }

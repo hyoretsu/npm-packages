@@ -5,7 +5,8 @@
 		"@swc-node/register": "^1.6.3",
 		"@types/bun": "^1.0.8",
 		"@types/node": "^20.11.28",
-		"lint-staged": "^15.2.2"
+		"lint-staged": "^15.2.2",
+		"tsup": "^8.5.0"
 	},
 	"lint-staged": {
 		"**/*.(json|js|jsx|ts|tsx)": ["biome format --write"]
