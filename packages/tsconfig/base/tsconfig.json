@@ -1,16 +1,23 @@
 {
-	"extends": "@tsconfig/bun/tsconfig.json",
 	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
+		"allowJs": true,
 		"composite": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"incremental": true,
-		"isolatedModules": true,
-		"noImplicitAny": true,
+		"exactOptionalPropertyTypes": true,
+		"jsx": "react-jsx",
+		"lib": ["ESNext"],
+		"module": "Preserve",
+		"moduleDetection": "force",
+		"noEmit": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": false,
-		"removeComments": false,
+		"noUncheckedIndexedAccess": true,
+		"removeComments": true,
 		"resolveJsonModule": true,
-		"strictNullChecks": true
+		"rewriteRelativeImportExtensions": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "ESNext",
+		"verbatimModuleSyntax": true
 	}
 }
