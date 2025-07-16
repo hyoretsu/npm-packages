@@ -2,7 +2,9 @@
 	"compilerOptions": {
 		"allowJs": true,
 		"composite": true,
+		"downlevelIteration": true,
 		"exactOptionalPropertyTypes": true,
+		"incremental": true,
 		"jsx": "react-jsx",
 		"lib": ["ESNext"],
 		"module": "Preserve",

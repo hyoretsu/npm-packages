@@ -1,0 +1,7 @@
+{
+	"extends": "../frontend/tsconfig.json",
+	"compilerOptions": {
+		"jsx": "preserve",
+		"plugins": [{ "name": "next" }]
+	}
+}
