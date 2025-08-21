@@ -1,7 +1,7 @@
 {
 	"name": "numerical-methods",
 	"description": "A library that I made while studying Computer Science at UFPB. Documentation's available through TypeScript.",
-	"version": "0.13.4",
+	"version": "0.13.5",
 	"keywords": ["academic", "calculus", "numerical analysis", "numerical methods"],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
@@ -30,6 +30,8 @@
 		"mathjs": "^11.2.1"
 	},
 	"devDependencies": {
-		"tsup": "^8.4.0"
+		"@types/node": "^24.3.0",
+		"tsup": "^8.4.0",
+		"typescript": "latest"
 	}
 }

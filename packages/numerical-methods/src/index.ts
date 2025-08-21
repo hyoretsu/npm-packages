@@ -65,6 +65,9 @@ export const allMethods = {
 	...categorizedMethods.linearSystems,
 };
 
+export type MethodKeys = keyof typeof allMethods;
+export const methodKeys = Object.keys(allMethods) as MethodKeys[];
+
 export const paramsList = {
 	bisection: zerosFunctionParams,
 	doolittleLuDecomposition: doolittleLuDecompositionParams,
@@ -83,8 +86,6 @@ export const paramsList = {
 	trapezoidalRule: integrationParams,
 	vandermondeInterpolation: interpolationParams,
 };
-
-export type AllMethods = keyof typeof allMethods;
 
 export * from "./custom";
 export * from "./functionZeros";
