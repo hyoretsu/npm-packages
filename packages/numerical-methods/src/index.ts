@@ -56,7 +56,6 @@ export const categorizedMethods = {
 		spectralRadius,
 	},
 };
-
 export const allMethods = {
 	...categorizedMethods.custom,
 	...categorizedMethods.functionZeros,
@@ -65,8 +64,29 @@ export const allMethods = {
 	...categorizedMethods.linearSystems,
 };
 
-export type MethodKeys = keyof typeof allMethods;
-export const methodKeys = Object.keys(allMethods) as MethodKeys[];
+export const customMethodKeys = ["minMaxBisection"] as const;
+export const functionZerosMethodKeys = ["bisection", "falsePosition", "newtonRaphson", "secant"] as const;
+export const integrationMethodKeys = ["simpsonRule13", "trapezoidalRule"] as const;
+export const interpolationMethodKeys = [
+	"lagrangeInterpolation",
+	"newtonInterpolation",
+	"vandermondeInterpolation",
+] as const;
+export const linearSystemsMethodKeys = [
+	"doolittleLuDecomposition",
+	"gaussJacobi",
+	"gaussSeidel",
+	"gaussianElimination",
+	"luComposition",
+	"spectralRadius",
+] as const;
+export const methodKeys = [
+	...customMethodKeys,
+	...functionZerosMethodKeys,
+	...integrationMethodKeys,
+	...interpolationMethodKeys,
+	...linearSystemsMethodKeys,
+];
 
 export const paramsList = {
 	bisection: zerosFunctionParams,
