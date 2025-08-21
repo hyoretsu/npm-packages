@@ -64,28 +64,31 @@ export const allMethods = {
 	...categorizedMethods.linearSystems,
 };
 
-export const customMethodKeys = ["minMaxBisection"] as const;
-export const functionZerosMethodKeys = ["bisection", "falsePosition", "newtonRaphson", "secant"] as const;
-export const integrationMethodKeys = ["simpsonRule13", "trapezoidalRule"] as const;
-export const interpolationMethodKeys = [
-	"lagrangeInterpolation",
-	"newtonInterpolation",
-	"vandermondeInterpolation",
-] as const;
-export const linearSystemsMethodKeys = [
+export type AllMethods = keyof typeof allMethods;
+export type CustomMethods = keyof typeof categorizedMethods.custom;
+export type FunctionZerosMethods = keyof typeof categorizedMethods.functionZeros;
+export type IntegrationMethods = keyof typeof categorizedMethods.integration;
+export type InterpolationMethods = keyof typeof categorizedMethods.interpolation;
+export type LinearSystemsMethods = keyof typeof categorizedMethods.linearSystems;
+
+export const customMethodKeys = ["minMaxBisection"];
+export const functionZerosKeys = ["bisection", "falsePosition", "newtonRaphson", "secant"];
+export const integrationKeys = ["simpsonRule13", "trapezoidalRule"];
+export const interpolationKeys = ["lagrangeInterpolation", "newtonInterpolation", "vandermondeInterpolation"];
+export const linearSystemsKeys = [
 	"doolittleLuDecomposition",
 	"gaussJacobi",
 	"gaussSeidel",
 	"gaussianElimination",
 	"luComposition",
 	"spectralRadius",
-] as const;
+];
 export const methodKeys = [
 	...customMethodKeys,
-	...functionZerosMethodKeys,
-	...integrationMethodKeys,
-	...interpolationMethodKeys,
-	...linearSystemsMethodKeys,
+	...functionZerosKeys,
+	...integrationKeys,
+	...interpolationKeys,
+	...linearSystemsKeys,
 ];
 
 export const paramsList = {
