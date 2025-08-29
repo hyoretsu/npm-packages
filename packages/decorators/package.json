@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/decorators",
 	"description": "A collection of useful decorators (mainly Nest.js)",
-	"version": "1.2",
+	"version": "1.2.0",
 	"keywords": ["backend", "class-validator", "decorator", "decorators", "fastify", "nestjs"],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
@@ -33,7 +33,10 @@
 	},
 	"devDependencies": {
 		"@fastify/multipart": "^7.6.0",
-		"fastify": "^4.17.0"
+		"@types/node": "^24.3.0",
+		"fastify": "^4.17.0",
+		"tsup": "^8.5.0",
+		"typescript": "^5.9.2"
 	},
 	"peerDependencies": {
 		"@fastify/multipart": ">=7",
