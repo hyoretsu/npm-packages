@@ -1,0 +1,6 @@
+{
+	"compilerOptions": {
+		"outDir": "dist"
+	},
+	"extends": ["./src/ts/base.json"]
+}

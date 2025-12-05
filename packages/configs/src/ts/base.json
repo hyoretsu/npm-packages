@@ -1,8 +1,12 @@
 {
+	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"checkJs": true,
 		"composite": true,
 		"downlevelIteration": true,
+		"esModuleInterop": true,
 		"exactOptionalPropertyTypes": true,
 		"incremental": true,
 		"jsx": "react-jsx",
@@ -18,8 +22,10 @@
 		"resolveJsonModule": true,
 		"rewriteRelativeImportExtensions": true,
 		"skipLibCheck": true,
+		"sourceMap": true,
 		"strict": true,
 		"target": "ESNext",
+		"tsBuildInfoFile": "../../tsbuildinfo",
 		"verbatimModuleSyntax": true
 	}
 }

@@ -1,5 +1,6 @@
 import eslint from "@eslint/js";
 import { defineConfig } from "eslint/config";
+// @ts-expect-error: no types definition
 import biome from "eslint-config-biome";
 import pluginJest from "eslint-plugin-jest";
 import tseslint from "typescript-eslint";

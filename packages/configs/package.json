@@ -1,16 +1,21 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.0.1",
+	"version": "1.1.1",
 	"type": "module",
 	"license": "MIT",
 	"exports": {
-		"./biome": "./base.json",
-		"./biome-mongo": "./biome/mongo.json",
-		"./biome-nest": "./biome/nest.json",
-		"./biome-react": "./biome/react.json",
-		"./eslint": "./eslint/index.js",
-		"./ts": "./ts/base.json",
-		"./ts-frontend": "./ts/frontend.json"
+		"./biome": "./src/base.json",
+		"./biome-mongo": "./src/biome/mongo.json",
+		"./biome-nest": "./src/biome/nest.json",
+		"./biome-react": "./src/biome/react.json",
+		"./eslint": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js"
+		},
+		"./ts": "./src/ts/base.json",
+		"./ts-backend": "./src/ts/backend.json",
+		"./ts-frontend": "./src/ts/frontend.json"
 	},
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/configs",
 	"bugs": {
@@ -26,34 +31,46 @@
 		"email": "hyoretsu@gmail.com",
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
-	"lint-staged": {
-		"**/*.(json|js|jsx|ts|tsx)": [
-			"biome check --write"
-		]
+	"scripts": {
+		"prepublishOnly": "tsup"
+	},
+	"dependencies": {
+		"@eslint/js": "^9.39.1",
+		"eslint": "^9.39.1",
+		"eslint-config-biome": "^2.1.3",
+		"eslint-plugin-jest": "^29.2.1",
+		"typescript-eslint": "^8.48.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "latest"
+		"@biomejs/biome": "latest",
+		"tsup": "^8.5.1"
 	},
 	"peerDependencies": {
 		"@biomejs/biome": "^2.3.0",
+		"@eslint/js": "^9.0.0",
 		"eslint": "^9.0.0",
-		"typescript": "^5.0.0"
+		"eslint-plugin-jest": "^28.0.0 || ^29.0.0",
+		"typescript": "^5.0.0",
+		"typescript-eslint": "^8.0.0"
 	},
 	"peerDependenciesMeta": {
 		"@biomejs/biome": {
 			"optional": true
 		},
+		"@eslint/js": {
+			"optional": true
+		},
 		"eslint": {
+			"optional": true
+		},
+		"eslint-plugin-jest": {
 			"optional": true
 		},
 		"typescript": {
 			"optional": true
+		},
+		"typescript-eslint": {
+			"optional": true
 		}
-	},
-	"dependencies": {
-		"@eslint/js": "^9.39.1",
-		"eslint-config-biome": "^2.1.3",
-		"eslint-plugin-jest": "^29.2.1",
-		"typescript-eslint": "^8.48.1"
 	}
 }

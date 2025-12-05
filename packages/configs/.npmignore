@@ -1,0 +1,6 @@
+node_modules
+src/**/*.js
+src/**/*.ts
+lint-staged.config.mjs
+tsconfig.json
+tsup.config.ts
