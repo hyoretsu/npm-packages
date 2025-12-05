@@ -7,5 +7,6 @@
 				"useImportType": "off"
 			}
 		}
-	}
+	},
+	"root": false
 }

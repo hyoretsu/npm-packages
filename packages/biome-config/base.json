@@ -3,6 +3,7 @@
 	"assist": {
 		"actions": {
 			"source": {
+				"organizeImports": "on",
 				"useSortedAttributes": "on",
 				"useSortedKeys": "on",
 				"useSortedProperties": "on"
@@ -12,7 +13,17 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!**/.next", "!**/build", "!**/client", "!**/dist", "!**/node_modules", "!**/bun.lock"]
+		"includes": [
+			"**",
+			"!**/.next",
+			"!**/build",
+			"!**/client",
+			"!**/dist",
+			"!**/node_modules",
+			"!**/bun.lock",
+			"!**/tmp",
+			"!**/temp"
+		]
 	},
 	"formatter": {
 		"formatWithErrors": false,
@@ -55,7 +66,8 @@
 					"options": {
 						"ignoreRestSiblings": true
 					}
-				}
+				},
+				"useHookAtTopLevel": "off"
 			},
 			"nursery": {
 				"useSortedClasses": {
@@ -105,8 +117,9 @@
 				"noMisplacedAssertion": "error",
 				"noSkippedTests": "error",
 				"noThenProperty": "info",
-				"useIterableCallbackReturn": "off"
+				"useIterableCallbackReturn": "info"
 			}
 		}
-	}
+	},
+	"root": false
 }

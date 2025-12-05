@@ -7,5 +7,6 @@
 				"noThenProperty": "off"
 			}
 		}
-	}
+	},
+	"root": false
 }
