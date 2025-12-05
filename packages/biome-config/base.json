@@ -1,0 +1,112 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+	"assist": {
+		"actions": {
+			"source": {
+				"useSortedAttributes": "on",
+				"useSortedKeys": "on",
+				"useSortedProperties": "on"
+			}
+		},
+		"includes": ["**", "!**/package.json"]
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": ["**", "!**/.next", "!**/build", "!**/client", "!**/dist", "!**/node_modules", "!**/bun.lock"]
+	},
+	"formatter": {
+		"formatWithErrors": false,
+		"lineWidth": 110,
+		"useEditorconfig": true
+	},
+	"javascript": {
+		"formatter": {
+			"arrowParentheses": "asNeeded",
+			"lineEnding": "lf",
+			"quoteStyle": "double",
+			"semicolons": "always",
+			"trailingCommas": "all"
+		},
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": true
+		}
+	},
+	"linter": {
+		"rules": {
+			"a11y": {
+				"noSvgWithoutTitle": "warn",
+				"useAltText": "warn",
+				"useButtonType": "warn",
+				"useHtmlLang": "warn",
+				"useKeyWithClickEvents": "off"
+			},
+			"complexity": {
+				"noBannedTypes": "warn",
+				"noForEach": "off"
+			},
+			"correctness": {
+				"noUnusedImports": {
+					"fix": "safe",
+					"level": "error"
+				},
+				"noUnusedPrivateClassMembers": "warn",
+				"noUnusedVariables": {
+					"level": "warn",
+					"options": {
+						"ignoreRestSiblings": true
+					}
+				}
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"fix": "safe",
+					"level": "warn",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["cn", "clsx", "cva", "tw"]
+					}
+				}
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "warn"
+			},
+			"style": {
+				"noDoneCallback": "error",
+				"noInferrableTypes": "error",
+				"noNonNullAssertion": "off",
+				"noParameterAssign": "warn",
+				"noUnusedTemplateLiteral": "error",
+				"noUselessElse": "error",
+				"useAsConstAssertion": "error",
+				"useConsistentArrayType": "error",
+				"useConsistentObjectDefinitions": {
+					"level": "error",
+					"options": {
+						"syntax": "shorthand"
+					}
+				},
+				"useConsistentTypeDefinitions": {
+					"fix": "safe",
+					"level": "warn"
+				},
+				"useConst": "warn",
+				"useNodejsImportProtocol": {
+					"fix": "safe",
+					"level": "warn"
+				},
+				"useNumberNamespace": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "off",
+				"useTemplate": "warn"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "warn",
+				"noExplicitAny": "off",
+				"noMisplacedAssertion": "error",
+				"noSkippedTests": "error",
+				"noThenProperty": "info",
+				"useIterableCallbackReturn": "off"
+			}
+		}
+	}
+}
