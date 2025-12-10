@@ -19,5 +19,8 @@
 		"bcrypt",
 		"esbuild",
 		"protobufjs"
-	]
+	],
+	"dependencies": {
+		"npm": "^11.7.0"
+	}
 }

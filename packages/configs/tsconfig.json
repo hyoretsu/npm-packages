@@ -1,8 +1,7 @@
 {
 	"compilerOptions": {
 		"baseUrl": "./src",
-		"outDir": "dist",
-		"rootDir": "src"
+		"outDir": "dist"
 	},
 	"extends": ["./src/ts/lib.json"],
 	"include": ["./build/**/*.ts", "./src/**/*.js", "./src/**/*.ts"]
