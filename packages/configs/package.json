@@ -1,21 +1,25 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.1.3",
+	"version": "1.1.4",
 	"type": "module",
 	"license": "MIT",
+	"files": [
+		"dist"
+	],
 	"exports": {
-		"./biome": "./src/biome/base.json",
-		"./biome-mongo": "./src/biome/mongo.json",
-		"./biome-nest": "./src/biome/nest.json",
-		"./biome-react": "./src/biome/react.json",
+		"./biome": "./dist/biome/base.json",
+		"./biome-mongo": "./dist/biome/mongo.json",
+		"./biome-nest": "./dist/biome/nest.json",
+		"./biome-react": "./dist/biome/react.json",
 		"./eslint": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.mjs",
-			"require": "./dist/index.js"
+			"types": "./dist/eslint/index.d.ts",
+			"import": "./dist/eslint/index.mjs",
+			"require": "./dist/eslint/index.js"
 		},
-		"./ts": "./src/ts/base.json",
-		"./ts-backend": "./src/ts/backend.json",
-		"./ts-frontend": "./src/ts/frontend.json"
+		"./ts": "./dist/ts/base.json",
+		"./ts-backend": "./dist/ts/backend.json",
+		"./ts-frontend": "./dist/ts/frontend.json",
+		"./ts-lib": "./dist/ts/lib.json"
 	},
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/configs",
 	"bugs": {
@@ -32,7 +36,8 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"prepublishOnly": "tsup"
+		"build": "tsup && tsc -p tsconfig.build.json && bun ./build/json.ts Biome && bun ./build/json.ts TS",
+		"prepublishOnly": "bun run build"
 	},
 	"dependencies": {
 		"@eslint/js": "^9.39.1",
@@ -43,7 +48,9 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "latest",
-		"tsup": "^8.5.1"
+		"es-toolkit": "^1.42.0",
+		"tsup": "^8.5.1",
+		"typescript": "^5.9.3"
 	},
 	"peerDependencies": {
 		"@biomejs/biome": "^2.3.0",

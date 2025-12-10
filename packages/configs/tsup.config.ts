@@ -1,12 +1,16 @@
-import type { Options } from "tsup";
+import { defineConfig } from "tsup";
 
-export const tsup: Options = {
+export default defineConfig({
+	bundle: false,
 	clean: true,
-	dts: true,
-	entry: ["./src/**/*.js", "./src/**/*.ts"],
+	entry: ["./src/**/*.(js|ts)"],
+	esbuildOptions(options) {
+		options.outbase = "./src";
+	},
 	format: ["cjs", "esm"],
 	minify: true,
 	outDir: "dist",
 	skipNodeModulesBundle: true,
 	target: "node22",
-};
+	tsconfig: "tsconfig.build.json",
+});
