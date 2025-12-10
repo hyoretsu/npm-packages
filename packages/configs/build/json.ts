@@ -25,7 +25,7 @@ const sortObjectKeys = (obj: JsonObject): any => {
 	}
 
 	if (Array.isArray(obj)) {
-	return obj.map(sortObjectKeys);
+		return obj.map(sortObjectKeys);
 	}
 
 	return Object.keys(obj)
@@ -39,19 +39,20 @@ const sortObjectKeys = (obj: JsonObject): any => {
 /** Recursively load and merge configs */
 const processConfig = async (currentPath: string): Promise<JsonObject> => {
 	// Bun Native: Read JSON directly
-	const config = await Bun.file(currentPath).json();
+	const baseConfig = await Bun.file(currentPath).json();
 
 	// If no 'extends', return as is
-	if (!config.extends?.length) {
-		return config;
+	if (!baseConfig.extends?.length) {
+		return baseConfig;
 	}
 
 	const configs = await Promise.all(
-		config.extends.map(async (extendedFile: string) => {
+		baseConfig.extends.map(async (extendedFile: string) => {
 			const extendedConfig = path.resolve(src, extendedFile);
 			return processConfig(extendedConfig);
 		})
 	);
+	configs.push(baseConfig);
 
 	let merged: JsonObject = {};
 
