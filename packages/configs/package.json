@@ -1,6 +1,6 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.1.5",
+	"version": "1.1.6",
 	"type": "module",
 	"license": "MIT",
 	"files": [
@@ -13,8 +13,8 @@
 		"./biome-react": "./dist/biome/react.json",
 		"./eslint": {
 			"types": "./dist/eslint/index.d.ts",
-			"import": "./dist/eslint/index.mjs",
-			"require": "./dist/eslint/index.js"
+			"import": "./dist/eslint/index.js",
+			"require": "./dist/eslint/index.cjs"
 		},
 		"./ts": "./dist/ts/base.json",
 		"./ts-backend": "./dist/ts/backend.json",
