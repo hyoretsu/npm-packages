@@ -1,0 +1,98 @@
+name: Publish Changed Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/*
+  workflow_dispatch:
+    inputs:
+      package_name:
+        description: 'Folder name to publish (e.g. "configs" or "packages/configs")'
+        required: true
+        type: string
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      has_changes: ${{ steps.set-matrix.outputs.has_changes }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Determine Changed Packages
+        id: set-matrix
+        run: |
+          MANUAL_INPUT="${{ inputs.package_name }}"
+          TARGETS=""
+
+          # 1. Logic to find targets (Manual vs Auto)
+          if [ -n "$MANUAL_INPUT" ]; then
+            echo "Manual trigger detected."
+            if [[ "$MANUAL_INPUT" == packages/* ]]; then
+               TARGETS="$MANUAL_INPUT"
+            else
+               TARGETS="packages/$MANUAL_INPUT"
+            fi
+          else
+            echo "Automatic trigger detected. Checking git diff..."
+            TARGETS=$(git diff --name-only HEAD~1 HEAD | grep "^packages/" | cut -d/ -f1-2 | sort | uniq)
+          fi
+
+          # 2. Output handling
+          if [ -z "$TARGETS" ]; then
+            echo "No packages found."
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "matrix=[]" >> "$GITHUB_OUTPUT"
+          else
+            # Convert newline-separated string to JSON array using jq
+            # e.g., "packages/a\npackages/b" -> ["packages/a", "packages/b"]
+            JSON_MATRIX=$(echo "$TARGETS" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+
+            echo "Matrix detected: $JSON_MATRIX"
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            echo "matrix=$JSON_MATRIX" >> "$GITHUB_OUTPUT"
+          fi
+
+  publish:
+    needs: detect
+    if: needs.detect.outputs.has_changes == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.detect.outputs.matrix) }}
+    name: Publish ${{ matrix.package }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install npm
+        run: bun add -g npm
+      - name: Install dependencies
+        run: |
+          cd ${{ matrix.package }} && bun install
+      - name: Publish '${{ matrix.package }}'
+        run: |
+          pkg_dir="${{ matrix.package }}"
+
+          echo "Processing: $pkg_dir"
+
+          if [ -d "$pkg_dir" ] && [ -f "$pkg_dir/package.json" ]; then
+             echo "Publishing..."
+
+             cd "$pkg_dir" && bunx npm publish --provenance --access public
+          else
+             echo "Skipping: Invalid package directory"
+             exit 1
+          fi
