@@ -15,6 +15,7 @@ on:
 
 jobs:
   detect:
+    name: Find updated packages
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -30,7 +31,6 @@ jobs:
           MANUAL_INPUT="${{ inputs.package_name }}"
           TARGETS=""
 
-          # 1. Logic to find targets (Manual vs Auto)
           if [ -n "$MANUAL_INPUT" ]; then
             echo "Manual trigger detected."
             if [[ "$MANUAL_INPUT" == packages/* ]]; then
@@ -43,14 +43,11 @@ jobs:
             TARGETS=$(git diff --name-only HEAD~1 HEAD | grep "^packages/" | cut -d/ -f1-2 | sort | uniq)
           fi
 
-          # 2. Output handling
           if [ -z "$TARGETS" ]; then
             echo "No packages found."
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
             echo "matrix=[]" >> "$GITHUB_OUTPUT"
           else
-            # Convert newline-separated string to JSON array using jq
-            # e.g., "packages/a\npackages/b" -> ["packages/a", "packages/b"]
             JSON_MATRIX=$(echo "$TARGETS" | jq -R -s -c 'split("\n") | map(select(length > 0))')
 
             echo "Matrix detected: $JSON_MATRIX"
@@ -59,6 +56,7 @@ jobs:
           fi
 
   publish:
+    name: Publish `${{ matrix.package }}`
     needs: detect
     if: needs.detect.outputs.has_changes == 'true'
     runs-on: ubuntu-latest
@@ -69,7 +67,6 @@ jobs:
       fail-fast: false
       matrix:
         package: ${{ fromJson(needs.detect.outputs.matrix) }}
-    name: Publish ${{ matrix.package }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
