@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+
+bun lint-staged
+pnpm i --lockfile-only && git add pnpm-lock.yaml
+# git branch -u origin/$(git symbolic-ref --short HEAD)
+git pull
