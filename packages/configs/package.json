@@ -1,6 +1,6 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.1.7",
+	"version": "1.1.8",
 	"type": "module",
 	"license": "MIT",
 	"files": [
@@ -15,6 +15,11 @@
 			"types": "./dist/eslint/index.d.ts",
 			"import": "./dist/eslint/index.js",
 			"require": "./dist/eslint/index.cjs"
+		},
+		"./lint-staged": {
+			"types": "./dist/lint-staged/index.d.ts",
+			"import": "./dist/lint-staged/index.js",
+			"require": "./dist/lint-staged/index.cjs"
 		},
 		"./ts": "./dist/ts/base.json",
 		"./ts-backend": "./dist/ts/backend.json",
@@ -37,6 +42,9 @@
 	},
 	"scripts": {
 		"build": "tsup && tsc -p tsconfig.build.json && bun ./build/json.ts Biome && bun ./build/json.ts TS",
+		"format": "bun format:biome . && bun format:eslint .",
+		"format:biome": "biome check --diagnostic-level=error --write --unsafe",
+		"format:eslint": "eslint --quiet --fix",
 		"prepublishOnly": "bun run build"
 	},
 	"dependencies": {
@@ -49,6 +57,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "latest",
 		"es-toolkit": "^1.42.0",
+		"lint-staged": "^16.2.7",
 		"tsup": "^8.5.1",
 		"typescript": "^5.9.3"
 	},
@@ -57,6 +66,7 @@
 		"@eslint/js": "^9.0.0",
 		"eslint": "^9.0.0",
 		"eslint-plugin-jest": "^28.0.0 || ^29.0.0",
+		"lint-staged": ">=12.0.0",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.0.0"
 	},
@@ -71,6 +81,9 @@
 			"optional": true
 		},
 		"eslint-plugin-jest": {
+			"optional": true
+		},
+		"lint-staged": {
 			"optional": true
 		},
 		"typescript": {
