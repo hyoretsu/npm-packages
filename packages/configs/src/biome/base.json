@@ -43,13 +43,6 @@
 	},
 	"linter": {
 		"rules": {
-			"a11y": {
-				"noSvgWithoutTitle": "warn",
-				"useAltText": "warn",
-				"useButtonType": "warn",
-				"useHtmlLang": "warn",
-				"useKeyWithClickEvents": "off"
-			},
 			"complexity": {
 				"noBannedTypes": "warn",
 				"noForEach": "off"
@@ -77,9 +70,6 @@
 						"functions": ["cn", "clsx", "cva", "tw"]
 					}
 				}
-			},
-			"security": {
-				"noDangerouslySetInnerHtml": "warn"
 			},
 			"style": {
 				"noDoneCallback": "error",
@@ -112,8 +102,9 @@
 			},
 			"suspicious": {
 				"noArrayIndexKey": "warn",
-				"noExplicitAny": "off",
+				"noExplicitAny": "warn",
 				"noMisplacedAssertion": "error",
+				"noShadowRestrictedNames": "warn",
 				"noSkippedTests": "error",
 				"noThenProperty": "info",
 				"useIterableCallbackReturn": "info"
