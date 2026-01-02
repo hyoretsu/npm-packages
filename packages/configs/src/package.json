@@ -1,0 +1,12 @@
+{
+	"name": "project",
+	"version": "1.0.0",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"format": "bun format:biome . & bun format:eslint .",
+		"format:biome": "biome check --diagnostic-level=error --write --unsafe",
+		"format:eslint": "eslint --quiet --fix",
+		"prepare": "git config --local core.hooksPath .githooks"
+	}
+}

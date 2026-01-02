@@ -72,6 +72,8 @@ await Promise.all(
 
 		// Process and Sort
 		const config = await processConfig(srcPath);
+		if (config.$schema) delete config.$schema;
+
 		const sortedConfig = sortObjectKeys(config);
 
 		await Bun.write(destPath, JSON.stringify(sortedConfig, null, "\t"));

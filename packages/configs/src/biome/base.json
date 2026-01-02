@@ -1,4 +1,5 @@
 {
+	"$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
 	"assist": {
 		"actions": {
 			"source": {
@@ -54,6 +55,7 @@
 				},
 				"noUnusedPrivateClassMembers": "warn",
 				"noUnusedVariables": {
+					"fix": "none",
 					"level": "warn",
 					"options": {
 						"ignoreRestSiblings": true
