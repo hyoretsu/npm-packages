@@ -106,6 +106,7 @@
 					"level": "warn"
 				},
 				"useConst": "warn",
+				"useForOf": "error",
 				"useNodejsImportProtocol": {
 					"fix": "safe",
 					"level": "warn"

@@ -6,7 +6,7 @@ import pluginJest from "eslint-plugin-jest";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-	{ ignores: ["**/build/**", "**/dist/**", "**/node_modules/**"] },
+	{ ignores: ["**/.next/**", "**/build/**", "**/dist/**", "**/node_modules/**"] },
 	eslint.configs.recommended,
 	// TS files
 	{
@@ -29,6 +29,9 @@ export default defineConfig([
 	{
 		extends: [tseslint.configs.disableTypeChecked],
 		files: ["**/*.js", "**/*.jsx"],
+		rules: {
+			"no-undef": "off",
+		},
 	},
 	// Test files
 	{
@@ -75,7 +78,9 @@ export default defineConfig([
 			"@typescript-eslint/no-dynamic-delete": "off",
 			"@typescript-eslint/no-empty-object-type": "off",
 			"@typescript-eslint/no-namespace": "off",
+			"@typescript-eslint/no-non-null-asserted-optional-chain": "off",
 			"@typescript-eslint/no-unused-vars": "off",
+			"@typescript-eslint/prefer-for-of": "off",
 			"@typescript-eslint/require-await": "off",
 			"jest/max-nested-describe": "off",
 			"jest/no-disabled-tests": "off",
