@@ -16,6 +16,8 @@
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": false,
 		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
 		"removeComments": true,
 		"resolveJsonModule": true,
 		"rewriteRelativeImportExtensions": true,
