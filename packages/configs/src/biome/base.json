@@ -11,6 +11,12 @@
 		},
 		"includes": ["**", "!**/package.json"]
 	},
+	"css": {
+		"parser": {
+			"cssModules": true,
+			"tailwindDirectives": true
+		}
+	},
 	"files": {
 		"ignoreUnknown": true,
 		"includes": [
