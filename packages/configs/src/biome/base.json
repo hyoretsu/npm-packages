@@ -50,6 +50,9 @@
 	},
 	"linter": {
 		"rules": {
+			"a11y": {
+				"noStaticElementInteractions": "info"
+			},
 			"complexity": {
 				"noBannedTypes": "warn",
 				"noForEach": "off"
@@ -85,6 +88,9 @@
 						"functions": ["cn", "clsx", "cva", "tw"]
 					}
 				}
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "warn"
 			},
 			"style": {
 				"noDoneCallback": "error",
