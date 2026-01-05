@@ -1,0 +1,25 @@
+**/dist
+**/node_modules
+**/tmp
+**/.vscode
+!/.vscode/launch.json
+!.gitkeep
+*.log
+public/cwr.js
+public/images
+!public/images/opengraph.jpg
+
+# Env files
+**/.env
+**/.env*.local
+
+# Next.js
+.next
+out/
+
+# Test files
+**/coverage
+
+# TypeScript
+next-env.d.ts
+*.tsbuildinfo
