@@ -129,7 +129,10 @@
 				"noShadowRestrictedNames": "warn",
 				"noSkippedTests": "error",
 				"noThenProperty": "info",
-				"noTsIgnore": "warn",
+				"noTsIgnore": {
+					"fix": "none",
+					"level": "warn"
+				},
 				"useIterableCallbackReturn": "info"
 			}
 		}
