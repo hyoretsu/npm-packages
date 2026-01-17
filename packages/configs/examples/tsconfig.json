@@ -12,7 +12,7 @@
 			"@utils/*": ["utils/*"]
 		}
 	},
-	"exclude": ["node_modules"],
-	"extends": ["@hyoretsu/configs/ts-frontend"],
-	"include": ["./*.js", "./*.cjs", "./*.mjs", "./*.ts"]
+	"exclude": ["build", "dist", "node_modules", "tmp", "**/*.spec.ts", "**/*.test.ts", "**/*.tmp.ts"],
+	"extends": ["@hyoretsu/configs/ts"],
+	"include": ["./*.cjs", "./*.js", "./*.mjs", "./*.ts", "scripts/*.ts", "src/**/*.ts", "src/**/*.tsx"]
 }

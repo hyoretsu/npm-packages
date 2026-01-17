@@ -1,0 +1,11 @@
+{
+	"lang": "en-US",
+	"types": {
+		"build": false,
+		"bump": "Package updates.",
+		"change": "Simple changes that don't amount to a feature.",
+		"misc": "Miscellaneous changes.",
+		"temp": false
+	},
+	"validScopes": ["backend", "extension", "frontend", "mobile"]
+}

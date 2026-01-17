@@ -21,14 +21,19 @@
 		"ignoreUnknown": true,
 		"includes": [
 			"**",
+			"!**/.git",
 			"!**/.next",
 			"!**/build",
 			"!**/client",
+			"!**/coverage",
 			"!**/dist",
 			"!**/node_modules",
 			"!**/bun.lock",
+			"!**/public",
 			"!**/tmp",
-			"!**/temp"
+			"!**/temp",
+			"!**/*.min.js",
+			"!**/*.gen.ts"
 		]
 	},
 	"formatter": {
@@ -112,6 +117,7 @@
 					"level": "warn"
 				},
 				"useConst": "warn",
+				"useEnumInitializers": "off",
 				"useForOf": "error",
 				"useNodejsImportProtocol": {
 					"fix": "safe",
@@ -124,11 +130,12 @@
 			},
 			"suspicious": {
 				"noArrayIndexKey": "warn",
+				"noEmptyInterface": "warn",
 				"noExplicitAny": "warn",
 				"noMisplacedAssertion": "error",
 				"noShadowRestrictedNames": "warn",
 				"noSkippedTests": "error",
-				"noThenProperty": "info",
+				"noThenProperty": "off",
 				"noTsIgnore": {
 					"fix": "none",
 					"level": "warn"

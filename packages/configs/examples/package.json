@@ -4,9 +4,20 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
+		"build": "",
+		"dev": "",
 		"format": "bun format:biome . & bun format:eslint .",
 		"format:biome": "biome check --diagnostic-level=error --write --unsafe",
 		"format:eslint": "eslint --quiet --fix",
-		"prepare": "git config --local core.hooksPath .githooks"
+		"generate": "(prisma generate && npm run format:biome ./src/infra/sql/kysely/types.ts) || true",
+		"migrate": "prisma migrate dev --create-only && bun run generate",
+		"migrate:dev": "prisma migrate dev && bun run generate",
+		"migrate:deploy": "prisma migrate deploy",
+		"postinstall": "bun run generate",
+		"prepare": "bun ./prepare.ts || true",
+		"test": "bun test",
+		"start": "",
+		"start:debug": "",
+		"start:prod": ""
 	}
 }

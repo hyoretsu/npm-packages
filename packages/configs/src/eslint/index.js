@@ -14,6 +14,9 @@ export default defineConfig([
 		files: ["**/*.ts", "**/*.tsx"],
 		languageOptions: {
 			parser: tseslint.parser,
+			parserOptions: {
+				projectService: true,
+			},
 		},
 		plugins: {
 			"@typescript-eslint": tseslint.plugin,
