@@ -2,7 +2,6 @@ import eslint from "@eslint/js";
 import { defineConfig } from "eslint/config";
 // @ts-expect-error: no types definition
 import biome from "eslint-config-biome";
-import pluginJest from "eslint-plugin-jest";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
@@ -14,9 +13,6 @@ export default defineConfig([
 		files: ["**/*.ts", "**/*.tsx"],
 		languageOptions: {
 			parser: tseslint.parser,
-			parserOptions: {
-				projectService: true,
-			},
 		},
 		plugins: {
 			"@typescript-eslint": tseslint.plugin,
@@ -34,42 +30,6 @@ export default defineConfig([
 		files: ["**/*.js", "**/*.jsx"],
 		rules: {
 			"no-undef": "off",
-		},
-	},
-	// Test files
-	{
-		extends: [pluginJest.configs["flat/all"]],
-		files: [
-			"**/*.spec.js",
-			"**/*.spec.ts",
-			"**/*.test.js",
-			"**/*.test.ts",
-			"**/*.spec.jsx",
-			"**/*.spec.tsx",
-			"**/*.test.jsx",
-			"**/*.test.tsx",
-		],
-		languageOptions: {
-			globals: pluginJest.environments.globals.globals,
-			// parserOptions: {
-			//   projectService: true,
-			//   tsconfigRootDir: import.meta.dirname,
-			// },
-		},
-		plugins: {
-			jest: pluginJest,
-		},
-		rules: {
-			"jest/no-commented-out-tests": "off",
-			"jest/no-deprecated-functions": "off",
-			//? Not sure if these should be turned off, but it was flagging most if not all existing tests and they will eventually be replaced by Bun anyway
-			"jest/require-hook": "off",
-			"jest/unbound-method": "off",
-		},
-		settings: {
-			jest: {
-				globalPackage: "bun:test",
-			},
 		},
 	},
 	{
