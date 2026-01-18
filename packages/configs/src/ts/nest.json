@@ -1,6 +1,8 @@
 {
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
+		"module": "commonjs",
+		"noEmit": false,
 		"verbatimModuleSyntax": false
 	},
 	"extends": ["./backend.json"]

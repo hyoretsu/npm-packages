@@ -1,15 +1,27 @@
+// biome-ignore-all assist/source/useSortedKeys: just an example file
+// biome-ignore-all lint/suspicious/noDuplicateObjectKeys: just an example file
 {
 	"compilerOptions": {
-		"baseUrl": "./src",
 		"paths": {
-			"@app/*": ["app/*"],
-			"@assets/*": ["assets/*"],
-			"@components/*": ["components/*"],
-			"@context/*": ["context/*"],
-			"@hooks/*": ["hooks/*"],
-			"@public/*": ["../public/*"],
-			"@services/*": ["services/*"],
-			"@utils/*": ["utils/*"]
+			// Backend
+			"@decorators": ["./src/shared/decorators"],
+			"@infra": ["./src/infra"],
+			"@infra/*": ["./src/infra/*"],
+			"@modules/*": ["./src/modules/*"],
+			"@shared/*": ["./src/shared/*"],
+			"@utils": ["./src/shared/utils"],
+			"@utils/*": ["./src/shared/utils/*"],
+			// Frontend
+			"@app/*": ["./src/app/*"],
+			"@assets/*": ["./src/assets/*"],
+			"@components/*": ["./src/components/*"],
+			"@context/*": ["./src/context/*"],
+			"@hooks/*": ["./src/hooks/*"],
+			"@public/*": ["./src/../public/*"],
+			"@services/*": ["./src/services/*"],
+			"@utils/*": ["./src/utils/*"],
+
+			"~/*": ["./src/*"]
 		}
 	},
 	"exclude": ["build", "dist", "node_modules", "tmp", "**/*.spec.ts", "**/*.test.ts", "**/*.tmp.ts"],

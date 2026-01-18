@@ -18,9 +18,12 @@ certificates
 **/.env*.local
 
 # IDEs
-**/.vscode
-!/.vscode/launch.json
 .idea
+.vscode
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
 
 # Next.js
 .next/

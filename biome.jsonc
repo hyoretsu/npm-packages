@@ -1,4 +1,9 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
-	"extends": ["@hyoretsu/biome-config"]
+	"extends": ["@hyoretsu/biome-config"],
+	"files":{
+		"includes": [
+			"!**/examples"
+		]
+	}
 }

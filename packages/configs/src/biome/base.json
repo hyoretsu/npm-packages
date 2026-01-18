@@ -45,6 +45,7 @@
 		"formatter": {
 			"arrowParentheses": "asNeeded",
 			"lineEnding": "lf",
+			"lineWidth": 140,
 			"quoteStyle": "double",
 			"semicolons": "always",
 			"trailingCommas": "all"
