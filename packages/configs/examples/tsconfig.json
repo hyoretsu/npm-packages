@@ -1,4 +1,4 @@
-// biome-ignore-all assist/source/useSortedKeys: just an example file
+// biome-ignore-all assist/source/useSortedKeys: order matters here
 // biome-ignore-all lint/suspicious/noDuplicateObjectKeys: just an example file
 {
 	"compilerOptions": {
@@ -8,23 +8,47 @@
 			"@infra": ["./src/infra"],
 			"@infra/*": ["./src/infra/*"],
 			"@modules/*": ["./src/modules/*"],
-			"@shared/*": ["./src/shared/*"],
 			"@utils": ["./src/shared/utils"],
 			"@utils/*": ["./src/shared/utils/*"],
+			"@shared/*": ["./src/shared/*"],
 			// Frontend
 			"@app/*": ["./src/app/*"],
 			"@assets/*": ["./src/assets/*"],
+			"@components": ["./src/components"],
 			"@components/*": ["./src/components/*"],
 			"@context/*": ["./src/context/*"],
 			"@hooks/*": ["./src/hooks/*"],
+			"@lib": ["./src/lib"],
+			"@lib/*": ["./src/lib/*"],
 			"@public/*": ["./src/../public/*"],
 			"@services/*": ["./src/services/*"],
+			"@utils": ["./src/utils"],
 			"@utils/*": ["./src/utils/*"],
 
 			"~/*": ["./src/*"]
-		}
+		},
+		// Next.js
+		"plugins": [{ "name": "next" }]
 	},
-	"exclude": ["build", "dist", "node_modules", "tmp", "**/*.spec.ts", "**/*.test.ts", "**/*.tmp.ts"],
+	"exclude": [
+		"build",
+		"dist",
+		"node_modules",
+		"tmp",
+		"**/*.spec.ts",
+		"**/*.test.ts",
+		"**/*.tmp.ts"
+	],
 	"extends": ["@hyoretsu/configs/ts"],
-	"include": ["./*.cjs", "./*.js", "./*.mjs", "./*.ts", "scripts/*.ts", "src/**/*.ts", "src/**/*.tsx"]
+	"include": [
+		"./*.cjs",
+		"./*.js",
+		"./*.mjs",
+		"./*.ts",
+		"scripts/*.ts",
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		// Next.js
+		".next/types/**/*.ts"
+	]
 }
