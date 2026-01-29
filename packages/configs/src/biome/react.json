@@ -3,18 +3,8 @@
 	"extends": ["./base.json"],
 	"linter": {
 		"rules": {
-			"a11y": {
-				"noSvgWithoutTitle": "warn",
-				"useAltText": "warn",
-				"useButtonType": "warn",
-				"useHtmlLang": "warn",
-				"useKeyWithClickEvents": "off"
-			},
 			"correctness": {
 				"useHookAtTopLevel": "error"
-			},
-			"security": {
-				"noDangerouslySetInnerHtml": "warn"
 			}
 		}
 	},

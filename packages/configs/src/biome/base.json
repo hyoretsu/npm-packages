@@ -57,11 +57,17 @@
 	"linter": {
 		"rules": {
 			"a11y": {
-				"noStaticElementInteractions": "info"
+				"noStaticElementInteractions": "info",
+				"noSvgWithoutTitle": "warn",
+				"useAltText": "warn",
+				"useButtonType": "warn",
+				"useHtmlLang": "warn",
+				"useKeyWithClickEvents": "off"
 			},
 			"complexity": {
 				"noBannedTypes": "warn",
-				"noForEach": "off"
+				"noForEach": "off",
+				"noImportantStyles": "off"
 			},
 			"correctness": {
 				"noUnusedFunctionParameters": {
@@ -75,7 +81,7 @@
 					"fix": "safe",
 					"level": "error"
 				},
-				"noUnusedPrivateClassMembers": "error",
+				"noUnusedPrivateClassMembers": "warn",
 				"noUnusedVariables": {
 					"fix": "none",
 					"level": "warn",
@@ -83,7 +89,8 @@
 						"ignoreRestSiblings": true
 					}
 				},
-				"useHookAtTopLevel": "off"
+				"useHookAtTopLevel": "off",
+				"useUniqueElementIds": "warn"
 			},
 			"nursery": {
 				"useSortedClasses": {
@@ -120,6 +127,7 @@
 				"useConst": "warn",
 				"useEnumInitializers": "off",
 				"useForOf": "error",
+				"useImportType": "error",
 				"useNodejsImportProtocol": {
 					"fix": "safe",
 					"level": "warn"
