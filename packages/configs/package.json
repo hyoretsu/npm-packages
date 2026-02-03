@@ -1,6 +1,6 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.1.30",
+	"version": "1.2.0",
 	"type": "module",
 	"license": "MIT",
 	"files": [
@@ -10,6 +10,11 @@
 		"./biome": "./dist/biome/base.json",
 		"./biome-nest": "./dist/biome/nest.json",
 		"./biome-react": "./dist/biome/react.json",
+		"./commitlint": {
+			"types": "./dist/commitlint/index.d.ts",
+			"import": "./dist/commitlint/index.js",
+			"require": "./dist/commitlint/index.cjs"
+		},
 		"./eslint": {
 			"types": "./dist/eslint/index.d.ts",
 			"import": "./dist/eslint/index.js",
@@ -55,6 +60,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "latest",
+		"@commitlint/types": "^20.4.0",
 		"es-toolkit": "^1.42.0",
 		"lint-staged": "^16.2.7",
 		"tsup": "^8.5.1",
@@ -62,6 +68,9 @@
 	},
 	"peerDependencies": {
 		"@biomejs/biome": "^2.3.0",
+		"@commitlint/cli": "^20.4.1",
+		"@commitlint/config-conventional": "^20.4.1",
+		"@commitlint/prompt-cli": "^20.4.1",
 		"@eslint/js": "^9.0.0",
 		"eslint": "^9.0.0",
 		"lint-staged": ">=12.0.0",
@@ -70,6 +79,15 @@
 	},
 	"peerDependenciesMeta": {
 		"@biomejs/biome": {
+			"optional": true
+		},
+		"@commitlint/cli": {
+			"optional": true
+		},
+		"@commitlint/config-conventional": {
+			"optional": true
+		},
+		"@commitlint/prompt-cli": {
 			"optional": true
 		},
 		"@eslint/js": {
