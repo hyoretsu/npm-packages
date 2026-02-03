@@ -1,3 +1,2 @@
-#!/usr/bin/env bash
-
-bun "./node_modules/commit-msg-linter/commit-msg-linter.js"
+bunx commitier --edit $1
+bunx commitlint --edit $1
