@@ -153,5 +153,10 @@
 			}
 		}
 	},
-	"root": false
+	"root": false,
+	"vcs": {
+		"clientKind": "git",
+		"enabled": true,
+		"useIgnoreFile": true
+	}
 }
