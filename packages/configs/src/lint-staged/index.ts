@@ -15,5 +15,5 @@ export const lintStagedConfig = (packageManager?: PackageManager) => ({
 	}),
 	"*.(cjs|js|jsx|mjs|ts|tsx)": ["bun run format:eslint"],
 	"*.(css|graphql|cjs|js|jsx|mjs|json|jsonc|ts|tsx)": ["bun run format:biome"],
-	"**/schema.prisma": [() => "bun run generate"],
+	"**/*.prisma": [() => "bun run generate"],
 });
