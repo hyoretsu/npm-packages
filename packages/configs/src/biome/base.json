@@ -149,6 +149,12 @@
 					"fix": "none",
 					"level": "warn"
 				},
+				"noUnknownAtRules": {
+					"level": "error",
+					"options": {
+						"ignore": ["tailwind"]
+					}
+				},
 				"useIterableCallbackReturn": "info"
 			}
 		}

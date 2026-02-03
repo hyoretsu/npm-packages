@@ -1,21 +1,26 @@
-**/dist
-**/tmp
 !.gitkeep
+tmp/
+.cache
 *.log
 .expo
 public/images
 !public/images/opengraph.jpg
 certificates
 
+# Artifacts
+build/
+dist/
+out/
+
 # Dependencies
-**/node_modules
-**/.pnp
+node_modules/
+.pnp/
 .pnpm-store
 .pnp.js
 
 # Env files
-**/.env
-**/.env*.local
+.env
+.env*.local
 
 # IDEs
 .idea
@@ -25,14 +30,14 @@ certificates
 !.vscode/settings.json
 !.vscode/tasks.json
 
-# Next.js
-.next/
+# Vendor
+.next
+.shopify
 .vercel
 next-env.d.ts
-out/
 
 # Test files
-**/coverage
+coverage/
 
 # TypeScript
 *.tsbuildinfo
