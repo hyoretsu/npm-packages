@@ -1,2 +1,4 @@
+#!/bin/sh
+
 bunx commitier --edit $1
 bunx commitlint --edit $1
