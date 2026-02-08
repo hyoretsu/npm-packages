@@ -22,4 +22,7 @@ export default {
 			},
 		},
 	},
+	rules: {
+		"body-case": [2, "always", ["camel-case", "lower-case", "pascal-case"]],
+	},
 } satisfies UserConfig;
