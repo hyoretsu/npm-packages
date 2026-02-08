@@ -1,3 +1,4 @@
+import { fixupPluginRules } from "@eslint/compat";
 import eslint from "@eslint/js";
 import { defineConfig } from "eslint/config";
 // @ts-expect-error: no types definition
@@ -15,7 +16,7 @@ export default defineConfig([
 			parser: tseslint.parser,
 		},
 		plugins: {
-			"@typescript-eslint": tseslint.plugin,
+			"@typescript-eslint": fixupPluginRules(tseslint.plugin),
 		},
 		rules: {
 			"@typescript-eslint/ban-ts-comment": "off",

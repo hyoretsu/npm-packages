@@ -1,6 +1,6 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"type": "module",
 	"license": "MIT",
 	"files": [
@@ -53,6 +53,7 @@
 		"prepublishOnly": "bun run build"
 	},
 	"dependencies": {
+		"@eslint/compat": "^2.0.2",
 		"@eslint/js": "^9.39.1",
 		"eslint": "^9.39.1",
 		"eslint-config-biome": "^2.1.3",
