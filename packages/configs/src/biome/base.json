@@ -19,22 +19,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": [
-			"**",
-			"!**/.git",
-			"!**/.next",
-			"!**/build",
-			"!**/client",
-			"!**/coverage",
-			"!**/dist",
-			"!**/node_modules",
-			"!**/bun.lock",
-			"!**/public",
-			"!**/tmp",
-			"!**/temp",
-			"!**/*.min.js",
-			"!**/*.gen.ts"
-		]
+		"includes": ["**", "!**/public", "!**/*.gen.ts", "!**/*.min.js"]
 	},
 	"formatter": {
 		"formatWithErrors": false,
@@ -45,13 +30,9 @@
 		"formatter": {
 			"arrowParentheses": "asNeeded",
 			"lineEnding": "lf",
-			"lineWidth": 140,
 			"quoteStyle": "double",
 			"semicolons": "always",
 			"trailingCommas": "all"
-		},
-		"parser": {
-			"unsafeParameterDecoratorsEnabled": true
 		}
 	},
 	"linter": {

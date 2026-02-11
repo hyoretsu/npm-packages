@@ -1,0 +1,12 @@
+version: 2
+
+multi-ecosystem-groups:
+  javascript:
+    schedule:
+      interval: "weekly"
+
+updates:
+  - package-ecosystem: "bun"
+    directory: "/"
+    multi-ecosystem-group: "javascript"
+    patterns: ["*"]
