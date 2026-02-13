@@ -1,3 +1,9 @@
-import config from "@hyoretsu/configs/eslint";
+import { readFileSync } from 'node:fs'
+import config from '@hyoretsu/configs/eslint'
 
-export default [...config];
+export default [
+	{
+		ignores: ,
+	},
+	...config,
+]

@@ -1,6 +1,6 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.2.4",
+	"version": "1.2.5",
 	"type": "module",
 	"license": "MIT",
 	"files": [
@@ -61,6 +61,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "latest",
 		"@commitlint/types": "^20.4.0",
+		"@types/node": "^25.2.3",
 		"es-toolkit": "^1.42.0",
 		"lint-staged": "^16.2.7",
 		"tsup": "^8.5.1",
