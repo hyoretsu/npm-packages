@@ -8,7 +8,7 @@ import tseslint from "typescript-eslint";
 
 export const generateIgnores = (filePath = ".gitignore") => {
 	return {
-		ignore: readFileSync(path.resolve(filePath), "utf-8")
+		ignores: readFileSync(path.resolve(filePath), "utf-8")
 			.split("\n")
 			.filter(line => line !== "" && line[0] !== "#" && line[0] !== "!")
 			.map(line => `**/${line}`),
