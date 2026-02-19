@@ -23,6 +23,6 @@ export default {
 		},
 	},
 	rules: {
-		"body-case": [2, "always", ["camel-case", "lower-case", "pascal-case"]],
+		"body-case": [2, "always", ["camel-case", "lower-case", "pascal-case", "sentence-case"]],
 	},
 } satisfies UserConfig;
