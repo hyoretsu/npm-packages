@@ -33,6 +33,7 @@ export default defineConfig([
 			"@typescript-eslint/no-confusing-void-expression": "off",
 			"@typescript-eslint/no-duplicate-enum-values": "off",
 			"@typescript-eslint/no-empty-function": "warn",
+			"@typescript-eslint/no-namespace": "off",
 		},
 	},
 	// JS files
