@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import eslint from "@eslint/js";
 import { defineConfig } from "eslint/config";
@@ -7,8 +7,14 @@ import biome from "eslint-config-biome";
 import tseslint from "typescript-eslint";
 
 export const generateIgnores = (filePath = ".gitignore") => {
+	const resolvedPath = path.resolve(filePath);
+
+	if (!existsSync(resolvedPath)) {
+		return { ignores: [] };
+	}
+
 	return {
-		ignores: readFileSync(path.resolve(filePath), "utf-8")
+		ignores: readFileSync(resolvedPath, "utf-8")
 			.split("\n")
 			.filter(line => line !== "" && line[0] !== "#" && line[0] !== "!")
 			.map(line => `**/${line}`),
