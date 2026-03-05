@@ -1,9 +1,11 @@
 {
 	"$schema": "http://json.schemastore.org/tsconfig",
 	"compilerOptions": {
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
 		"module": "commonjs",
 		"noEmit": false,
 		"verbatimModuleSyntax": false
 	},
-	"extends": ["./backend.json"]
+	"extends": ["./base.json"]
 }

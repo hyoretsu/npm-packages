@@ -4,7 +4,6 @@
 		"composite": false,
 		"declaration": true,
 		"emitDeclarationOnly": true,
-		"incremental": false,
 		"noEmit": false
 	},
 	"extends": ["./base.json"]
