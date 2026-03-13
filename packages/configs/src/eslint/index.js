@@ -13,28 +13,31 @@ export const generateIgnores = (filePath = ".gitignore") => {
 	const gitignoreFileName = path.basename(resolvedPath);
 
 	if (!existsSync(resolvedPath)) {
-		return { ignores: [] };
+		return {
+			ignores: [],
+		};
 	}
 
-	const gitignorePaths = readdirSync(rootDir, { withFileTypes: true }).flatMap(entry => {
-		const entryPath = path.join(rootDir, entry.name);
+	const readIgnoreFiles = dir =>
+		readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+			const entryPath = path.join(dir, entry.name);
 
-		if (entry.isDirectory()) {
-			if (entry.name === ".git" || entry.name === "node_modules") {
-				return [];
+			if (entry.isDirectory()) {
+				if (entry.name === ".git" || entry.name === "node_modules") {
+					return [];
+				}
+
+				return readIgnoreFiles(entryPath);
 			}
 
-			return readGitignoreFiles(entryPath);
-		}
-
-		return entry.isFile() && entry.name === gitignoreFileName ? [entryPath] : [];
-	});
+			return entry.isFile() && entry.name === gitignoreFileName ? [entryPath] : [];
+		});
 
 	return {
-		ignores: gitignorePaths.flatMap(gitignorePath => {
-			const relativeDir = path.relative(rootDir, path.dirname(gitignorePath)).split(path.sep).join("/");
+		ignores: readIgnoreFiles(rootDir).flatMap(ignoreFilePath => {
+			const relativeDir = path.relative(rootDir, path.dirname(ignoreFilePath)).split(path.sep).join("/");
 
-			return readFileSync(gitignorePath, "utf-8")
+			return readFileSync(ignoreFilePath, "utf-8")
 				.split("\n")
 				.map(line => line.replace(/\r$/, ""))
 				.filter(line => line !== "" && line[0] !== "#" && line[0] !== "!")
