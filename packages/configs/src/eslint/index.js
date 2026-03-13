@@ -1,4 +1,5 @@
-import { existsSync, readFileSync } from "node:fs";
+// @ts-nocheck
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import eslint from "@eslint/js";
 import { defineConfig } from "eslint/config";
@@ -8,16 +9,45 @@ import tseslint from "typescript-eslint";
 
 export const generateIgnores = (filePath = ".gitignore") => {
 	const resolvedPath = path.resolve(filePath);
+	const rootDir = path.dirname(resolvedPath);
+	const gitignoreFileName = path.basename(resolvedPath);
 
 	if (!existsSync(resolvedPath)) {
 		return { ignores: [] };
 	}
 
+	const gitignorePaths = readdirSync(rootDir, { withFileTypes: true }).flatMap(entry => {
+		const entryPath = path.join(rootDir, entry.name);
+
+		if (entry.isDirectory()) {
+			if (entry.name === ".git" || entry.name === "node_modules") {
+				return [];
+			}
+
+			return readGitignoreFiles(entryPath);
+		}
+
+		return entry.isFile() && entry.name === gitignoreFileName ? [entryPath] : [];
+	});
+
 	return {
-		ignores: readFileSync(resolvedPath, "utf-8")
-			.split("\n")
-			.filter(line => line !== "" && line[0] !== "#" && line[0] !== "!")
-			.map(line => `**/${line}`),
+		ignores: gitignorePaths.flatMap(gitignorePath => {
+			const relativeDir = path.relative(rootDir, path.dirname(gitignorePath)).split(path.sep).join("/");
+
+			return readFileSync(gitignorePath, "utf-8")
+				.split("\n")
+				.map(line => line.replace(/\r$/, ""))
+				.filter(line => line !== "" && line[0] !== "#" && line[0] !== "!")
+				.map(line => {
+					const normalizedLine = line[0] === "/" ? line.slice(1) : line;
+
+					if (relativeDir === "") {
+						return `**/${normalizedLine}`;
+					}
+
+					return `**/${relativeDir}/${normalizedLine}`;
+				});
+		}),
 	};
 };
 
