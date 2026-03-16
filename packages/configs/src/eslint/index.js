@@ -57,6 +57,11 @@ export const generateIgnores = (filePath = ".gitignore") => {
 export default defineConfig([
 	{ ignores: ["**/.next/**", "**/build/**", "**/dist/**", "**/node_modules/**"] },
 	eslint.configs.recommended,
+	{
+		rules: {
+			"no-useless-assignment": "off",
+		},
+	},
 	// TS files
 	{
 		extends: [tseslint.configs.strict, tseslint.configs.stylistic],
