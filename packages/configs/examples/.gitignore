@@ -3,8 +3,7 @@ tmp/
 .cache
 *.log
 .expo
-public/images
-!public/images/opengraph.jpg
+!opengraph.*
 certificates
 
 # Artifacts

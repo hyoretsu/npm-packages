@@ -1,6 +1,6 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.2.13",
+	"version": "1.2.14",
 	"type": "module",
 	"license": "MIT",
 	"files": [
@@ -26,6 +26,7 @@
 			"require": "./dist/lint-staged/index.cjs"
 		},
 		"./ts": "./dist/ts/base.json",
+		"./ts-backend": "./dist/ts/backend.json",
 		"./ts-frontend": "./dist/ts/frontend.json",
 		"./ts-nest": "./dist/ts/nest.json",
 		"./ts-lib": "./dist/ts/lib.json"
