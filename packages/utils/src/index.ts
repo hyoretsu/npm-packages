@@ -14,6 +14,7 @@ export * from "./funcs/isEven";
 export * from "./funcs/isOdd";
 export * from "./funcs/isPowerOf";
 export * from "./funcs/JsonFixBigInt";
+export * from "./funcs/jsonReviver";
 export * from "./funcs/measureText";
 export * from "./funcs/onlyUnique";
 export * from "./funcs/random";
