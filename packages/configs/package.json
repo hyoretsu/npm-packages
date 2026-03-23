@@ -1,6 +1,6 @@
 {
 	"name": "@hyoretsu/configs",
-	"version": "1.2.16",
+	"version": "1.2.17",
 	"type": "module",
 	"license": "MIT",
 	"files": [
@@ -8,6 +8,7 @@
 	],
 	"exports": {
 		"./biome": "./dist/biome/base.json",
+		"./biome-elysia": "./dist/biome/elysia.json",
 		"./biome-nest": "./dist/biome/nest.json",
 		"./biome-react": "./dist/biome/react.json",
 		"./commitlint": {
