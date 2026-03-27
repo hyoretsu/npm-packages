@@ -1,6 +1,13 @@
 "use client";
 import { range } from "@hyoretsu/utils";
-import React, { ChangeEvent, ChangeEventHandler, InputHTMLAttributes, useEffect, useState } from "react";
+import type React from "react";
+import {
+	type ChangeEvent,
+	type ChangeEventHandler,
+	type InputHTMLAttributes,
+	useEffect,
+	useState,
+} from "react";
 
 export interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
 	onChange: ChangeEventHandler<HTMLInputElement>;
@@ -54,11 +61,7 @@ export const Input: React.FC<CustomInputProps> = ({
 
 	return (
 		<input
-			type={type || "text"}
-			value={internalValue}
 			maxLength={maxLength}
-			onChange={handleOnChange}
-			onKeyUp={e => e.key === "Enter" && e.currentTarget.blur()}
 			onBlur={() =>
 				internalValue !== String(value) &&
 				handleOnChange(
@@ -66,6 +69,10 @@ export const Input: React.FC<CustomInputProps> = ({
 					true,
 				)
 			}
+			onChange={handleOnChange}
+			onKeyUp={e => e.key === "Enter" && e.currentTarget.blur()}
+			type={type || "text"}
+			value={internalValue}
 			{...rest}
 		/>
 	);

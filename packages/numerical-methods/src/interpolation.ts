@@ -32,9 +32,9 @@ export namespace Interpolation {
 }
 
 export const interpolationParams = {
+	targetX: "number|undefined",
 	x: "number[]",
 	y: "number[]",
-	targetX: "number|undefined",
 };
 
 export const lagrangeInterpolation: Interpolation = ({ x, y, targetX }) => {
@@ -55,12 +55,12 @@ export const lagrangeInterpolation: Interpolation = ({ x, y, targetX }) => {
 		.reduce((prev, curr) => (prev ? `${prev} + ${curr}` : curr), "");
 
 	return {
-		result: polynomial,
 		details: {
 			...(targetX && {
 				targetResult: fixNumber(evaluate(polynomial, { x: targetX })),
 			}),
 		},
+		result: polynomial,
 	};
 };
 
@@ -82,12 +82,12 @@ export const vandermondeInterpolation: Interpolation = ({ x, y, targetX }) => {
 	}, "");
 
 	return {
-		result: polynomial,
 		details: {
 			...(targetX && {
 				targetResult: fixNumber(evaluate(polynomial, { x: targetX })),
 			}),
 		},
+		result: polynomial,
 	};
 };
 
@@ -122,12 +122,12 @@ export const newtonInterpolation: Interpolation.Newton = ({ x, y, targetX }) => 
 		.join(" ");
 
 	return {
-		result: polynomial,
 		details: {
 			dividedDifferences,
 			...(targetX && {
 				result: evaluate(polynomial, { x: targetX }),
 			}),
 		},
+		result: polynomial,
 	};
 };

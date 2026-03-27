@@ -2,8 +2,8 @@ import type { Options } from "tsup";
 
 export const tsup: Options = {
 	clean: true,
-	entry: ["src/**/*.ts"],
 	dts: true,
+	entry: ["src/**/*.ts"],
 	format: ["cjs", "esm"],
 	minify: true,
 	outDir: "dist",

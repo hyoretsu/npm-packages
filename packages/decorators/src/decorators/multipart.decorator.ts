@@ -1,17 +1,17 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { createWriteStream } from "node:fs";
+import { pipeline } from "node:stream/promises";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import type { MultipartFile } from "@fastify/multipart";
-import { BadRequestException, createParamDecorator, ExecutionContext } from "@nestjs/common";
+import { BadRequestException, createParamDecorator, type ExecutionContext } from "@nestjs/common";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import type { FastifyRequest } from "fastify";
-import { createWriteStream } from "fs";
-import { pipeline } from "stream/promises";
 
-export type MultipartParams = {
+export interface MultipartParams {
 	fields?: string[];
 	optionalFields?: boolean | string[];
 	validation?: any;
-};
+}
 
 const handlers: Record<string, (file: MultipartFile) => Promise<void>> = {
 	local: async ({ file, filename }) => {
@@ -19,7 +19,7 @@ const handlers: Record<string, (file: MultipartFile) => Promise<void>> = {
 		const writeSteam = createWriteStream(uploadPath);
 		await pipeline(file, writeSteam);
 	},
-	s3: async (file) => {
+	s3: async file => {
 		const s3 = new S3Client({
 			credentials: {
 				accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
@@ -32,10 +32,10 @@ const handlers: Record<string, (file: MultipartFile) => Promise<void>> = {
 
 		await s3.send(
 			new PutObjectCommand({
-				Bucket: process.env.AWS_BUCKET,
-				Key,
 				Body: await file.toBuffer(),
+				Bucket: process.env.AWS_BUCKET,
 				ContentType,
+				Key,
 			}),
 		);
 	},
@@ -106,13 +106,13 @@ export const Multipart = createParamDecorator(
 
 			if (validationErrors.length) {
 				throw new BadRequestException(
-					validationErrors.flatMap((error) => {
+					validationErrors.flatMap(error => {
 						return error.children?.length
-							? error.children.flatMap((child) =>
+							? error.children.flatMap(child =>
 									Object.values(child.constraints as Record<string, string>).map(
-										(err) => `${error.property}.${err}`,
+										err => `${error.property}.${err}`,
 									),
-							  )
+								)
 							: Object.values(error.constraints as Record<string, string>);
 					}),
 				);
@@ -120,7 +120,7 @@ export const Multipart = createParamDecorator(
 		}
 
 		// Save all files
-		files.forEach((file) => handlers[process.env.STORAGE_DRIVER as string](file));
+		files.forEach(file => handlers[process.env.STORAGE_DRIVER as string](file));
 
 		return body;
 	},

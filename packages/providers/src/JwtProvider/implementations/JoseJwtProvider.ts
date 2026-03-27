@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify } from "jose";
+import { jwtVerify, SignJWT } from "jose";
 import type { JwtProvider, SignJwt, VerifyJwt } from "../models";
 
 export default class JoseJwtProvider implements JwtProvider {

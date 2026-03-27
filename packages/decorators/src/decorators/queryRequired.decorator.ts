@@ -1,4 +1,4 @@
-import { createParamDecorator, ExecutionContext, BadRequestException } from "@nestjs/common";
+import { BadRequestException, createParamDecorator, type ExecutionContext } from "@nestjs/common";
 
 export const QueryRequired = createParamDecorator((key: string, ctx: ExecutionContext) => {
 	const req = ctx.switchToHttp().getRequest();

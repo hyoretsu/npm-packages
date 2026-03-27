@@ -1,4 +1,5 @@
-import React, { CSSProperties, ReactNode } from "react";
+import type React from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 export interface OpacityFilterProps {
 	children: ReactNode;
@@ -22,17 +23,17 @@ export const OpacityFilter: React.FC<OpacityFilterProps> = ({
 		<div
 			className={className}
 			style={{
-				display: "flex",
 				alignItems: "center",
+				backgroundColor: `rgba(0, 0, 0, ${opacity})`,
+				display: "flex",
+				height: "100%",
 				justifyContent: "center",
+				left: 0,
 				position: "fixed",
 				top: 0,
-				left: 0,
-				zIndex: 1000,
 
 				width: "100%",
-				height: "100%",
-				backgroundColor: `rgba(0, 0, 0, ${opacity})`,
+				zIndex: 1000,
 				...style,
 			}}
 		>

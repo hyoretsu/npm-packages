@@ -85,8 +85,8 @@ const functionZerosOptionsParams = {
 export const zerosFunctionParams = {
 	func: "string",
 	interval: "[number,number]",
-	precision: "number",
 	options: functionZerosOptionsParams,
+	precision: "number",
 };
 
 export const bisection: FunctionZeros.Simple = ({
@@ -131,8 +131,8 @@ export const bisection: FunctionZeros.Simple = ({
 		}
 
 		details.push({
-			iteration: iterations,
 			interval: interval.map(number => fixNumber(number)),
+			iteration: iterations,
 			results: results.map(number => fixNumber(number)),
 			x: fixNumber(midPoint),
 			...(origFunc && { y: evaluate(origFunc, { x: midPoint }) }),
@@ -162,11 +162,11 @@ export const bisection: FunctionZeros.Simple = ({
 	}
 
 	return {
-		result: {
-			iterations,
-			interval: [a.toPrecision(21), b.toPrecision(21)],
-		},
 		details,
+		result: {
+			interval: [a.toPrecision(21), b.toPrecision(21)],
+			iterations,
+		},
 	};
 };
 
@@ -223,8 +223,8 @@ export const falsePosition: FunctionZeros.Simple = ({
 		}
 
 		details.push({
-			iteration: iterations,
 			interval: interval.map(number => fixNumber(number)),
+			iteration: iterations,
 			results: results.map(number => fixNumber(number)),
 			x: fixNumber(newPoint),
 			...(origFunc && { y: evaluate(origFunc, { x: newPoint }) }),
@@ -246,19 +246,19 @@ export const falsePosition: FunctionZeros.Simple = ({
 	}
 
 	return {
-		result: {
-			iterations,
-			interval: [a.toPrecision(21), b.toPrecision(21)],
-		},
 		details,
+		result: {
+			interval: [a.toPrecision(21), b.toPrecision(21)],
+			iterations,
+		},
 	};
 };
 
 export const newtonRaphsonParams = {
 	func: "string",
 	initialX: "number",
-	precision: "number",
 	options: functionZerosOptionsParams,
+	precision: "number",
 };
 
 export const newtonRaphson: FunctionZeros.NewtonRaphson = ({
@@ -299,10 +299,10 @@ export const newtonRaphson: FunctionZeros.NewtonRaphson = ({
 		}
 
 		details.push({
+			diffY: fixNumber(diffY),
 			iteration: iterations,
 			prevX: fixNumber(prevX),
 			prevY: fixNumber(prevY),
-			diffY: fixNumber(diffY),
 			x: fixNumber(x),
 			...(origFunc && { y: evaluate(origFunc, { x }) }),
 			...(relativeError && { relativeError: fixNumber(relativeError as number) }),
@@ -323,11 +323,11 @@ export const newtonRaphson: FunctionZeros.NewtonRaphson = ({
 	}
 
 	return {
+		details,
 		result: {
 			iterations,
 			x: x.toPrecision(21),
 		},
-		details,
 	};
 };
 
@@ -367,8 +367,8 @@ export const secant: FunctionZeros.Secant = ({
 		}
 
 		details.push({
-			iteration: iterations,
 			interval: [fixNumber(a), fixNumber(b)],
+			iteration: iterations,
 			results: results.map(number => fixNumber(number)),
 			x: fixNumber(c),
 			...(origFunc && { y: evaluate(origFunc, { x: c }) }),
@@ -393,10 +393,10 @@ export const secant: FunctionZeros.Secant = ({
 	}
 
 	return {
-		result: {
-			iterations,
-			interval: [a.toPrecision(21), b.toPrecision(21)],
-		},
 		details,
+		result: {
+			interval: [a.toPrecision(21), b.toPrecision(21)],
+			iterations,
+		},
 	};
 };

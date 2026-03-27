@@ -15,10 +15,10 @@ export const hexToHsl = (hex: string) => {
 		colors = hex.match(/.{2}/g) as RegExpMatchArray;
 	}
 
-	const r = parseInt(colors[0], 16) / 255;
-	const g = parseInt(colors[1], 16) / 255;
-	const b = parseInt(colors[2], 16) / 255;
-	const a = parseInt(colors[3], 16) / 255;
+	const r = Number.parseInt(colors[0], 16) / 255;
+	const g = Number.parseInt(colors[1], 16) / 255;
+	const b = Number.parseInt(colors[2], 16) / 255;
+	const a = Number.parseInt(colors[3], 16) / 255;
 
 	const max = Math.max(r, g, b);
 	const min = Math.min(r, g, b);

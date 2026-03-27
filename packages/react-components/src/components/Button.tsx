@@ -1,4 +1,5 @@
-import React, { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
+import type React from "react";
+import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
 
 export interface CustomButtonProps
 	extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
@@ -30,7 +31,6 @@ export const Button: React.FC<CustomButtonProps> = ({
 }) => {
 	return (
 		<button
-			type="button"
 			style={{
 				backgroundColor: background,
 				borderColor: border,
@@ -43,6 +43,7 @@ export const Button: React.FC<CustomButtonProps> = ({
 				paddingTop: (paddingVertical || padding[0]) - borderWidth,
 				...style,
 			}}
+			type="button"
 			{...rest}
 		>
 			<p style={{ color, fontSize }}>{children}</p>

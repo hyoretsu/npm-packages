@@ -2,7 +2,12 @@
 	"name": "numerical-methods",
 	"description": "A library that I made while studying Computer Science at UFPB. Documentation's available through TypeScript.",
 	"version": "0.13.7",
-	"keywords": ["academic", "calculus", "numerical analysis", "numerical methods"],
+	"keywords": [
+		"academic",
+		"calculus",
+		"numerical analysis",
+		"numerical methods"
+	],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",

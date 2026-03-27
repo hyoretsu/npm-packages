@@ -1,6 +1,6 @@
-import React, { CSSProperties } from "react";
-
 import { hexToRgba } from "@hyoretsu/utils";
+import type React from "react";
+import type { CSSProperties } from "react";
 
 export interface GlowingBlurProps {
 	className?: string;
@@ -63,9 +63,9 @@ export const GlowingBlur: React.FC<GlowingBlurProps> = ({
 
 	return (
 		<span
+			className={className}
 			id={id}
 			key={key}
-			className={className}
 			style={{
 				backgroundImage: `radial-gradient(46% 46% at 50% 50%, rgba(${hexToRgba(
 					color,

@@ -1,9 +1,9 @@
-import { SeverityNumber, type Logger } from "@opentelemetry/api-logs";
+import { type Logger, SeverityNumber } from "@opentelemetry/api-logs";
 import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
 import { CompressionAlgorithm } from "@opentelemetry/otlp-exporter-base";
 import { Resource } from "@opentelemetry/resources";
 import { BatchLogRecordProcessor, LoggerProvider } from "@opentelemetry/sdk-logs";
-import { LoggingProvider, type LoggingArgs } from "../model";
+import { type LoggingArgs, LoggingProvider } from "../model";
 import type { LoggingLevel } from "../types";
 
 export interface OtlpLoggingServiceArgs {
@@ -83,9 +83,9 @@ export class OtlpLoggingProvider extends LoggingProvider {
 
 		this.logger.emit({
 			body: `${content}\n\n${message}`,
-			timestamp: new Date(),
 			// @ts-expect-error: dynamic key
 			severityNumber: SeverityNumber[`${level.toUpperCase()}${severity === 1 ? "" : severity}`],
+			timestamp: new Date(),
 		});
 	}
 

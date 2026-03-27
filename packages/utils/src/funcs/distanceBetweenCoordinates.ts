@@ -15,8 +15,8 @@ export const distanceBetweenCoordinates = (
 	coord2: Coordinate,
 	radius = 6378.137 * 1000,
 ) => {
-	const [latitude1, longitude1] = coord1.map((value) => degreesToRadians(value));
-	const [latitude2, longitude2] = coord2.map((value) => degreesToRadians(value));
+	const [latitude1, longitude1] = coord1.map(value => degreesToRadians(value));
+	const [latitude2, longitude2] = coord2.map(value => degreesToRadians(value));
 
 	const h =
 		haversine(latitude2 - latitude1) +

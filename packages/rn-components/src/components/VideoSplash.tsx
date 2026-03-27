@@ -1,6 +1,6 @@
-import { AVPlaybackStatus, ResizeMode, Video } from "expo-av";
+import { type AVPlaybackStatus, ResizeMode, Video } from "expo-av";
 import * as SplashScreen from "expo-splash-screen";
-import React, { Dispatch, ReactNode, SetStateAction, useState } from "react";
+import { type Dispatch, type ReactNode, type SetStateAction, useState } from "react";
 import { StyleSheet } from "react-native";
 
 export interface VideoSplashProps {
@@ -27,8 +27,6 @@ export function VideoSplash({ children, hang, state, video: uri }: VideoSplashPr
 			{children}
 			{!splashComplete && (
 				<Video
-					source={{ uri }}
-					shouldPlay={!(lastStatus.isLoaded && lastStatus.didJustFinish)}
 					isLooping={true}
 					onPlaybackStatusUpdate={status => {
 						if (status.isLoaded) {
@@ -43,8 +41,10 @@ export function VideoSplash({ children, hang, state, video: uri }: VideoSplashPr
 
 						setStatus(() => status);
 					}}
-					style={StyleSheet.absoluteFill}
 					resizeMode={ResizeMode.COVER}
+					shouldPlay={!(lastStatus.isLoaded && lastStatus.didJustFinish)}
+					source={{ uri }}
+					style={StyleSheet.absoluteFill}
 				/>
 			)}
 		</>

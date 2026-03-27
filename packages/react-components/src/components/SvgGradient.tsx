@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 export interface SvgGradientProps {
 	colors: string[];
@@ -35,7 +35,7 @@ export const SvgGradient: React.FC<SvgGradientProps> = ({ colors, id, to = "bott
 
 	return (
 		// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-		<svg width="0" height="0" style={{ position: "absolute" }}>
+		<svg height="0" style={{ position: "absolute" }} width="0">
 			<linearGradient id={id} {...xy}>
 				{colors.map((color, index) => (
 					<stop key={color} offset={`${(index / (colors.length - 1)) * 100}%`} stopColor={color} />

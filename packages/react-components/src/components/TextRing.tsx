@@ -1,6 +1,6 @@
 import { useStyleInjection } from "@hyoretsu/react-hooks";
 import { range } from "@hyoretsu/utils";
-import React from "react";
+import type React from "react";
 import type { CSSProperties } from "react";
 
 export interface TextRingProps {
@@ -106,8 +106,8 @@ export const TextRing: React.FC<TextRingProps> = ({
 		<div
 			style={{
 				display: "inline-block",
-				position: "absolute",
 				left: "50%",
+				position: "absolute",
 				top: "50%",
 				...(rotating && {
 					animation: `${reverse ? "reverse-spin" : "spin"} ${duration}s infinite linear`,
@@ -130,13 +130,13 @@ export const TextRing: React.FC<TextRingProps> = ({
 					<span
 						key={index}
 						style={{
+							color,
+							left: "50%",
 							position: "absolute",
 							top: "50%",
-							left: "50%",
 							transform: `translate(-50%, -50%) rotate(calc(360deg / ${characters.length} * ${
 								index + offset
 							})) translateY(calc(${isBullet ? radius * 1.5 + 0.2 : radius} * -1ch))`,
-							color,
 							...(isBullet && { fontFamily: "Times New Roman" }),
 						}}
 					>

@@ -1,6 +1,7 @@
 import { useStyleInjection } from "@hyoretsu/react-hooks";
 import { hexToRgba } from "@hyoretsu/utils";
-import React, { ReactElement, cloneElement } from "react";
+import type React from "react";
+import { cloneElement, type ReactElement } from "react";
 
 export interface SonarProps {
 	children: ReactElement;

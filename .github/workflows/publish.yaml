@@ -78,7 +78,7 @@ jobs:
         run: bun add -g npm
       - name: Install dependencies
         run: |
-          cd ${{ matrix.package }} && bun install
+          cd ${{ matrix.package }} && NODE_ENV=development bun install
       - name: Publish '${{ matrix.package }}'
         run: |
           pkg_dir="${{ matrix.package }}"

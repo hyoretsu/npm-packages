@@ -1,4 +1,4 @@
-import { ValidateIf, ValidationOptions } from "class-validator";
+import { ValidateIf, type ValidationOptions } from "class-validator";
 
 /**
  * Validates if the value isn't `null`, `undefined` or an empty string.

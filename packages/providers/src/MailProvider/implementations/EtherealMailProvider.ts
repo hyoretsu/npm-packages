@@ -8,13 +8,13 @@ export default class EtherealMailProvider implements MailProvider {
 	constructor() {
 		nodemailer.createTestAccount().then(account => {
 			const transporter = nodemailer.createTransport({
+				auth: {
+					pass: account.pass,
+					user: account.user,
+				},
 				host: account.smtp.host,
 				port: account.smtp.port,
 				secure: account.smtp.secure,
-				auth: {
-					user: account.user,
-					pass: account.pass,
-				},
 			});
 
 			this.client = transporter;
@@ -24,9 +24,9 @@ export default class EtherealMailProvider implements MailProvider {
 	public async sendMail({ from, to, subject, body: text }: SendMailDTO): Promise<void> {
 		const message = await this.client.sendMail({
 			from,
-			to,
 			subject,
 			text,
+			to,
 		});
 
 		console.log("Message sent:", message);

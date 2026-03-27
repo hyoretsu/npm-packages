@@ -1,8 +1,7 @@
-import React from "react";
 import {
 	Animated,
 	Pressable as DefaultPressable,
-	PressableProps as DefaultPressableProps,
+	type PressableProps as DefaultPressableProps,
 } from "react-native";
 
 export interface PressableProps extends DefaultPressableProps {
@@ -14,15 +13,15 @@ export function Pressable({ children, touchFeedback = true, ...rest }: Pressable
 
 	const fadeIn = () => {
 		Animated.timing(animated, {
-			toValue: 0.5,
 			duration: 100,
+			toValue: 0.5,
 			useNativeDriver: true,
 		}).start();
 	};
 	const fadeOut = () => {
 		Animated.timing(animated, {
-			toValue: 1,
 			duration: 200,
+			toValue: 1,
 			useNativeDriver: true,
 		}).start();
 	};

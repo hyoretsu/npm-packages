@@ -1,10 +1,10 @@
-import { sign, verify, type JwtPayload, type SignOptions } from "jsonwebtoken";
+import { type JwtPayload, type SignOptions, sign, verify } from "jsonwebtoken";
 import type { JwtProvider, SignJwt, VerifyJwt } from "../models";
 
 export default class JsonWebTokenJwtProvider implements JwtProvider {
 	public async sign({ expiresIn = "24h", payload = {}, subject }: SignJwt): Promise<string> {
 		const jwt = sign(payload, process.env.JWT_SECRET!, {
-			expiresIn: expiresIn as SignOptions["expiresIn"],
+			expiresIn: (expiresIn as SignOptions["expiresIn"])!,
 			subject,
 		});
 

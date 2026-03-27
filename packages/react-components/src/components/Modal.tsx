@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Button } from "./Button";
 import { OpacityFilter } from "./OpacityFilter";
 
@@ -68,8 +68,8 @@ export function Modal({
 					border={buttonBorderColor}
 					borderRadius={buttonBorderRadius}
 					borderWidth={buttonBorderWidth}
-					padding={buttonPadding}
 					onClick={onConfirm}
+					padding={buttonPadding}
 				>
 					{buttonText}
 				</Button>

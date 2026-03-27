@@ -1,26 +1,26 @@
 import pino from "pino";
 import type { LokiOptions } from "pino-loki";
-import { LoggingProvider, type LoggingArgs } from "../model";
+import { type LoggingArgs, LoggingProvider } from "../model";
 import type { LoggingLevel } from "../types";
 
 export type LoggingArgsArray = [a?: Record<string, any> | string, b?: string];
 
 export class PinoLoggingProvider extends LoggingProvider {
 	private transport = pino.transport<LokiOptions>({
-		target: "pino-loki",
 		options: {
 			host: process.env.LOGGING_URL!,
 		},
+		target: "pino-loki",
 	});
 	logger = pino(this.transport);
 
 	private getArgs({ content, message }: LoggingArgs): LoggingArgsArray {
 		if (!content && !message) {
 			this.error({
-				message: "Wrong logging arguments",
 				content: {
 					reason: "You must provide either the 'message' or 'content' arguments in order to log.",
 				},
+				message: "Wrong logging arguments",
 			});
 		}
 

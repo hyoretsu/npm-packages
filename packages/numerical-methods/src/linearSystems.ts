@@ -41,10 +41,10 @@ export namespace LinearSystems {
 			transformedFuncs: TransformedFuncs;
 		}
 
-		export type Return = {
+		export interface Return {
 			result: Result;
 			details: Details;
-		};
+		}
 	}
 
 	export type GaussJacobi = (data: GaussJacobi.Params) => GaussJacobi.Return;
@@ -294,11 +294,11 @@ export const gaussianElimination: LinearSystems.GaussianElimination = ({
 	}
 
 	return {
-		result: results,
 		details: {
-			transformedFuncs,
 			steps,
+			transformedFuncs,
 		},
+		result: results,
 	};
 };
 
@@ -316,10 +316,10 @@ export const spectralRadius = (coefficients: Matrix): number => {
 
 export const gaussMethodParams = {
 	...linearSystemParams,
-	precision: "number",
 	options: {
 		maxIterations: "number",
 	},
+	precision: "number",
 };
 
 export const gaussJacobi: LinearSystems.GaussJacobi = ({
@@ -374,10 +374,10 @@ export const gaussJacobi: LinearSystems.GaussJacobi = ({
 		const relativeError = absoluteError / Math.max(...guess);
 
 		details.push({
-			iteration: iterations,
-			currentGuess: prevGuess.map(number => fixNumber(number)),
-			nextGuess: guess.map(number => fixNumber(number)),
 			absoluteError: fixNumber(absoluteError),
+			currentGuess: prevGuess.map(number => fixNumber(number)),
+			iteration: iterations,
+			nextGuess: guess.map(number => fixNumber(number)),
 			relativeError: fixNumber(relativeError),
 		});
 
@@ -385,13 +385,13 @@ export const gaussJacobi: LinearSystems.GaussJacobi = ({
 	}
 
 	return {
-		result: {
-			iterations,
-			iterationFunc,
-			spectralRadius: spectralRadius(coefficients),
-			solution: guess,
-		},
 		details,
+		result: {
+			iterationFunc,
+			iterations,
+			solution: guess,
+			spectralRadius: spectralRadius(coefficients),
+		},
 	};
 };
 
@@ -448,10 +448,10 @@ export const gaussSeidel: LinearSystems.GaussSeidel = ({
 		const relativeError = absoluteError / Math.max(...guess);
 
 		details.push({
-			iteration: iterations,
-			currentGuess: prevGuess.map(number => fixNumber(number)),
-			nextGuess: guess.map(number => fixNumber(number)),
 			absoluteError: fixNumber(absoluteError),
+			currentGuess: prevGuess.map(number => fixNumber(number)),
+			iteration: iterations,
+			nextGuess: guess.map(number => fixNumber(number)),
 			relativeError: fixNumber(relativeError),
 		});
 
@@ -459,12 +459,12 @@ export const gaussSeidel: LinearSystems.GaussSeidel = ({
 	}
 
 	return {
-		result: {
-			iterations,
-			iterationFunc,
-			spectralRadius: spectralRadius(coefficients),
-			solution: guess,
-		},
 		details,
+		result: {
+			iterationFunc,
+			iterations,
+			solution: guess,
+			spectralRadius: spectralRadius(coefficients),
+		},
 	};
 };

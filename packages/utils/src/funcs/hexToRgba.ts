@@ -12,7 +12,7 @@ export const hexToRgba = (hex: string): ColorArray => {
 	hex = hex.slice(1);
 
 	function hexToResult(colorCode: string, isAlpha = false) {
-		return parseInt(colorCode, 16) / (isAlpha ? 255 : 1);
+		return Number.parseInt(colorCode, 16) / (isAlpha ? 255 : 1);
 	}
 
 	if (hex.length === 3 || hex.length === 4) {

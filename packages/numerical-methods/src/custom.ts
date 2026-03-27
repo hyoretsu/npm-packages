@@ -41,9 +41,9 @@ const minMaxBisectionOptionsParams = {
 export const minMaxBisectionParams = {
 	func: "string",
 	interval: "[number,number]",
-	target: '"min"|"max"',
-	precision: "number",
 	options: minMaxBisectionOptionsParams,
+	precision: "number",
+	target: '"min"|"max"',
 };
 
 export const minMaxBisection: Custom.MinMaxBisection = ({
@@ -124,8 +124,8 @@ export const minMaxBisection: Custom.MinMaxBisection = ({
 		}
 
 		details.push({
-			iteration: iterations,
 			interval: [fixNumber(a), fixNumber(b)],
+			iteration: iterations,
 			results: results.map(number => fixNumber(number)),
 			x: fixNumber(midPoint),
 			...(origFunc && { y: evaluate(origFunc, { x: midPoint }) }),
@@ -145,10 +145,10 @@ export const minMaxBisection: Custom.MinMaxBisection = ({
 	}
 
 	return {
-		result: {
-			iterations,
-			interval: [a.toPrecision(21), b.toPrecision(21)],
-		},
 		details,
+		result: {
+			interval: [a.toPrecision(21), b.toPrecision(21)],
+			iterations,
+		},
 	};
 };

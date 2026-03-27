@@ -1,6 +1,6 @@
-import NextLink, { LinkProps as NextLinkProps } from "next/link";
-import React, { CSSProperties, ReactNode } from "react";
-import { UrlObject } from "url";
+import type { UrlObject } from "node:url";
+import NextLink, { type LinkProps as NextLinkProps } from "next/link";
+import type { CSSProperties, ReactNode } from "react";
 
 export interface LinkProps extends NextLinkProps {
 	children: ReactNode;
@@ -38,7 +38,7 @@ export function Link({
 
 	if (href.includes("http") || href.includes("https") || href.includes("png")) {
 		return (
-			<a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+			<a href={href} rel="noopener noreferrer" target="_blank" {...props}>
 				{children}
 			</a>
 		);

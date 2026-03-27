@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "",
 		"dev": "",
-		"format": "bun format:biome . & bun format:eslint .",
+		"format": "bun run --parallel 'bun format:biome .' 'bun format:eslint .'",
 		"format:biome": "biome check --diagnostic-level=error --write --unsafe",
 		"format:eslint": "eslint --quiet --fix",
 		"generate": "(prisma generate && npm run format:biome ./src/infra/sql/kysely/types.ts) || true",

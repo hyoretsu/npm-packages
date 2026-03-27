@@ -1,8 +1,7 @@
 {
-	"extends": "../../tsconfig.json",
 	"compilerOptions": {
-		"outDir": "dist",
-		"typeRoots": ["./node_modules/@types", "src/@types"]
+		"outDir": "dist"
 	},
+	"extends": ["@hyoretsu/configs/ts-lib"],
 	"include": ["src/**/*"]
 }

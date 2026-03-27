@@ -10,20 +10,20 @@ export default class NodemailerMailProvider implements MailProvider {
 	constructor() {
 		const transportObject: Record<string, SMTPTransport | SMTPTransport.Options> = {
 			gmail: {
-				service: "gmail",
 				auth: {
-					user: process.env.MAIL_USER,
 					pass: process.env.MAIL_PASS,
+					user: process.env.MAIL_USER,
 				},
+				service: "gmail",
 			},
 			nodemailer: {
+				auth: {
+					pass: process.env.MAIL_PASS,
+					user: process.env.MAIL_USER,
+				},
 				host: process.env.MAIL_HOST,
 				port: Number(process.env.MAIL_PORT),
 				secure: true,
-				auth: {
-					user: process.env.MAIL_USER,
-					pass: process.env.MAIL_PASS,
-				},
 			},
 			sendgrid: nodemailerSendgrid({
 				apiKey: process.env.SENDGRID_API_KEY as string,

@@ -52,17 +52,17 @@ export const trapezoidalRule: Integration = ({ func, pointN, x }) => {
 	} = minMaxBisection({
 		func: secondDerivative,
 		interval: [x[0], x[1]],
-		target: "max",
-		precision: 1e-12,
 		options: {
 			maxIterations: 1000,
 		},
+		precision: 1e-12,
+		target: "max",
 	});
 
 	const error =
 		(amplitude ** 3 / (12 * intervals ** 2)) * Math.abs(evaluate(secondDerivative, { x: maxPoint }));
 
-	return { result, details: { error } };
+	return { details: { error }, result };
 };
 
 export const simpsonRule13: Integration = ({ func, pointN, x }) => {
@@ -93,15 +93,15 @@ export const simpsonRule13: Integration = ({ func, pointN, x }) => {
 	} = minMaxBisection({
 		func: fourthDerivative,
 		interval: x,
-		target: "max",
-		precision: 1e-12,
 		options: {
 			maxIterations: 1000,
 		},
+		precision: 1e-12,
+		target: "max",
 	});
 
 	const error =
 		(amplitude ** 5 / (180 * intervals ** 2)) * Math.abs(evaluate(fourthDerivative, { x: maxPoint }));
 
-	return { result, details: { error } };
+	return { details: { error }, result };
 };
