@@ -25,7 +25,7 @@
 		"prepublishOnly": "tsup"
 	},
 	"devDependencies": {
-		"@hyoretsu/configs": "^1.2.18",
+		"@hyoretsu/configs": "^1.2.19",
 		"@types/node": "^25.5.0",
 		"@types/react": "^19.2.14",
 		"tsup": "^8.5.1",

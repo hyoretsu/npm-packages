@@ -5,11 +5,11 @@
     "": {
       "name": "@hyoretsu/utils",
       "devDependencies": {
-        "@hyoretsu/configs": "latest",
-        "@types/node": "latest",
-        "@types/react": "latest",
-        "tsup": "latest",
-        "typescript": "latest",
+        "@hyoretsu/configs": "^1.2.19",
+        "@types/node": "^25.5.0",
+        "@types/react": "^19.2.14",
+        "tsup": "^8.5.1",
+        "typescript": "^6.0.2",
       },
     },
   },
@@ -92,7 +92,7 @@
 
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.3", "", {}, "sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ=="],
 
-    "@hyoretsu/configs": ["@hyoretsu/configs@1.2.18", "", { "dependencies": { "@eslint/js": "^9.39.1", "eslint": "^9.39.1", "eslint-config-biome": "^2.1.3", "typescript-eslint": "^8.48.1" }, "peerDependencies": { "@biomejs/biome": "^2.3.0", "@commitlint/cli": "^20.4.1", "@commitlint/config-conventional": "^20.4.1", "@commitlint/prompt-cli": "^20.4.1", "lint-staged": ">=12.0.0", "typescript": "^5.0.0" }, "optionalPeers": ["@biomejs/biome", "@commitlint/cli", "@commitlint/config-conventional", "@commitlint/prompt-cli", "lint-staged", "typescript"] }, "sha512-f/pgwDQbv1XlZqrfn/s/YEhMhI7XYaLQBvnA8G6Pjobh7ECikCh1nsMmeiGNNuoqHFwI2VjUeIflOKmiuafnyw=="],
+    "@hyoretsu/configs": ["@hyoretsu/configs@1.2.19", "", { "dependencies": { "@eslint/js": "^9.39.1", "eslint": "^9.39.1", "eslint-config-biome": "^2.1.3", "typescript-eslint": "^8.48.1" }, "peerDependencies": { "@biomejs/biome": "^2.3.0", "@commitlint/cli": "^20.4.1", "@commitlint/config-conventional": "^20.4.1", "@commitlint/prompt-cli": "^20.4.1", "lint-staged": ">=12.0.0", "typescript": "^5.0.0" }, "optionalPeers": ["@biomejs/biome", "@commitlint/cli", "@commitlint/config-conventional", "@commitlint/prompt-cli", "lint-staged", "typescript"] }, "sha512-pSsl88R83ilwQoJAF2vADTWpyuDEqg2zwALC5c0P0iFi2sRE0bG0R7OxuC0ZAV9wAec6F51dpqTXNMkpdRX/Lg=="],
 
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 
