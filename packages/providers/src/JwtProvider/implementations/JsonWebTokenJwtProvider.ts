@@ -11,7 +11,7 @@ export default class JsonWebTokenJwtProvider implements JwtProvider {
 		return jwt;
 	}
 
-	public async verify<T = Record<string, unknown>, JwtData = JwtPayload & T>(jwt: string): Promise<JwtData> {
+	public async verify<T = Record<string, any>, JwtData = JwtPayload & T>(jwt: string): Promise<JwtData> {
 		const payload = verify(jwt, process.env.JWT_SECRET!);
 
 		return payload as JwtData;

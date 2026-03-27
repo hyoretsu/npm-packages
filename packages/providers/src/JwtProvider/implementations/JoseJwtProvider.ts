@@ -14,7 +14,7 @@ export default class JoseJwtProvider implements JwtProvider {
 		return jwt;
 	}
 
-	public async verify<T = Record<string, unknown>, JwtData = JwtPayload & T>(jwt: string): Promise<JwtData> {
+	public async verify<T = Record<string, any>, JwtData = JwtPayload & T>(jwt: string): Promise<JwtData> {
 		const { payload } = await jwtVerify(jwt, new TextEncoder().encode(process.env.JWT_SECRET));
 
 		return payload as JwtData;

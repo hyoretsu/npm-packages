@@ -27,5 +27,5 @@ export interface IJwtProvider {
 
 export abstract class JwtProvider implements IJwtProvider {
 	abstract sign(data: SignJwt): Promise<string>;
-	abstract verify<T = Record<string, unknown>>(data: string): Promise<T>;
+	abstract verify<T = Record<string, any>>(data: string): Promise<T>;
 }
