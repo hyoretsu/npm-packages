@@ -1,5 +1,6 @@
 export * from "./funcs/capitalize";
 export * from "./funcs/clamp";
+export * from "./funcs/createEnumFromArray";
 export * from "./funcs/degreesToRadians";
 export * from "./funcs/directLink";
 export * from "./funcs/distanceBetweenCoordinates";

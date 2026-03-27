@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/utils",
 	"description": "A collection of utility functions that I use in my projects.",
-	"version": "1.17.1",
+	"version": "1.18.0",
 	"keywords": [],
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
@@ -26,9 +26,9 @@
 	},
 	"devDependencies": {
 		"@hyoretsu/configs": "^1.2.18",
-		"@types/node": "^18.15.11",
-		"@types/react": "^18.0.33",
-		"tsup": "^8.0.2",
-		"typescript": "^5.4.5"
+		"@types/node": "^25.5.0",
+		"@types/react": "^19.2.14",
+		"tsup": "^8.5.1",
+		"typescript": "^6.0.2"
 	}
 }
