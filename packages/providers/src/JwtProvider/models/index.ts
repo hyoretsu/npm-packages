@@ -20,16 +20,12 @@ export interface SignJwt {
 	subject: string;
 }
 
-export interface VerifyJwt {
-	jwt: string;
-}
-
 export interface IJwtProvider {
 	sign(data: SignJwt): Promise<string>;
-	verify(data: VerifyJwt): Promise<Record<string, any>>;
+	verify(data: string): Promise<Record<string, any>>;
 }
 
 export abstract class JwtProvider implements IJwtProvider {
 	abstract sign(data: SignJwt): Promise<string>;
-	abstract verify(data: VerifyJwt): Promise<Record<string, any>>;
+	abstract verify<T = Record<string, unknown>>(data: string): Promise<T>;
 }
