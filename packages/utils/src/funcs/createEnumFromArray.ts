@@ -1,5 +1,8 @@
-export const createEnumFromArray = <T extends string, Enum = { [key in T]: key }>(
+export function createEnumFromArray<T extends string>(
 	arr: readonly T[],
-): Enum => {
-	return Object.fromEntries(arr.map(item => [item, item])) as Enum;
-};
+	uppercase: true,
+): { [K in T as Uppercase<K>]: K };
+export function createEnumFromArray<T extends string>(arr: readonly T[], uppercase?: false): { [K in T]: K };
+export function createEnumFromArray<T extends string>(arr: readonly T[], uppercase = false) {
+	return Object.fromEntries(arr.map(item => [uppercase ? item.toUpperCase() : item, item])) as any;
+}
