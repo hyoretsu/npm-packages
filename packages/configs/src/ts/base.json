@@ -10,7 +10,6 @@
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": false,
-		"noUncheckedIndexedAccess": true,
 		"removeComments": true,
 		"resolveJsonModule": true,
 		"rewriteRelativeImportExtensions": true,

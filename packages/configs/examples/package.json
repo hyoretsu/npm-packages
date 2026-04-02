@@ -1,8 +1,8 @@
 {
 	"name": "project",
 	"version": "1.0.0",
-	"type": "module",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "",
 		"dev": "",
@@ -13,12 +13,12 @@
 		"migrate": "prisma migrate dev --create-only && bun run generate",
 		"migrate:dev": "prisma migrate dev && bun run generate",
 		"migrate:deploy": "prisma migrate deploy",
-		"postinstall": "bun run generate",
+		"postinstall": "bun run generate --no-hints",
 		"prepare": "bun ./prepare.ts || true",
-		"test": "bun test",
 		"start": "",
 		"start:debug": "",
-		"start:prod": ""
+		"start:prod": "",
+		"test": "bun test"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.7",
