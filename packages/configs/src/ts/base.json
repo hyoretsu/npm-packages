@@ -16,7 +16,7 @@
 		"rewriteRelativeImportExtensions": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"typeRoots": ["./node_modules/@types", "src/@types"],
+		"typeRoots": ["node", "src/@types"],
 		"verbatimModuleSyntax": true
 	}
 }
