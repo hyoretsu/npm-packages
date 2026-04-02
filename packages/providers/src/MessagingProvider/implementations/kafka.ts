@@ -22,16 +22,20 @@ export interface KafkaMessagingProviderConfig extends Omit<KafkaConfig, "clientI
 
 export class KafkaMessagingProvider extends MessagingProvider {
 	private readonly kafka: Kafka;
-	private readonly baseGroupId: string;
 
 	private producer?: Producer;
 	private producerReady = false;
 	private readonly subscriptions = new Map<string, Promise<void>>();
 
-	public constructor(config: KafkaMessagingProviderConfig) {
+	public constructor() {
 		super();
-		this.kafka = new Kafka(config);
-		this.baseGroupId = config.groupId ?? `${config.clientId}-messaging`;
+		this.kafka = new Kafka({
+			brokers: process.env.KAFKA_BROKERS!.split(","),
+			retry: {
+				initialRetryTime: 5000,
+				retries: 5,
+			},
+		});
 	}
 
 	private getProducer(): Producer {
@@ -111,9 +115,12 @@ export class KafkaMessagingProvider extends MessagingProvider {
 		callback: (message: MessagingMessage) => Promise<void>,
 		fanout?: boolean,
 	): Promise<void> {
-		const consumer: Consumer = this.kafka.consumer({
-			groupId: fanout ? `${this.baseGroupId}.${topic}.${randomUUID()}` : `${this.baseGroupId}.${topic}`,
-		});
+		let groupId = topic;
+		if (fanout) {
+			groupId += `.${randomUUID()}`;
+		}
+
+		const consumer: Consumer = this.kafka.consumer({ groupId });
 
 		await consumer.connect();
 		await consumer.subscribe({ fromBeginning: false, topic });
