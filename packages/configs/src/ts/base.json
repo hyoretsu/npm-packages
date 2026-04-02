@@ -4,11 +4,8 @@
 		"allowImportingTsExtensions": true,
 		"allowJs": true,
 		"checkJs": true,
-		"esModuleInterop": true,
 		"jsx": "react-jsx",
 		"lib": ["ESNext"],
-		"module": "Preserve",
-		"moduleResolution": "bundler",
 		"noEmit": true,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
@@ -19,8 +16,6 @@
 		"rewriteRelativeImportExtensions": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"strict": true,
-		"target": "ESNext",
 		"typeRoots": ["./node_modules/@types", "src/@types"],
 		"verbatimModuleSyntax": true
 	}
