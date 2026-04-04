@@ -6,6 +6,8 @@
 		"checkJs": true,
 		"jsx": "react-jsx",
 		"lib": ["ESNext"],
+		"module": "preserve",
+		"moduleResolution": "bundler",
 		"noEmit": true,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
