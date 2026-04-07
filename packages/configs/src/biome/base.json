@@ -95,6 +95,12 @@
 				"noUselessElse": "error",
 				"useAsConstAssertion": "error",
 				"useConsistentArrayType": "error",
+				"useConsistentMemberAccessibility": {
+					"level": "error",
+					"options": {
+						"accessibility": "explicit"
+					}
+				},
 				"useConsistentObjectDefinitions": {
 					"level": "error",
 					"options": {
