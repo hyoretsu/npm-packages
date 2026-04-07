@@ -1,5 +1,5 @@
-import { type JwtPayload, type SignOptions, sign, verify } from "jsonwebtoken";
-import type { JwtProvider, SignJwt } from "../models";
+import { type SignOptions, sign, verify } from "jsonwebtoken";
+import type { JwtPayload, JwtProvider, SignJwt } from "../models";
 
 export default class JsonWebTokenJwtProvider implements JwtProvider {
 	public async sign({ expiresIn = "24h", payload = {}, subject }: SignJwt): Promise<string> {
@@ -11,9 +11,9 @@ export default class JsonWebTokenJwtProvider implements JwtProvider {
 		return jwt;
 	}
 
-	public async verify<T = Record<string, any>, JwtData = JwtPayload & T>(jwt: string): Promise<JwtData> {
+	public async verify<T extends object>(jwt: string): Promise<JwtPayload<T>> {
 		const payload = verify(jwt, process.env.JWT_SECRET!);
 
-		return payload as JwtData;
+		return payload as JwtPayload<T>;
 	}
 }

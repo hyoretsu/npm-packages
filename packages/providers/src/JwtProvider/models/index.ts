@@ -1,3 +1,9 @@
+export type JwtPayload<Payload extends object = Record<string, any>> = Payload & {
+	exp: number;
+	iat: number;
+	sub: number;
+};
+
 export interface SignJwt {
 	/** Signature or encryption algorithm. */
 	alg?:
@@ -22,10 +28,10 @@ export interface SignJwt {
 
 export interface IJwtProvider {
 	sign(data: SignJwt): Promise<string>;
-	verify(data: string): Promise<Record<string, any>>;
+	verify(data: string): Promise<JwtPayload>;
 }
 
 export abstract class JwtProvider implements IJwtProvider {
 	abstract sign(data: SignJwt): Promise<string>;
-	abstract verify<T = Record<string, any>>(data: string): Promise<T>;
+	abstract verify<T extends object>(data: string): Promise<JwtPayload<T>>;
 }
