@@ -33,5 +33,5 @@ export interface IJwtProvider {
 
 export abstract class JwtProvider implements IJwtProvider {
 	abstract sign(data: SignJwt): Promise<string>;
-	abstract verify<T extends object>(data: string): Promise<JwtPayload<T>>;
+	abstract verify<T extends object = Record<string, any>>(data: string): Promise<JwtPayload<T>>;
 }
