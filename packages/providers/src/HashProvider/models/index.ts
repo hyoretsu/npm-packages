@@ -1,9 +1,9 @@
 export interface IHashProvider {
-	compareHash(payload: string, hashed: string): Promise<boolean>;
-	generateHash(payload: string, rounds?: number): Promise<string>;
+	compare(payload: string, hashed: string): Promise<boolean>;
+	generate(payload: string, rounds?: number): Promise<string>;
 }
 
 export abstract class HashProvider implements IHashProvider {
-	abstract compareHash(payload: string, hashed: string): Promise<boolean>;
-	abstract generateHash(payload: string, rounds?: number): Promise<string>;
+	abstract compare(payload: string, hashed: string): Promise<boolean>;
+	abstract generate(payload: string, rounds?: number): Promise<string>;
 }
