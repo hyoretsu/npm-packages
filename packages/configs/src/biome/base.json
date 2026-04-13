@@ -19,7 +19,17 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!**/public", "!**/*.gen.ts", "!**/*.min.js"]
+		"includes": [
+			"**",
+			"!.agents",
+			"!.claude",
+			"!**/public",
+			"!**/*.gen.ts",
+			"!**/*.min.js",
+			"!skills-lock.json",
+			"!**/package-lock.json",
+			"!**/pnpm-lock.yaml"
+		]
 	},
 	"formatter": {
 		"formatWithErrors": false,
