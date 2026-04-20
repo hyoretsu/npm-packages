@@ -27,7 +27,7 @@ export interface ResponseErrorConfig<TError = unknown> {
 	statusText: string;
 }
 
-export type Client = typeof fetch;
+export type Client = ReturnType<typeof createClient>;
 
 /** Kubb custom client with Zod Validation */
 export const createClient =
