@@ -5,23 +5,17 @@ import { pluginTs } from "@kubb/plugin-ts";
 import { pluginZod } from "@kubb/plugin-zod";
 import { generateTagKey } from "./generateTagKey";
 
-const exclude: Exclude[] = [
-	{
-		pattern: "External",
-		type: "tag",
-	},
-];
-
-export type CreateConfig = (data: {
+export interface CreateConfigParams {
 	config: {
 		[url: string]: {
 			docsPath: string;
 			name: string;
 		};
 	};
-}) => Config;
+	exclude?: Exclude[];
+}
 
-export const createConfig: CreateConfig = ({ config }) =>
+export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
 	defineConfig(
 		Object.entries(config).map(([url, { docsPath, name }]) => ({
 			input: {
