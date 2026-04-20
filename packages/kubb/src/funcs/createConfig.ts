@@ -4,11 +4,14 @@ import { pluginReactQuery } from "@kubb/plugin-react-query";
 import { pluginTs } from "@kubb/plugin-ts";
 import { pluginZod } from "@kubb/plugin-zod";
 import { generateTagKey } from "./generateTagKey";
+import path from "node:path";
 
 export interface CreateConfigParams {
 	config: {
 		[url: string]: {
 			name: string;
+			/** Will contain a `generated` folder with each config's folder. */
+			output?: string;
 		} & (
 			| {
 					docsPath: string;
@@ -25,7 +28,7 @@ export interface CreateConfigParams {
 
 export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
 	defineConfig(
-		Object.entries(config).map(([url, { docsPath, jsonPath, name }]) => ({
+		Object.entries(config).map(([url, { docsPath, jsonPath, name, output = "./src/lib/api" }]) => ({
 			input: {
 				path: jsonPath ?? url + docsPath,
 			},
@@ -33,7 +36,7 @@ export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
 				clean: true,
 				format: "auto",
 				lint: "auto",
-				path: `./generated/${name}`,
+				path: path.resolve(output, "generated", name),
 			},
 			plugins: [
 				pluginOas(),
@@ -65,6 +68,5 @@ export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
 					},
 				}),
 			],
-			root: "./src/lib/api",
 		})),
 	);

@@ -2,7 +2,8 @@
 	"compilerOptions": {
 		"ignoreDeprecations": "6.0",
 		"lib": ["DOM", "ESNext"],
-		"outDir": "dist"
+		"outDir": "dist",
+		"types": ["node"]
 	},
 	"extends": ["@hyoretsu/configs/ts-lib"],
 	"include": ["src/**/*"]
