@@ -1,0 +1,6 @@
+**/tmp
+esbuild.js
+src/
+tsconfig.json
+tsupconfig.json
+*.tsbuildinfo
