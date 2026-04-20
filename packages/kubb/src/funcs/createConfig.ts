@@ -8,18 +8,26 @@ import { generateTagKey } from "./generateTagKey";
 export interface CreateConfigParams {
 	config: {
 		[url: string]: {
-			docsPath: string;
 			name: string;
-		};
+		} & (
+			| {
+					docsPath: string;
+					jsonPath?: never;
+			  }
+			| {
+					jsonPath: string;
+					docsPath?: never;
+			  }
+		);
 	};
 	exclude?: Exclude[];
 }
 
 export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
 	defineConfig(
-		Object.entries(config).map(([url, { docsPath, name }]) => ({
+		Object.entries(config).map(([url, { docsPath, jsonPath, name }]) => ({
 			input: {
-				path: url + docsPath,
+				path: jsonPath ?? url + docsPath,
 			},
 			output: {
 				clean: true,
