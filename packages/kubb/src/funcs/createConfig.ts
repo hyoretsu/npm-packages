@@ -44,7 +44,16 @@ export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
 					dateType: "date",
 					exclude,
 				}),
-				pluginZod({ exclude }),
+				pluginZod({
+					exclude,
+					transformers: {
+						schema: (_props, defaultSchemas) => {
+							if (defaultSchemas.some(s => s.keyword === "blob")) {
+								return defaultSchemas.filter(s => s.keyword !== "default");
+							}
+						},
+					},
+				}),
 				pluginReactQuery({
 					client: {
 						importPath: `../../../../client-${name}.ts`,
