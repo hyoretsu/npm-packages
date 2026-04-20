@@ -48,7 +48,21 @@ export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
 					exclude,
 					transformers: {
 						schema: (_props, defaultSchemas) => {
-							if (defaultSchemas.some(s => s.keyword === "blob")) {
+							const hasBlob = (schemas: typeof defaultSchemas): boolean => {
+								return schemas.some(s => {
+									if (s.keyword === "blob") {
+										return true;
+									}
+
+									if (s.keyword === "array" && "args" in s) {
+										return hasBlob((s.args as { items: typeof defaultSchemas }).items);
+									}
+
+									return false;
+								});
+							};
+
+							if (hasBlob(defaultSchemas)) {
 								return defaultSchemas.filter(s => s.keyword !== "default");
 							}
 						},
