@@ -60,6 +60,7 @@ export default defineConfig([
 	{
 		rules: {
 			"no-useless-assignment": "off",
+			"preserve-caught-error": "off",
 		},
 	},
 	// TS files
