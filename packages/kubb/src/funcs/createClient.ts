@@ -60,7 +60,7 @@ export const createClient =
 				searchParams = Object.fromEntries(
 					Object.entries(searchParams).map(([key, value]) => {
 						if (value instanceof Date) {
-							value = dayjs(value).format("YYYY-MM-DDTHH:mm:ssZ[Z]");
+							value = dayjs(value).format("YYYY-MM-DDTHH:mm:ssZ");
 						}
 						return [key, value];
 					}),
