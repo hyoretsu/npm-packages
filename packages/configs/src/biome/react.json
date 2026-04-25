@@ -4,7 +4,8 @@
 	"linter": {
 		"rules": {
 			"correctness": {
-				"useHookAtTopLevel": "error"
+				"useHookAtTopLevel": "error",
+				"useUniqueElementIds": "off"
 			}
 		}
 	},
