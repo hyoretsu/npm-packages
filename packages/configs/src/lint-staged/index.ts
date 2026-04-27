@@ -11,24 +11,12 @@ const lockCommands: Record<PackageManager, Array<() => string>> = {
 
 export interface LintStagedConfigParams {
 	packageManager?: PackageManager;
-	prismaPackageName?: string;
 }
 
-export const lintStagedConfig = ({ packageManager, prismaPackageName }: LintStagedConfigParams = {}) => ({
+export const lintStagedConfig = ({ packageManager }: LintStagedConfigParams = {}) => ({
 	...(packageManager && {
 		"(bun.|package-|pnpm-|yarn.)lock*": lockCommands[packageManager],
 	}),
 	"*.(cjs|js|jsx|mjs|ts|tsx)": ["bun run format:eslint"],
 	"*.(css|graphql|cjs|js|jsx|mjs|json|jsonc|ts|tsx)": ["bun run format:biome"],
-	"**/*.prisma": [
-		() => {
-			let cmd = "bun run generate";
-
-			if (prismaPackageName) {
-				cmd = cmd.replace("bun run", `bun -F ${prismaPackageName}`);
-			}
-
-			return cmd;
-		},
-	],
 });
