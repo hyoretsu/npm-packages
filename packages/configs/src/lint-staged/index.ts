@@ -3,10 +3,10 @@
 type PackageManager = "bun" | "npm" | "pnpm" | "yarn";
 
 const lockCommands: Record<PackageManager, Array<() => string>> = {
-	bun: [() => "bun i --lockfile-only", () => "git add bun.lock"],
-	npm: [() => "npm i --package-lock-only", () => "git add package-lock.json"],
-	pnpm: [() => "pnpm i --lockfile-only", () => "git add pnpm-lock.yaml"],
-	yarn: [() => "yarn install", () => "git add yarn.lock"], // For Yarn Berry, use: "yarn install --mode update-lockfile"
+	bun: [() => "bun i --lockfile-only"],
+	npm: [() => "npm i --package-lock-only"],
+	pnpm: [() => "pnpm i --lockfile-only"],
+	yarn: [() => "yarn install"], // For Yarn Berry, use: "yarn install --mode update-lockfile"
 };
 
 export interface LintStagedConfigParams {
@@ -17,6 +17,8 @@ export const lintStagedConfig = ({ packageManager }: LintStagedConfigParams = {}
 	...(packageManager && {
 		"(bun.|package-|pnpm-|yarn.)lock*": lockCommands[packageManager],
 	}),
-	"*.(cjs|js|jsx|mjs|ts|tsx)": ["bun run format:eslint"],
-	"*.(css|graphql|cjs|js|jsx|mjs|json|jsonc|ts|tsx)": ["bun run format:biome"],
+	"*.(cjs|js|jsx|mjs|ts|tsx)": ["bunx eslint --quiet --fix"],
+	"*.(css|graphql|cjs|js|jsx|mjs|json|jsonc|ts|tsx)": [
+		() => "bunx biome check  --diagnostic-level=error --staged --write --unsafe",
+	],
 });
