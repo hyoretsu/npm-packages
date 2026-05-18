@@ -9,6 +9,7 @@ export const tanstackClient = new QueryClient({
 			},
 		},
 		queries: {
+			refetchOnWindowFocus: false,
 			staleTime: timeConversion(1, "minutes", "milliseconds"),
 		},
 	},

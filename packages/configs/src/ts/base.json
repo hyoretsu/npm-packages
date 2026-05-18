@@ -17,6 +17,7 @@
 		"rewriteRelativeImportExtensions": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
+		"types": ["node"],
 		"verbatimModuleSyntax": true
 	}
 }
