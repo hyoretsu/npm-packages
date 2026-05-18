@@ -2,7 +2,11 @@ import { timeConversion } from "@hyoretsu/utils";
 import { QueryClient } from "@tanstack/react-query";
 
 export interface TanstackClientData {
-	/** In `ms`. */
+	/**
+	 * In `ms`.
+	 *
+	 * Default: `1min`.
+	 */
 	staleTime?: number;
 }
 
