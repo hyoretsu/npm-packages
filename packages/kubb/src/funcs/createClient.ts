@@ -94,12 +94,10 @@ export const createClient =
 			};
 		} catch (error) {
 			if (isHTTPError(error)) {
-				const errorData = (await error.response.json().catch(() => ({}))) as TError;
-
 				// We throw the error so TanStack Query (useMutation) can catch it
 
 				throw {
-					data: errorData,
+					data: error.data,
 					status: error.response.status,
 					statusText: error.response.statusText,
 				};

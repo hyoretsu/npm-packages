@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/kubb",
 	"description": "A collection of helpers for Kubb.",
-	"version": "3.0.4",
+	"version": "3.1.0",
 	"keywords": [],
 	"type": "module",
 	"exports": {
