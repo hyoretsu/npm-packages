@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/kubb",
 	"description": "A collection of helpers for Kubb.",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"keywords": [],
 	"type": "module",
 	"exports": {
@@ -38,6 +38,7 @@
 		"dayjs": "^1.11.20"
 	},
 	"peerDependencies": {
+		"@kubb/cli": "^4.37.2",
 		"@kubb/core": "^4.37.2",
 		"@tanstack/react-query": "^5.99.2",
 		"ky": "^2.0.1",
