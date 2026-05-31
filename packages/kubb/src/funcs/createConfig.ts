@@ -34,8 +34,8 @@ export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
 			},
 			output: {
 				clean: true,
-				format: "auto",
-				lint: "auto",
+				format: false,
+				lint: false,
 				path: path.resolve(output, "generated", name),
 			},
 			plugins: [
