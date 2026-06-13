@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"noUncheckedIndexedAccess": false,
 		"outDir": "dist",
 		"rootDir": "src",
 		"typeRoots": [
