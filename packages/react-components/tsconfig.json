@@ -1,10 +1,12 @@
 {
 	"compilerOptions": {
+		"exactOptionalPropertyTypes": false,
 		"lib": [
 			"DOM",
 			"DOM.Iterable",
 			"ESNext"
 		],
+		"noUncheckedIndexedAccess": false,
 		"outDir": "dist",
 		"rootDir": "src",
 		"typeRoots": [
