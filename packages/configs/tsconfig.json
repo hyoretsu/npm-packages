@@ -1,7 +1,8 @@
 {
 	"compilerOptions": {
 		"outDir": "dist",
-		"typeRoots": ["./node_modules/@types"]
+		"typeRoots": ["./node_modules/@types", "../../node_modules/@types"],
+		"types": ["bun"]
 	},
 	"extends": ["./src/ts/lib.json"],
 	"include": ["./build/**/*.ts", "./src/**/*.js", "./src/**/*.ts"]
