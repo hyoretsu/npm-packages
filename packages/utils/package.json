@@ -22,13 +22,16 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"prepublishOnly": "tsup"
+		"prepublishOnly": "bun run build",
+		"build": "tsup && tsc --emitDeclarationOnly",
+		"check-types": "tsc --noEmit",
+		"publish": "npm publish --provenance --access public"
 	},
 	"devDependencies": {
 		"@hyoretsu/configs": "^1.2.19",
 		"@types/node": "^25.5.0",
 		"@types/react": "^19.2.14",
 		"tsup": "^8.5.1",
-		"typescript": "^6.0.2"
+		"typescript": "^6.0.3"
 	}
 }

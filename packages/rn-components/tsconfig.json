@@ -1,8 +1,14 @@
 {
 	"compilerOptions": {
 		"outDir": "dist",
-		"typeRoots": ["./node_modules/@types", "./src/data/@types"]
+		"rootDir": "src",
+		"typeRoots": [
+			"./node_modules/@types",
+			"./src/data/@types"
+		]
 	},
 	"extends": "../../tsconfig.json",
-	"include": ["src/**/*"]
+	"include": [
+		"src/**/*"
+	]
 }

@@ -1,4 +1,5 @@
-import { RedisCacheProvider } from "./implementations";
+import type { LazyProvider } from "../lazy";
+import type { RedisCacheProvider } from "./implementations/RedisCacheProvider";
 
 export * from "./models";
 
@@ -8,6 +9,6 @@ export type CacheProviderKeys = "redis";
 export enum CacheProvidersEnum {
 	REDIS = "redis",
 }
-export const cacheProviders: Record<CacheProviderKeys, CacheProviders> = {
-	redis: RedisCacheProvider,
+export const cacheProviders: Record<CacheProviderKeys, LazyProvider<CacheProviders>> = {
+	redis: async () => (await import("./implementations/RedisCacheProvider")).RedisCacheProvider,
 };

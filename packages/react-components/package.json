@@ -26,7 +26,10 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"prepublishOnly": "tsup"
+		"prepublishOnly": "bun run build",
+		"build": "tsup && tsc --emitDeclarationOnly",
+		"check-types": "tsc --noEmit",
+		"publish": "npm publish --provenance --access public"
 	},
 	"dependencies": {
 		"@hyoretsu/react-hooks": "latest",
@@ -37,6 +40,7 @@
 	"devDependencies": {
 		"@hyoretsu/configs": "^1.2.18",
 		"@types/react": "^18.0.33",
-		"tsup": "^8.5.1"
+		"tsup": "^8.5.1",
+		"typescript": "^6.0.3"
 	}
 }

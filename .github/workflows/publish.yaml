@@ -15,50 +15,50 @@ on:
 
 jobs:
   detect:
-    name: Find updated packages
+    name: Detect affected
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-      has_changes: ${{ steps.set-matrix.outputs.has_changes }}
+      # JSON object keyed by task, e.g. {"publish":["@hyoretsu/providers"]}. A matrix
+      # built from [] spawns no jobs, so an unchanged push is skipped without a
+      # separate "any" flag.
+      tasks: ${{ steps.affected.outputs.tasks }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
         with:
-          fetch-depth: 2
-      - name: Determine Changed Packages
-        id: set-matrix
+          # Full history so the push diff against the previous commit resolves.
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Compute packages to publish
+        id: affected
+        env:
+          MANUAL_INPUT: ${{ inputs.package_name }}
+          BASE_SHA: ${{ github.event.before }}
         run: |
-          MANUAL_INPUT="${{ inputs.package_name }}"
-          TARGETS=""
-
           if [ -n "$MANUAL_INPUT" ]; then
-            echo "Manual trigger detected."
-            if [[ "$MANUAL_INPUT" == packages/* ]]; then
-               TARGETS="$MANUAL_INPUT"
-            else
-               TARGETS="packages/$MANUAL_INPUT"
+            # Manual trigger: resolve the given folder to its package name.
+            dir="${MANUAL_INPUT#packages/}"
+            name=$(node -e "process.stdout.write(require('./packages/$dir/package.json').name)")
+            tasks=$(jq -nc --arg n "$name" '{publish: [$n]}')
+          else
+            # Push trigger: diff against the commit before the push. Fall back to
+            # HEAD~1 when the SHA is the zero ref (first push / force-push).
+            base="$BASE_SHA"
+            if [ -z "$base" ] || [[ "$base" =~ ^0+$ ]]; then
+              base=$(git rev-parse HEAD~1)
             fi
-          else
-            echo "Automatic trigger detected. Checking git diff..."
-            TARGETS=$(git diff --name-only HEAD~1 HEAD | grep "^packages/" | cut -d/ -f1-2 | sort | uniq)
+            tasks=$(bun scripts/affected-packages.ts "$base" publish)
           fi
 
-          if [ -z "$TARGETS" ]; then
-            echo "No packages found."
-            echo "has_changes=false" >> "$GITHUB_OUTPUT"
-            echo "matrix=[]" >> "$GITHUB_OUTPUT"
-          else
-            JSON_MATRIX=$(echo "$TARGETS" | jq -R -s -c 'split("\n") | map(select(length > 0))')
-
-            echo "Matrix detected: $JSON_MATRIX"
-            echo "has_changes=true" >> "$GITHUB_OUTPUT"
-            echo "matrix=$JSON_MATRIX" >> "$GITHUB_OUTPUT"
-          fi
+          echo "Tasks: $tasks"
+          echo "tasks=$tasks" >> "$GITHUB_OUTPUT"
 
   publish:
-    name: Publish `${{ matrix.package }}`
+    name: Publish ${{ matrix.package }}
     needs: detect
-    if: needs.detect.outputs.has_changes == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -66,30 +66,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ${{ fromJson(needs.detect.outputs.matrix) }}
+        package: ${{ fromJSON(needs.detect.outputs.tasks)['publish'] }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
+
+      - name: Cache Bun install
+        uses: actions/cache@v4
         with:
-          bun-version: latest
-      - name: Install npm
-        run: bun add -g npm
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-publish-${{ matrix.package }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-publish-${{ matrix.package }}-
+
       - name: Install dependencies
-        run: |
-          cd ${{ matrix.package }} && NODE_ENV=development bun install
-      - name: Publish '${{ matrix.package }}'
-        run: |
-          pkg_dir="${{ matrix.package }}"
+        run: bun i --frozen-lockfile
 
-          echo "Processing: $pkg_dir"
-
-          if [ -d "$pkg_dir" ] && [ -f "$pkg_dir/package.json" ]; then
-             echo "Publishing..."
-
-             cd "$pkg_dir" && bunx npm publish --provenance --access public
-          else
-             echo "Skipping: Invalid package directory"
-             exit 1
-          fi
+      # The package `publish` script runs `npm publish --provenance --access public`;
+      # Turbo builds it first (publish -> prepublish -> build) with cache reuse.
+      - name: Publish ${{ matrix.package }}
+        run: bun turbo run publish -F ${{ matrix.package }} --cache-dir=.turbo

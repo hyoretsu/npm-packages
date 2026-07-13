@@ -1,7 +1,8 @@
 export type { SendMailDTO } from "./dtos/SendMail.dto";
 
-import EtherealMailProvider from "./implementations/EtherealMailProvider";
-import NodemailerMailProvider from "./implementations/NodemailerMailProvider";
+import type { LazyProvider } from "../lazy";
+import type EtherealMailProvider from "./implementations/EtherealMailProvider";
+import type NodemailerMailProvider from "./implementations/NodemailerMailProvider";
 
 export * from "./models";
 
@@ -14,9 +15,15 @@ export enum MailProvidersEnum {
 	NODEMAILER = "nodemailer",
 	SENDGRID = "sendgrid",
 }
-export const mailProviders: Record<MailProviderKeys, MailProviders> = {
-	ethereal: EtherealMailProvider,
-	gmail: NodemailerMailProvider,
-	nodemailer: NodemailerMailProvider,
-	sendgrid: NodemailerMailProvider,
+
+const etherealProvider: LazyProvider<typeof EtherealMailProvider> = async () =>
+	(await import("./implementations/EtherealMailProvider")).default;
+const nodemailerProvider: LazyProvider<typeof NodemailerMailProvider> = async () =>
+	(await import("./implementations/NodemailerMailProvider")).default;
+
+export const mailProviders: Record<MailProviderKeys, LazyProvider<MailProviders>> = {
+	ethereal: etherealProvider,
+	gmail: nodemailerProvider,
+	nodemailer: nodemailerProvider,
+	sendgrid: nodemailerProvider,
 };

@@ -1,0 +1,70 @@
+name: Type-check
+
+on:
+  pull_request:
+
+jobs:
+  detect:
+    name: Detect affected
+    runs-on: ubuntu-latest
+    outputs:
+      # JSON object keyed by task, e.g. {"check-types":["backend","frontend"]}.
+      # A matrix built from [] spawns no jobs, so an unaffected run is skipped
+      # without a separate "any" flag.
+      tasks: ${{ steps.affected.outputs.tasks }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          # Need the base commit present to diff the PR against it.
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Compute affected packages with a check-types task
+        id: affected
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          tasks=$(bun scripts/affected-packages.ts "$BASE_SHA" check-types)
+          echo "tasks=$tasks" >> "$GITHUB_OUTPUT"
+
+  check-types:
+    name: Type-check ${{ matrix.package }}
+    needs: detect
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJSON(needs.detect.outputs.tasks)['check-types'] }}
+    env:
+      DATABASE_URL: postgresql://placeholder:placeholder@127.0.0.1:5432/placeholder
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Cache Bun install
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-check-types-${{ matrix.package }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-check-types-${{ matrix.package }}-
+
+      - name: Install dependencies
+        run: bun i --frozen-lockfile
+
+      - name: Type-check ${{ matrix.package }}
+        run: bun turbo run check-types -F ${{ matrix.package }} --cache-dir=.turbo

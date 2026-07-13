@@ -1,8 +1,20 @@
 {
 	"compilerOptions": {
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ESNext"
+		],
 		"outDir": "dist",
-		"typeRoots": ["./node_modules/@types", "./src/data/@types"]
+		"rootDir": "src",
+		"typeRoots": [
+			"./node_modules/@types",
+			"./src/data/@types",
+			"../../node_modules/@types"
+		]
 	},
 	"extends": "../../tsconfig.json",
-	"include": ["src/**/*"]
+	"include": [
+		"src/**/*"
+	]
 }

@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/providers",
 	"description": "A collection of useful providers for Node.js",
-	"version": "1.5.5",
+	"version": "2.0.0",
 	"keywords": [
 		"backend",
 		"nodejs",
@@ -12,6 +12,83 @@
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"type": "module",
+	"sideEffects": false,
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
+			}
+		},
+		"./cache": {
+			"import": {
+				"types": "./dist/CacheProvider/index.d.ts",
+				"default": "./dist/CacheProvider/index.js"
+			},
+			"require": {
+				"types": "./dist/CacheProvider/index.d.cts",
+				"default": "./dist/CacheProvider/index.cjs"
+			}
+		},
+		"./hash": {
+			"import": {
+				"types": "./dist/HashProvider/index.d.ts",
+				"default": "./dist/HashProvider/index.js"
+			},
+			"require": {
+				"types": "./dist/HashProvider/index.d.cts",
+				"default": "./dist/HashProvider/index.cjs"
+			}
+		},
+		"./jwt": {
+			"import": {
+				"types": "./dist/JwtProvider/index.d.ts",
+				"default": "./dist/JwtProvider/index.js"
+			},
+			"require": {
+				"types": "./dist/JwtProvider/index.d.cts",
+				"default": "./dist/JwtProvider/index.cjs"
+			}
+		},
+		"./mail": {
+			"import": {
+				"types": "./dist/MailProvider/index.d.ts",
+				"default": "./dist/MailProvider/index.js"
+			},
+			"require": {
+				"types": "./dist/MailProvider/index.d.cts",
+				"default": "./dist/MailProvider/index.cjs"
+			}
+		},
+		"./messaging": {
+			"import": {
+				"types": "./dist/MessagingProvider/index.d.ts",
+				"default": "./dist/MessagingProvider/index.js"
+			},
+			"require": {
+				"types": "./dist/MessagingProvider/index.d.cts",
+				"default": "./dist/MessagingProvider/index.cjs"
+			}
+		},
+		"./logging": {
+			"import": {
+				"types": "./dist/LoggingProvider/index.d.ts",
+				"default": "./dist/LoggingProvider/index.js"
+			},
+			"require": {
+				"types": "./dist/LoggingProvider/index.d.cts",
+				"default": "./dist/LoggingProvider/index.cjs"
+			}
+		},
+		"./package.json": "./package.json"
+	},
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/providers",
 	"bugs": {
 		"url": "https://github.com/hyoretsu/npm-packages/issues",
@@ -28,9 +105,44 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"prepublishOnly": "tsup"
+		"build": "tsup && tsc --emitDeclarationOnly",
+		"prepublishOnly": "bun run build",
+		"check-types": "tsc --noEmit",
+		"publish": "npm publish --provenance --access public"
 	},
 	"dependencies": {
+		"iso8601-duration": "^2.1.2"
+	},
+	"devDependencies": {
+		"@hyoretsu/configs": "^1.2.18",
+		"@opentelemetry/api-logs": "^0.57.2",
+		"@opentelemetry/exporter-logs-otlp-http": "^0.57.2",
+		"@opentelemetry/otlp-exporter-base": "^0.57.2",
+		"@opentelemetry/resources": "^1.30.1",
+		"@opentelemetry/sdk-logs": "^0.57.2",
+		"@types/amqplib": "^0.10.8",
+		"@types/bcrypt": "^5.0.0",
+		"@types/bcryptjs": "^2.4.6",
+		"@types/jsonwebtoken": "^9.0.6",
+		"@types/multer": "^1.4.7",
+		"@types/node": "^25.5.0",
+		"@types/nodemailer": "^6.4.8",
+		"@types/nodemailer-sendgrid": "^1.0.0",
+		"amqplib": "^1.0.3",
+		"bcrypt": "^5.1.1",
+		"bcryptjs": "^2.4.3",
+		"ioredis": "^5.4.2",
+		"jose": "^5.6.3",
+		"jsonwebtoken": "^9.0.2",
+		"kafkajs": "^2.2.4",
+		"nodemailer": "^6.9.3",
+		"nodemailer-sendgrid": "^1.0.3",
+		"pino": "^9.6.0",
+		"pino-loki": "^2.5.0",
+		"tsup": "^8.5.1",
+		"typescript": "^6.0.3"
+	},
+	"peerDependencies": {
 		"@opentelemetry/api-logs": "^0.57.2",
 		"@opentelemetry/exporter-logs-otlp-http": "^0.57.2",
 		"@opentelemetry/otlp-exporter-base": "^0.57.2",
@@ -40,7 +152,6 @@
 		"bcrypt": "^5.1.1",
 		"bcryptjs": "^2.4.3",
 		"ioredis": "^5.4.2",
-		"iso8601-duration": "^2.1.2",
 		"jose": "^5.6.3",
 		"jsonwebtoken": "^9.0.2",
 		"kafkajs": "^2.2.4",
@@ -49,18 +160,55 @@
 		"pino": "^9.6.0",
 		"pino-loki": "^2.5.0"
 	},
-	"devDependencies": {
-		"@hyoretsu/configs": "^1.2.18",
-		"@types/amqplib": "^0.10.8",
-		"@types/bcrypt": "^5.0.0",
-		"@types/bcryptjs": "^2.4.6",
-		"@types/jsonwebtoken": "^9.0.6",
-		"@types/multer": "^1.4.7",
-		"@types/node": "^25.5.0",
-		"@types/nodemailer": "^6.4.8",
-		"@types/nodemailer-sendgrid": "^1.0.0",
-		"tsup": "^8.5.1",
-		"typescript": "latest"
+	"peerDependenciesMeta": {
+		"@opentelemetry/api-logs": {
+			"optional": true
+		},
+		"@opentelemetry/exporter-logs-otlp-http": {
+			"optional": true
+		},
+		"@opentelemetry/otlp-exporter-base": {
+			"optional": true
+		},
+		"@opentelemetry/resources": {
+			"optional": true
+		},
+		"@opentelemetry/sdk-logs": {
+			"optional": true
+		},
+		"amqplib": {
+			"optional": true
+		},
+		"bcrypt": {
+			"optional": true
+		},
+		"bcryptjs": {
+			"optional": true
+		},
+		"ioredis": {
+			"optional": true
+		},
+		"jose": {
+			"optional": true
+		},
+		"jsonwebtoken": {
+			"optional": true
+		},
+		"kafkajs": {
+			"optional": true
+		},
+		"nodemailer": {
+			"optional": true
+		},
+		"nodemailer-sendgrid": {
+			"optional": true
+		},
+		"pino": {
+			"optional": true
+		},
+		"pino-loki": {
+			"optional": true
+		}
 	},
 	"trustedDependencies": [
 		"bcrypt",

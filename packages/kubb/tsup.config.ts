@@ -5,7 +5,6 @@ const excludedDeps = new Set(["esbuild", "tsup", "typescript"]);
 
 export const tsup: Options = {
 	clean: true,
-	dts: true,
 	entry: ["src/**/*.ts"],
 	format: ["cjs", "esm"],
 	minify: true,

@@ -1,11 +1,20 @@
 {
 	"compilerOptions": {
-		"ignoreDeprecations": "6.0",
-		"lib": ["DOM", "ESNext"],
-		"noUncheckedIndexedAccess": false,
+		"lib": [
+			"DOM",
+			"ESNext"
+		],
 		"outDir": "dist",
-		"typeRoots": ["./node_modules/@types", "./src/data/@types"]
+		"rootDir": "src",
+		"typeRoots": [
+			"./node_modules/@types",
+			"./src/data/@types"
+		]
 	},
-	"extends": ["@hyoretsu/configs/ts-lib"],
-	"include": ["src/**/*"]
+	"extends": [
+		"@hyoretsu/configs/ts-lib"
+	],
+	"include": [
+		"src/**/*"
+	]
 }

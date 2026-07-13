@@ -1,4 +1,6 @@
-import { OtlpLoggingProvider, PinoLoggingProvider } from "./implementations";
+import type { LazyProvider } from "../lazy";
+import type { OtlpLoggingProvider } from "./implementations/Otlp";
+import type { PinoLoggingProvider } from "./implementations/Pino";
 
 export * from "./model";
 export * from "./types";
@@ -10,7 +12,7 @@ export enum LoggingProvidersEnum {
 	OTLP = "otlp",
 	PINO = "pino",
 }
-export const loggingProviders: Record<LoggingProviderKeys, LoggingProviders> = {
-	otlp: OtlpLoggingProvider,
-	pino: PinoLoggingProvider,
+export const loggingProviders: Record<LoggingProviderKeys, LazyProvider<LoggingProviders>> = {
+	otlp: async () => (await import("./implementations/Otlp")).OtlpLoggingProvider,
+	pino: async () => (await import("./implementations/Pino")).PinoLoggingProvider,
 };
