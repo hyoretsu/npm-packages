@@ -3,6 +3,24 @@
 	"extends": ["./base.json"],
 	"linter": {
 		"rules": {
+			"a11y": {
+				"noLabelWithoutControl": {
+					"level": "on",
+					"options": {
+						"inputComponents": [
+							"Checkbox",
+							"CurrencyInput",
+							"Input",
+							"MaskedInput",
+							"MediaUrlInput",
+							"NumericInput",
+							"RgbInput",
+							"Select",
+							"UnitHoursInput"
+						]
+					}
+				}
+			},
 			"correctness": {
 				"useHookAtTopLevel": "error",
 				"useUniqueElementIds": "off"
