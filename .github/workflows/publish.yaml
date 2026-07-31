@@ -108,4 +108,6 @@ jobs:
       # The package `publish` script runs `npm publish --provenance --access public`;
       # Turbo builds it first (publish -> prepublish -> build) with cache reuse.
       - name: Publish ${{ matrix.package }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: bun turbo run publish -F ${{ matrix.package }} --cache-dir=.turbo
