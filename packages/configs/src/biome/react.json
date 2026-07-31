@@ -24,6 +24,9 @@
 			"correctness": {
 				"useHookAtTopLevel": "error",
 				"useUniqueElementIds": "off"
+			},
+			"style": {
+				"useComponentExportOnlyModules": "error"
 			}
 		}
 	},
