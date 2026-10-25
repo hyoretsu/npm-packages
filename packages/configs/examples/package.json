@@ -6,10 +6,8 @@
 	"scripts": {
 		"build": "",
 		"dev": "",
-		"format": "bun run --parallel 'bun format:biome .' 'bun format:eslint .'",
-		"format:biome": "biome check --diagnostic-level=error --write --unsafe",
-		"format:eslint": "eslint --quiet --fix",
-		"generate": "(prisma generate && npm run format:biome ./src/infra/sql/kysely/types.ts) || true",
+		"format": "bun fmt",
+		"generate": "(prisma generate && bun fmt ./src/infra/sql/kysely/types.ts) || true",
 		"migrate": "prisma migrate dev --create-only && bun run generate",
 		"migrate:dev": "prisma migrate dev && bun run generate",
 		"migrate:deploy": "prisma migrate deploy",
@@ -18,7 +16,12 @@
 		"start": "",
 		"start:debug": "",
 		"start:prod": "",
-		"test": "bun test"
+		"test": "bun test",
+		"format:check": "bun fmt --check",
+		"lint": "bun run lint:biome . && bun run lint:eslint .",
+		"lint:biome": "bunx biome check --formatter-enabled=false --diagnostic-level=error",
+		"lint:eslint": "bunx eslint --quiet",
+		"lint:fix": "bun run lint:biome --write --unsafe . && bun run lint:eslint --fix . && bun run format"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.7",
@@ -36,5 +39,6 @@
 		"tsconfig-paths": "^4.2.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.57.0"
-	}
+	},
+	"packageManager": "bun@1.4.4"
 }

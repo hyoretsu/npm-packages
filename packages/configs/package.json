@@ -30,7 +30,8 @@
 		"./ts-backend": "./dist/ts/backend.json",
 		"./ts-frontend": "./dist/ts/frontend.json",
 		"./ts-nest": "./dist/ts/nest.json",
-		"./ts-lib": "./dist/ts/lib.json"
+		"./ts-lib": "./dist/ts/lib.json",
+		"./bunfig": "./dist/bunfig.toml"
 	},
 	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/configs",
 	"bugs": {
@@ -47,13 +48,16 @@
 		"url": "https://www.linkedin.com/in/aranleite"
 	},
 	"scripts": {
-		"build": "tsup && tsc -p tsconfig.build.json && bun ./build/json.ts Biome && bun ./build/json.ts TS",
-		"format": "bun format:biome . && bun format:eslint .",
-		"format:biome": "biome check --diagnostic-level=error --write --unsafe",
-		"format:eslint": "eslint --quiet --fix",
+		"build": "tsup && tsc -p tsconfig.build.json && bun ./build/json.ts Biome && bun ./build/json.ts TS && bun ./build/fmt.ts",
+		"format": "bun fmt",
 		"prepublishOnly": "bun run build",
 		"check-types": "tsc --noEmit",
-		"publish": "npm publish --provenance --access public"
+		"publish": "npm publish --provenance --access public",
+		"format:check": "bun fmt --check",
+		"lint": "bun run lint:biome . && bun run lint:eslint .",
+		"lint:biome": "bunx biome check --formatter-enabled=false --diagnostic-level=error",
+		"lint:eslint": "bunx eslint --quiet",
+		"lint:fix": "bun run lint:biome --write --unsafe . && bun run lint:eslint --fix . && bun run format"
 	},
 	"dependencies": {
 		"@eslint/js": "^10.0.1",

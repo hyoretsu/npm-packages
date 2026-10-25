@@ -3,7 +3,7 @@
 	"assist": {
 		"actions": {
 			"source": {
-				"organizeImports": "on",
+				"organizeImports": "off",
 				"useSortedAttributes": "on",
 				"useSortedKeys": "on",
 				"useSortedProperties": "on"
@@ -32,18 +32,7 @@
 		]
 	},
 	"formatter": {
-		"formatWithErrors": false,
-		"lineWidth": 110,
-		"useEditorconfig": true
-	},
-	"javascript": {
-		"formatter": {
-			"arrowParentheses": "asNeeded",
-			"lineEnding": "lf",
-			"quoteStyle": "double",
-			"semicolons": "always",
-			"trailingCommas": "all"
-		}
+		"enabled": false
 	},
 	"linter": {
 		"rules": {
@@ -84,14 +73,7 @@
 				"useUniqueElementIds": "warn"
 			},
 			"nursery": {
-				"useSortedClasses": {
-					"fix": "safe",
-					"level": "warn",
-					"options": {
-						"attributes": ["classList"],
-						"functions": ["cn", "clsx", "cva", "tw"]
-					}
-				}
+				"useSortedClasses": "off"
 			},
 			"security": {
 				"noDangerouslySetInnerHtml": "warn"

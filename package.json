@@ -1,19 +1,22 @@
 {
 	"name": "npm-packages",
 	"private": true,
-	"packageManager": "bun@1.3.12",
+	"packageManager": "bun@1.4.4",
 	"workspaces": [
 		"packages/*"
 	],
 	"scripts": {
 		"build": "turbo run build",
 		"check-types": "turbo run check-types",
-		"format": "bun --parallel 'bun format:biome .' 'bun format:eslint .'",
-		"format:biome": "biome check --diagnostic-level=error --write --unsafe",
-		"format:eslint": "eslint --quiet --fix",
+		"format": "bun fmt",
 		"prepare": "bun run ./prepare.ts || true",
 		"publish": "turbo run publish",
-		"test": "turbo run test"
+		"test": "turbo run test",
+		"format:check": "bun fmt --check",
+		"lint": "bun run lint:biome . && bun run lint:eslint .",
+		"lint:biome": "bunx biome check --formatter-enabled=false --diagnostic-level=error",
+		"lint:eslint": "bunx eslint --quiet",
+		"lint:fix": "bun run lint:biome --write --unsafe . && bun run lint:eslint --fix . && bun run format"
 	},
 	"dependencies": {
 		"npm": "^11.12.0"

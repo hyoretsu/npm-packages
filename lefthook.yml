@@ -26,13 +26,18 @@ pre-commit:
         piped: true
         jobs:
           - name: Biome
-            glob: "*.(astro|css|graphql|cjs|grit|html|js|jsx|md|mjs|json|jsonc|scss|svelte|ts|tsx|vue|yaml|yml)"
-            run: bunx @biomejs/biome check --diagnostic-level=error --files-ignore-unknown=true --no-errors-on-unmatched --write --unsafe {staged_files}
+            glob: "*.{astro,css,graphql,cjs,grit,html,js,jsx,md,mjs,json,jsonc,scss,svelte,ts,tsx,vue,yaml,yml}"
+            run: bunx @biomejs/biome check --formatter-enabled=false --diagnostic-level=error --files-ignore-unknown=true --no-errors-on-unmatched --write --unsafe {staged_files}
             stage_fixed: true
 
           - name: ESLint
-            glob: "*.(cjs|js|jsx|mjs|ts|tsx)"
+            glob: "*.{cjs,js,jsx,mjs,ts,tsx}"
             run: bunx eslint --quiet --fix --no-error-on-unmatched-pattern {staged_files}
+            stage_fixed: true
+
+          - name: Bun fmt
+            glob: "*.{astro,css,graphql,cjs,cts,gql,hbs,handlebars,html,js,json,json5,jsonc,jsx,less,md,mdx,mjs,mts,scss,svelte,toml,ts,tsx,vue,yaml,yml}"
+            run: bun fmt --ignore-unknown --no-error-on-unmatched-pattern {staged_files}
             stage_fixed: true
 
 pre-push:
