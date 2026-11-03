@@ -1,7 +1,7 @@
 {
 	"name": "@hyoretsu/kubb",
 	"description": "A collection of helpers for Kubb.",
-	"version": "3.1.0",
+	"version": "4.0.0",
 	"keywords": [],
 	"type": "module",
 	"exports": {
@@ -38,21 +38,21 @@
 	},
 	"dependencies": {
 		"@hyoretsu/utils": "^1.18.1",
-		"dayjs": "^1.11.20"
+		"dayjs": "^1.11.20",
+		"@kubb/adapter-oas": "^5.15.3",
+		"@kubb/plugin-client": "^5.9.0",
+		"@kubb/plugin-react-query": "^5.9.0",
+		"@kubb/plugin-ts": "^5.4.0",
+		"@kubb/plugin-zod": "^5.6.0"
 	},
 	"peerDependencies": {
-		"@kubb/cli": "^4.37.2",
-		"@kubb/core": "^4.37.2",
 		"@tanstack/react-query": "^5.99.2",
 		"ky": "^2.0.1",
-		"zod": "^4.3.6"
+		"zod": "^4.3.6",
+		"kubb": "^5.15.3"
 	},
 	"devDependencies": {
 		"@hyoretsu/configs": "^1.2.28",
-		"@kubb/plugin-oas": "^4.37.2",
-		"@kubb/plugin-react-query": "^4.37.2",
-		"@kubb/plugin-ts": "^4.37.2",
-		"@kubb/plugin-zod": "^4.37.2",
 		"@types/node": "^25.6.0",
 		"tsup": "^8.5.1",
 		"typescript": "^6.0.3"

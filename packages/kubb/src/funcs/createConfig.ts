@@ -1,95 +1,61 @@
-import { type Config, defineConfig, URLPath } from "@kubb/core";
-import { type Exclude, pluginOas } from "@kubb/plugin-oas";
-import { pluginReactQuery } from "@kubb/plugin-react-query";
+import path from "node:path";
+import { adapterOas } from "@kubb/adapter-oas";
+import { pluginClient } from "@kubb/plugin-client";
+import { pluginReactQuery, queryKeyTransformer } from "@kubb/plugin-react-query";
 import { pluginTs } from "@kubb/plugin-ts";
 import { pluginZod } from "@kubb/plugin-zod";
+import { defineConfig } from "kubb/config";
 import { generateTagKey } from "./generateTagKey";
-import path from "node:path";
 
 export interface CreateConfigParams {
-	config: {
-		[url: string]: {
-			name: string;
-			/** Will contain a `generated` folder with each config's folder. */
-			output?: string;
-		} & (
-			| {
-					docsPath: string;
-					jsonPath?: never;
-			  }
-			| {
-					jsonPath: string;
-					docsPath?: never;
-			  }
-		);
-	};
-	exclude?: Exclude[];
+	config: Record<
+		string,
+		{ name: string; output?: string } & (
+			{ docsPath: string; jsonPath?: never } | { jsonPath: string; docsPath?: never }
+		)
+	>;
+	exclude?: NonNullable<Parameters<typeof pluginTs>[0]>["exclude"];
+	dateType?: "date" | "string";
 }
 
-export const createConfig = ({ config, exclude }: CreateConfigParams): Config =>
-	defineConfig(
-		Object.entries(config).map(([url, { docsPath, jsonPath, name, output = "./src/lib/api" }]) => ({
-			input: {
-				path: jsonPath ?? url + docsPath,
-			},
+export const createConfig = ({
+	config,
+	exclude,
+	dateType = "date",
+}: CreateConfigParams): ReturnType<typeof defineConfig>[] =>
+	Object.entries(config).map(([url, { docsPath, jsonPath, name, output = "./src/lib/api" }]) =>
+		defineConfig({
+			adapter: adapterOas({
+				dateType,
+				emptySchemaType: "unknown",
+				integerType: "number",
+				unknownType: "unknown",
+			}),
+			input: jsonPath ?? url + docsPath,
 			output: {
+				barrel: { type: "named" as const },
 				clean: true,
 				format: false,
 				lint: false,
 				path: path.resolve(output, "generated", name),
 			},
 			plugins: [
-				pluginOas(),
-				pluginTs({
-					dateType: "date",
+				pluginTs({ enum: { type: "inlineLiteral" }, exclude }),
+				pluginZod({ exclude }),
+				pluginClient({
 					exclude,
-				}),
-				pluginZod({
-					exclude,
-					transformers: {
-						schema: (_props, defaultSchemas) => {
-							const hasBlob = (schemas: typeof defaultSchemas): boolean => {
-								return schemas.some(s => {
-									if (s.keyword === "blob") {
-										return true;
-									}
-
-									if (s.keyword === "array" && "args" in s) {
-										return hasBlob((s.args as { items: typeof defaultSchemas }).items);
-									}
-
-									return false;
-								});
-							};
-
-							if (hasBlob(defaultSchemas)) {
-								return defaultSchemas.filter(s => s.keyword !== "default");
-							}
-						},
-					},
+					importPath: `@/lib/api/client-${name}`,
+					output: { barrel: { type: "named" }, path: "clients" },
 				}),
 				pluginReactQuery({
-					client: {
-						importPath: `../../../../client-${name}.ts`,
-					},
+					client: "client",
 					exclude,
-					group: {
-						type: "tag",
-					},
+					group: { type: "tag" },
+					hooks: true,
 					mutationKey: generateTagKey,
-					queryKey: props => {
-						const { operation, schemas } = props;
-
-						return [
-							...generateTagKey(props),
-							...[
-								new URLPath(operation.path).template,
-								schemas.queryParams?.name && "...(params ? [params] : [])",
-								schemas.request?.name && "...(data ? [data] : [])",
-							].filter(Boolean),
-						];
-					},
+					queryKey: props => [...generateTagKey(props), ...queryKeyTransformer(props)],
+					suspense: {},
 				}),
 			],
-		})),
+		}),
 	);

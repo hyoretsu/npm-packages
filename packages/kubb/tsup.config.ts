@@ -8,7 +8,9 @@ export const tsup: Options = {
 	entry: ["src/**/*.ts"],
 	format: ["cjs", "esm"],
 	minify: true,
-	noExternal: Object.keys(dependencies || {}).filter(dep => !excludedDeps.has(dep)),
+	noExternal: Object.keys(dependencies || {}).filter(
+		dep => !excludedDeps.has(dep) && !dep.startsWith("@kubb/"),
+	),
 	outDir: "dist",
 	skipNodeModulesBundle: true,
 	target: "node18",
