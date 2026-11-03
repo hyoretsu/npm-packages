@@ -3,6 +3,9 @@
 	"description": "A collection of helpers for Kubb.",
 	"version": "4.0.0",
 	"keywords": [],
+	"files": [
+		"dist"
+	],
 	"type": "module",
 	"exports": {
 		"./client": {
