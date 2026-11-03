@@ -22,7 +22,12 @@ export type OperationOptions<TData extends DataShape, ThrowOnError extends boole
 	OperationRequestConfig,
 	keyof DataShape | "url" | "method" | "throwOnError"
 > &
-	TData & { throwOnError?: ThrowOnError & true };
+	(TData extends unknown
+		? Omit<TData, "headers"> &
+				(TData extends { headers: infer THeaders }
+					? { headers: THeaders & HeadersInit }
+					: { headers?: HeadersInit })
+		: never) & { throwOnError?: ThrowOnError & true };
 /** This transport always rejects failures, including when called by Query mutations. */
 export type RequestResult<TResponses, ThrowOnError extends boolean = true> = ThrowOnError extends false
 	? never
