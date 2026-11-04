@@ -16,7 +16,7 @@
 	"linter": {
 		"rules": {
 			"nursery": {
-				"useSortedClasses": "off"
+				"useTailwindSortedClasses": "off"
 			}
 		}
 	}

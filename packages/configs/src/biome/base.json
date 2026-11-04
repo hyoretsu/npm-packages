@@ -73,7 +73,7 @@
 				"useUniqueElementIds": "warn"
 			},
 			"nursery": {
-				"useSortedClasses": "off"
+				"useTailwindSortedClasses": "off"
 			},
 			"security": {
 				"noDangerouslySetInnerHtml": "warn"
