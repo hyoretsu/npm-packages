@@ -33,7 +33,7 @@
 		"prepublishOnly": "bun run build",
 		"build": "tsup && tsc --emitDeclarationOnly",
 		"check-types": "tsc --noEmit",
-		"publish": "npm publish --provenance --access public"
+		"release": "npm publish --provenance --access public"
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.327.0",

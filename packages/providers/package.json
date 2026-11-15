@@ -108,7 +108,7 @@
 		"build": "tsup && tsc --emitDeclarationOnly",
 		"prepublishOnly": "bun run build",
 		"check-types": "tsc --noEmit",
-		"publish": "npm publish --provenance --access public"
+		"release": "npm publish --provenance --access public"
 	},
 	"dependencies": {
 		"iso8601-duration": "^2.1.2"

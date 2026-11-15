@@ -25,7 +25,7 @@
 		"prepublishOnly": "bun run build",
 		"build": "tsup && tsc --emitDeclarationOnly",
 		"check-types": "tsc --noEmit",
-		"publish": "npm publish --provenance --access public"
+		"release": "npm publish --provenance --access public"
 	},
 	"devDependencies": {
 		"@hyoretsu/configs": "^1.2.19",

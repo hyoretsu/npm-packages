@@ -12,13 +12,13 @@
 			"inputs": ["src/**", "tsconfig*.json"],
 			"outputLogs": "new-only",
 		},
-		"prepublish": {
+		"prerelease": {
 			"dependsOn": ["build"],
 			"outputLogs": "new-only",
 		},
-		"publish": {
+		"release": {
 			"cache": false,
-			"dependsOn": ["prepublish"],
+			"dependsOn": ["prerelease"],
 			"passThroughEnv": [
 				"ACTIONS_ID_TOKEN_REQUEST_URL",
 				"ACTIONS_ID_TOKEN_REQUEST_TOKEN",

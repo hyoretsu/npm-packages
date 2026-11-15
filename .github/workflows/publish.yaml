@@ -18,7 +18,7 @@ jobs:
     name: Detect affected
     runs-on: ubuntu-latest
     outputs:
-      # JSON object keyed by task, e.g. {"publish":["@hyoretsu/providers"]}. A matrix
+      # JSON object keyed by task, e.g. {"release":["@hyoretsu/providers"]}. A matrix
       # built from [] spawns no jobs, so an unchanged push is skipped without a
       # separate "any" flag.
       tasks: ${{ steps.affected.outputs.tasks }}
@@ -42,7 +42,7 @@ jobs:
             # Manual trigger: resolve the given folder to its package name.
             dir="${MANUAL_INPUT#packages/}"
             name=$(node -e "process.stdout.write(require('./packages/$dir/package.json').name)")
-            tasks=$(jq -nc --arg n "$name" '{publish: [$n]}')
+            tasks=$(jq -nc --arg n "$name" '{release: [$n]}')
           else
             # Push trigger: diff against the commit before the push. Fall back to
             # HEAD~1 when the SHA is the zero ref (first push / force-push).
@@ -50,7 +50,7 @@ jobs:
             if [ -z "$base" ] || [[ "$base" =~ ^0+$ ]]; then
               base=$(git rev-parse HEAD~1)
             fi
-            tasks=$(bun scripts/affected-packages.ts "$base" publish)
+            tasks=$(bun scripts/affected-packages.ts "$base" release)
           fi
 
           echo "Tasks: $tasks"
@@ -66,7 +66,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ${{ fromJSON(needs.detect.outputs.tasks)['publish'] }}
+        package: ${{ fromJSON(needs.detect.outputs.tasks)['release'] }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -103,7 +103,7 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      # The package `publish` script runs `npm publish --provenance --access public`;
-      # Turbo builds it first (publish -> prepublish -> build) with cache reuse.
+      # The package `release` script runs `npm publish --provenance --access public`;
+      # Turbo builds it first (release -> prerelease -> build) with cache reuse.
       - name: Publish ${{ matrix.package }}
-        run: bun turbo run publish -F ${{ matrix.package }} --cache-dir=.turbo
+        run: bun turbo run release -F ${{ matrix.package }} --cache-dir=.turbo

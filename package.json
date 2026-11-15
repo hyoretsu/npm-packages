@@ -10,7 +10,7 @@
 		"check-types": "turbo run check-types",
 		"format": "bun fmt",
 		"prepare": "bun run ./prepare.ts || true",
-		"publish": "turbo run publish",
+		"release": "turbo run release",
 		"test": "turbo run test",
 		"format:check": "bun fmt --check",
 		"lint": "bun run lint:biome . && bun run lint:eslint .",

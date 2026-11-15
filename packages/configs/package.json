@@ -52,7 +52,7 @@
 		"format": "bun fmt",
 		"prepublishOnly": "bun run build",
 		"check-types": "tsc --noEmit",
-		"publish": "npm publish --provenance --access public",
+		"release": "npm publish --provenance --access public",
 		"format:check": "bun fmt --check",
 		"lint": "bun run lint:biome . && bun run lint:eslint .",
 		"lint:biome": "bunx biome check --formatter-enabled=false --diagnostic-level=error",
