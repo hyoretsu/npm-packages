@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"ignoreDeprecations": "6.0",
+		"outDir": "dist",
+		"removeComments": false,
+		"rootDir": "src",
+		"types": ["node", "bun"]
+	},
+	"extends": ["@hyoretsu/configs/ts-lib"],
+	"include": ["src/**/*"]
+}

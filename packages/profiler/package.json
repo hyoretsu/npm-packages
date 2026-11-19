@@ -1,0 +1,118 @@
+{
+	"name": "@hyoretsu/profiler",
+	"description": "Continuous CPU profiler for Node.js and Bun with Pyroscope/pprof export and trace-to-profile linking",
+	"version": "0.1.0",
+	"keywords": [
+		"bun",
+		"cpu",
+		"grafana",
+		"nodejs",
+		"opentelemetry",
+		"pprof",
+		"profiler",
+		"profiling",
+		"pyroscope",
+		"tempo"
+	],
+	"main": "dist/index.cjs",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"type": "module",
+	"bin": {
+		"profiler": "dist/cli.js"
+	},
+	"sideEffects": [
+		"./dist/preload.js",
+		"./dist/preload.cjs"
+	],
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
+			}
+		},
+		"./exporters": {
+			"import": {
+				"types": "./dist/exporters/index.d.ts",
+				"default": "./dist/exporters/index.js"
+			},
+			"require": {
+				"types": "./dist/exporters/index.d.cts",
+				"default": "./dist/exporters/index.cjs"
+			}
+		},
+		"./opentelemetry": {
+			"import": {
+				"types": "./dist/opentelemetry/index.d.ts",
+				"default": "./dist/opentelemetry/index.js"
+			},
+			"require": {
+				"types": "./dist/opentelemetry/index.d.cts",
+				"default": "./dist/opentelemetry/index.cjs"
+			}
+		},
+		"./pprof": {
+			"import": {
+				"types": "./dist/pprof/index.d.ts",
+				"default": "./dist/pprof/index.js"
+			},
+			"require": {
+				"types": "./dist/pprof/index.d.cts",
+				"default": "./dist/pprof/index.cjs"
+			}
+		},
+		"./preload": {
+			"import": {
+				"types": "./dist/preload.d.ts",
+				"default": "./dist/preload.js"
+			},
+			"require": {
+				"types": "./dist/preload.d.cts",
+				"default": "./dist/preload.cjs"
+			}
+		},
+		"./package.json": "./package.json"
+	},
+	"homepage": "https://github.com/hyoretsu/npm-packages/tree/main/packages/profiler",
+	"bugs": {
+		"url": "https://github.com/hyoretsu/npm-packages/issues",
+		"email": "hyoretsu@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hyoretsu/npm-packages.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Aran Leite",
+		"email": "hyoretsu@gmail.com",
+		"url": "https://www.linkedin.com/in/aranleite"
+	},
+	"scripts": {
+		"build": "tsup",
+		"prepublishOnly": "bun run build",
+		"check-types": "tsc --noEmit",
+		"release": "npm publish --provenance --access public",
+		"test:unit": "bun test"
+	},
+	"dependencies": {
+		"@jridgewell/trace-mapping": "^0.3.25"
+	},
+	"devDependencies": {
+		"@hyoretsu/configs": "^1.2.18",
+		"@types/node": "^25.5.0",
+		"tsup": "^8.5.1",
+		"typescript": "^6.0.3"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}
