@@ -1,4 +1,5 @@
 import type { ExporterStatsDTO } from "../dtos/ExporterStats.dto";
+import type { ExportResultDTO } from "../dtos/ExportResult.dto";
 import type { ProfileWindowDTO } from "../dtos/ProfileWindow.dto";
 import { ExporterError } from "../errors/ExporterError";
 import type { ProfileExporter } from "../models/ProfileExporter";
@@ -98,7 +99,8 @@ export class ExporterRunner {
 					this.lastSuccessAt = Date.now();
 					this.lastError = null;
 					this.lastExportDurationMs = performance.now() - started;
-					this.exportedBytes += result?.bytes ?? 0;
+					const bytes = (result as ExportResultDTO | undefined)?.bytes;
+					if (typeof bytes === "number") this.exportedBytes += bytes;
 					finalError = null;
 					break;
 				} catch (error) {
