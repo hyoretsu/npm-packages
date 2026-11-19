@@ -62,4 +62,5 @@ export type { TraceSpanDTO } from "./dtos/TraceSpan.dto";
 export type { TracingOptionsDTO } from "./dtos/TracingOptions.dto";
 export type { TracingStatsDTO } from "./dtos/TracingStats.dto";
 export type { TrackedIntervalDTO } from "./dtos/TrackedInterval.dto";
-export type { WallClockAnchorDTO } from "./dtos/WallClockAnchor.dto";
+export type { WallClockAnchorDTO, WallClockMethodDTO } from "./dtos/WallClockAnchor.dto";
+export type { WallClockCalibrationDTO } from "./dtos/WallClockCalibration.dto";

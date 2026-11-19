@@ -1,4 +1,5 @@
 import type { SpanTrackerStatsDTO } from "./SpanTrackerStats.dto";
+import type { WallClockMethodDTO } from "./WallClockAnchor.dto";
 
 /** Trace attribution counters. */
 export interface TracingStatsDTO extends SpanTrackerStatsDTO {
@@ -8,6 +9,9 @@ export interface TracingStatsDTO extends SpanTrackerStatsDTO {
 	attributedSamples: number;
 	/** Samples that lost their span ids to the `maxSampleLabelSets` cardinality guard. */
 	cardinalityLimitedSamples: number;
+	/** How the most recent window's clock was mapped to wall time.
+	 */
+	lastAnchorMethod: WallClockMethodDTO | null;
 	/** Alignment error (ms) of the most recent window's wall-clock anchor. */
 	lastAnchorUncertaintyMs: number | null;
 	/** Samples with no active span or tag. */

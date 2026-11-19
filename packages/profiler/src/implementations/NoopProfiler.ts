@@ -45,6 +45,7 @@ export class NoopProfiler implements ProfilerHandle {
 				cardinalityLimitedSamples: 0,
 				evictedIntervals: 0,
 				invalidSpans: 0,
+				lastAnchorMethod: null,
 				lastAnchorUncertaintyMs: null,
 				orphanedIntervals: 0,
 				retainedIntervals: 0,

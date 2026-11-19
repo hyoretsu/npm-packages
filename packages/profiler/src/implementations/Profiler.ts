@@ -15,6 +15,7 @@ import type { SampleLabelAssignmentDTO } from "../dtos/SampleLabelAssignment.dto
 import type { TraceSpanDTO } from "../dtos/TraceSpan.dto";
 import type { TrackedIntervalDTO } from "../dtos/TrackedInterval.dto";
 import type { WallClockAnchorDTO } from "../dtos/WallClockAnchor.dto";
+import type { WallClockCalibrationDTO } from "../dtos/WallClockCalibration.dto";
 import { ProfilerConcurrencyError } from "../errors/ProfilerConcurrencyError";
 import { ProfilerConfigError } from "../errors/ProfilerConfigError";
 import { RESERVED_LABELS, validateLabels } from "../labels";
@@ -23,7 +24,7 @@ import type { ProfileExporter } from "../models/ProfileExporter";
 import type { ProfilerHandle } from "../models/ProfilerHandle";
 import type { EndInterval } from "../models/SpanTracker";
 import { samplerRegistry } from "../registry";
-import { createAnchor, preciseNowMs } from "../wall-clock";
+import { createCalibration, readClocks, resolveAnchor } from "../wall-clock";
 import { ExporterRunner } from "./ExporterRunner";
 import { IntervalSpanTracker } from "./IntervalSpanTracker";
 import { PyroscopeExporter } from "./PyroscopeExporter";
@@ -32,7 +33,7 @@ import { SourceMapResolver } from "./SourceMapResolver";
 const NOOP_END: EndInterval = () => undefined;
 
 interface CapturedWindow {
-	anchor: WallClockAnchorDTO;
+	calibration: WallClockCalibrationDTO;
 	from: number;
 	labels: Readonly<ProfileLabelsDTO>;
 	profile: CdpProfileDTO;
@@ -67,7 +68,7 @@ export class Profiler implements ProfilerHandle {
 	private currentSampleIntervalUs: number;
 	private emptyWindows = 0;
 	private jscHeapStats: (() => Record<string, number>) | null = null;
-	private lastAnchorUncertaintyMs: number | null = null;
+	private lastAnchor: WallClockAnchorDTO | null = null;
 	private lastCaptureGapMs: number | null = null;
 	private lastConversionDurationMs: number | null = null;
 	private maxCaptureGapMs = 0;
@@ -78,7 +79,8 @@ export class Profiler implements ProfilerHandle {
 	private signalHandlers: { sigint: () => void; sigterm: () => void } | null = null;
 	private stopPromise: Promise<void> | null = null;
 	private unattributedSamples = 0;
-	private windowAnchor: WallClockAnchorDTO = { startMs: 0, uncertaintyMs: 0 };
+	private windowCalibration: WallClockCalibrationDTO = { afterWallMs: 0, beforeWallMs: 0 };
+	private windowStartedAtMs = 0;
 	private windowLabels: Readonly<ProfileLabelsDTO> = Object.freeze({});
 	private windowStart = 0;
 	private isRunning = false;
@@ -221,9 +223,10 @@ export class Profiler implements ProfilerHandle {
 		if (!this.session || !this.isRunning) return;
 		this.windowStart = Math.floor(Date.now() / 1_000);
 		this.windowLabels = Object.freeze({ ...this.config.labels });
-		const before = preciseNowMs();
+		const before = readClocks();
 		await this.session.post("Profiler.start");
-		this.windowAnchor = createAnchor(before, preciseNowMs());
+		this.windowCalibration = createCalibration(before, readClocks());
+		this.windowStartedAtMs = this.windowCalibration.beforeWallMs;
 		this.profileActive = true;
 	}
 
@@ -260,7 +263,7 @@ export class Profiler implements ProfilerHandle {
 		if (!this.session || !this.profileActive) return;
 		const session = this.session;
 		const captured: Omit<CapturedWindow, "profile" | "until"> = {
-			anchor: this.windowAnchor,
+			calibration: this.windowCalibration,
 			from: this.windowStart,
 			labels: this.windowLabels,
 			sampleIntervalUs: this.currentSampleIntervalUs,
@@ -295,7 +298,7 @@ export class Profiler implements ProfilerHandle {
 			: captured.profile;
 		this.capturedWindows++;
 		this.capturedSamples += profile.samples?.length ?? 0;
-		const sampleLabels = this.attribute(profile, captured.anchor);
+		const sampleLabels = this.attribute(profile, captured.calibration);
 
 		const folded = convertToFolded(profile);
 		if (folded) {
@@ -310,16 +313,17 @@ export class Profiler implements ProfilerHandle {
 			if (wall) this.enqueue(this.makeWindow("wall", wall, 1_000_000, profile, captured, undefined));
 		}
 		// Intervals that ended before the live window started can no longer overlap any sample.
-		this.tracker.prune(this.isRunning ? this.windowAnchor.startMs : Number.POSITIVE_INFINITY);
+		this.tracker.prune(this.isRunning ? this.windowStartedAtMs : Number.POSITIVE_INFINITY);
 		this.lastConversionDurationMs = performance.now() - started;
 	}
 
 	/** Binds samples to the tracked spans/tags active at their wall-clock time. */
 	private attribute(
 		profile: CdpProfileDTO,
-		anchor: WallClockAnchorDTO,
+		calibration: WallClockCalibrationDTO,
 	): SampleLabelAssignmentDTO | undefined {
-		this.lastAnchorUncertaintyMs = anchor.uncertaintyMs;
+		const anchor = resolveAnchor(calibration, profile);
+		this.lastAnchor = anchor;
 		const samples = profile.samples?.length ?? 0;
 		if (!this.config.tracing.enabled || samples === 0) return undefined;
 		const times = sampleWallTimesMs(profile, anchor);
@@ -419,7 +423,8 @@ export class Profiler implements ProfilerHandle {
 				ambiguousSamples: this.ambiguousSamples,
 				attributedSamples: this.attributedSamples,
 				cardinalityLimitedSamples: this.cardinalityLimitedSamples,
-				lastAnchorUncertaintyMs: this.lastAnchorUncertaintyMs,
+				lastAnchorMethod: this.lastAnchor?.method ?? null,
+				lastAnchorUncertaintyMs: this.lastAnchor?.uncertaintyMs ?? null,
 				unattributedSamples: this.unattributedSamples,
 			},
 		};
