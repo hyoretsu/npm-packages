@@ -12,22 +12,30 @@ const SPAN_ID = /^[0-9a-f]{16}$/;
 const NOOP: EndInterval = () => undefined;
 
 /**
- * Keeps intervals in insertion (= start) order in a `Map`, which makes oldest-first eviction O(1).
+ * Keeps intervals in start order in an array with a moving head, which makes oldest-first
+ * eviction and orphan expiry O(1) amortized. (An insertion-ordered `Map` with front deletions looks
+ * equivalent but is pathological in JavaScriptCore: every `values().next()` has to skip the
+ * tombstones of earlier deletions, which measured ~55 us per span.)
  *
- * Memory is bounded three ways: a hard cap on retained intervals (oldest evicted first, closed ones
- * preferred), force-closing open intervals older than `maxSpanAgeMs` (a span whose `end` is never
- * called cannot leak), and `prune` after each converted window. A force-closed or evicted interval
- * that is still referenced by an unconverted window keeps working because snapshots hold references.
+ * Memory is bounded three ways: a hard cap on retained intervals (oldest evicted first),
+ * force-closing open intervals older than `maxSpanAgeMs` (a span whose `end` is never called cannot
+ * leak), and `prune` after each converted window. An evicted or force-closed interval that an
+ * unconverted window still references keeps working, because snapshots hold references.
  */
 export class IntervalSpanTracker extends SpanTracker {
-	private readonly intervals = new Map<number, TrackedIntervalDTO>();
+	private activeIntervals = 0;
+	private readonly detached = new WeakSet<TrackedIntervalDTO>();
 	private evictedIntervals = 0;
+	private head = 0;
 	private invalidSpans = 0;
+	private items: TrackedIntervalDTO[] = [];
 	private readonly maxIntervals: number;
 	private readonly maxSpanAgeMs: number;
-	private readonly now: () => number;
 	private nextId = 1;
+	private readonly now: () => number;
 	private orphanedIntervals = 0;
+	/** Index before which every open interval has already been checked for expiry. */
+	private scanned = 0;
 
 	constructor(options: SpanTrackerOptionsDTO = {}) {
 		super();
@@ -58,11 +66,15 @@ export class IntervalSpanTracker extends SpanTracker {
 	private open(fields: Pick<TrackedIntervalDTO, "kind" | "labels" | "spanId" | "traceId">): EndInterval {
 		const startMs = this.now();
 		this.expireOrphans(startMs);
-		while (this.intervals.size >= this.maxIntervals) this.evictOldest();
+		while (this.items.length - this.head >= this.maxIntervals) this.evictOldest();
 		const interval: TrackedIntervalDTO = { ...fields, endMs: null, id: this.nextId++, startMs };
-		this.intervals.set(interval.id, interval);
+		this.items.push(interval);
+		this.activeIntervals++;
 		return finalLabels => {
-			if (interval.endMs === null) interval.endMs = this.now();
+			if (interval.endMs === null) {
+				interval.endMs = this.now();
+				if (!this.detached.has(interval)) this.activeIntervals--;
+			}
 			// A late label (for example `http.route`) still applies to every unconverted window.
 			if (finalLabels)
 				Object.assign(interval.labels, validateLabels(finalLabels, false, RESERVED_LABELS));
@@ -70,57 +82,64 @@ export class IntervalSpanTracker extends SpanTracker {
 	}
 
 	private evictOldest(): void {
-		let victim: TrackedIntervalDTO | undefined;
-		for (const interval of this.intervals.values()) {
-			victim ??= interval;
-			if (interval.endMs !== null) {
-				victim = interval;
-				break;
-			}
-		}
+		const victim = this.items[this.head];
 		if (!victim) return;
-		this.intervals.delete(victim.id);
+		this.items[this.head++] = undefined as never;
+		this.detached.add(victim);
+		if (victim.endMs === null) this.activeIntervals--;
 		this.evictedIntervals++;
+		this.compact();
 	}
 
-	/** Force-close open intervals that outlived `maxSpanAgeMs`. Insertion order lets us stop early. */
+	/** Force-close open intervals that outlived `maxSpanAgeMs`. Start order lets us stop early. */
 	private expireOrphans(nowMs: number): void {
-		for (const interval of this.intervals.values()) {
-			if (nowMs - interval.startMs <= this.maxSpanAgeMs) break;
+		this.scanned = Math.max(this.scanned, this.head);
+		while (this.scanned < this.items.length) {
+			const interval = this.items[this.scanned] as TrackedIntervalDTO;
+			if (nowMs - interval.startMs <= this.maxSpanAgeMs) return;
 			if (interval.endMs === null) {
 				interval.endMs = interval.startMs + this.maxSpanAgeMs;
+				this.activeIntervals--;
 				this.orphanedIntervals++;
 			}
+			this.scanned++;
 		}
+	}
+
+	private compact(): void {
+		if (this.head < 1_024 || this.head * 2 < this.items.length) return;
+		this.items = this.items.slice(this.head);
+		this.scanned = Math.max(0, this.scanned - this.head);
+		this.head = 0;
 	}
 
 	prune(beforeMs: number): number {
 		this.expireOrphans(this.now());
-		let dropped = 0;
-		for (const [id, interval] of this.intervals) {
-			if (interval.endMs !== null && interval.endMs < beforeMs) {
-				this.intervals.delete(id);
-				dropped++;
-			}
-		}
-		return dropped;
+		const live = this.items.slice(this.head);
+		const kept = live.filter(interval => interval.endMs === null || interval.endMs >= beforeMs);
+		this.items = kept;
+		this.head = 0;
+		this.scanned = 0;
+		return live.length - kept.length;
 	}
 
 	snapshot(fromMs: number, untilMs: number): TrackedIntervalDTO[] {
-		return [...this.intervals.values()].filter(
-			interval => interval.startMs <= untilMs && (interval.endMs === null || interval.endMs >= fromMs),
-		);
+		const result: TrackedIntervalDTO[] = [];
+		for (let i = this.head; i < this.items.length; i++) {
+			const interval = this.items[i] as TrackedIntervalDTO;
+			if (interval.startMs <= untilMs && (interval.endMs === null || interval.endMs >= fromMs))
+				result.push(interval);
+		}
+		return result;
 	}
 
 	stats(): SpanTrackerStatsDTO {
-		let active = 0;
-		for (const interval of this.intervals.values()) if (interval.endMs === null) active++;
 		return {
-			activeIntervals: active,
+			activeIntervals: this.activeIntervals,
 			evictedIntervals: this.evictedIntervals,
 			invalidSpans: this.invalidSpans,
 			orphanedIntervals: this.orphanedIntervals,
-			retainedIntervals: this.intervals.size,
+			retainedIntervals: this.items.length - this.head,
 		};
 	}
 }
