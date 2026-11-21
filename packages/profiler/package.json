@@ -101,6 +101,7 @@
 		"prepublishOnly": "bun run build",
 		"check-types": "tsc --noEmit",
 		"release": "npm publish --provenance --access public",
+		"test:node": "node scripts/node-smoke.mjs",
 		"test:unit": "bun test"
 	},
 	"dependencies": {
